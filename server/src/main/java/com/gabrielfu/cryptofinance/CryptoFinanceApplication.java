@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CryptoFinanceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CryptofinanceApplication.class, args);
+		SpringApplication.run(CryptoFinanceApplication.class, args);
 	}
 
 }
