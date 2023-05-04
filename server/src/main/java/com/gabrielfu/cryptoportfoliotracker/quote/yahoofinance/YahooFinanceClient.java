@@ -1,11 +1,9 @@
 package com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 import org.springframework.web.client.RestTemplate;
+import org.apache.http.client.utils.URIBuilder;
 
-import java.util.List;
+import java.net.URISyntaxException;
 
 public class YahooFinanceClient {
     private final String QUOTE_BASE_URL = "https://query1.finance.yahoo.com/v7/finance/quote";
@@ -16,37 +14,56 @@ public class YahooFinanceClient {
         this.restTemplate = restTemplate;
     }
 
-    public Double getStockPrice(String tickerSymbol) {
+    public String getTickerFromToken(String token) {
+        return token + "-USD";
+    }
+
+    public YahooFinanceQuoteResponse getQuote(String tickerSymbol) {
         String url = String.format("%s?symbols=%s", QUOTE_BASE_URL, tickerSymbol);
-        YahooFinanceQuoteResponse response = restTemplate.getForObject(url, YahooFinanceQuoteResponse.class);
-        // Extract stock price from the response
-        return response.getQuoteResponse().getResult()[0].getRegularMarketPrice();
+        return restTemplate.getForObject(url, YahooFinanceQuoteResponse.class);
+    }
+
+    public YahooFinanceChartResponse getChart(
+            String tickerSymbol,
+            String interval,
+            String range,
+            Long period1,
+            Long period2
+    ) {
+        String url;
+        try {
+            URIBuilder builder = new URIBuilder(String.format("%s/%s", CHART_BASE_URL, tickerSymbol));
+            if (interval != null) {
+                builder.addParameter("interval", interval);
+            }
+            if (range != null) {
+                builder.addParameter("range", range);
+            }
+            if (period1 != null) {
+                builder.addParameter("period1", period1.toString());
+            }
+            if (period2 != null) {
+                builder.addParameter("period2", period2.toString());
+            }
+            url = builder.build().toString();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(
+                    "Failed to make Yahoo Finance Chart URL",
+                    e
+            );
+        }
+        return restTemplate.getForObject(url, YahooFinanceChartResponse.class);
+    }
+
+    public YahooFinanceChartResponse getChart(String tickerSymbol, String interval, String range) {
+        return getChart(tickerSymbol, interval, range, null, null);
+    }
+
+    public YahooFinanceChartResponse getChart(String tickerSymbol, Long period1, Long period2) {
+        return getChart(tickerSymbol, null, null, period1, period2);
     }
 
     public YahooFinanceChartResponse getChart(String tickerSymbol) {
-        String url = String.format("%s/%s", CHART_BASE_URL, tickerSymbol);
-        YahooFinanceChartResponse response = restTemplate.getForObject(url, YahooFinanceChartResponse.class);
-        return response;
-    }
-
-//    public List<Double> getHistoricalStockPrices(String tickerSymbol, LocalDate startDate, LocalDate endDate) {
-//        String url = String.format("%ssymbol=%s&period1=%s&period2=%s", HISTORICAL_BASE_URL, tickerSymbol,
-//                startDate.atStartOfDay().toEpochSecond(ZoneOffset.UTC),
-//                endDate.atStartOfDay().toEpochSecond(ZoneOffset.UTC));
-//        YFChartResponse response = restTemplate.getForObject(url, YFChartResponse.class);
-//        // Extract closing prices from the response
-//        return response.getClosingPrices();
-//    }
-}
-
-
-class Main {
-    public static void main(String[] args) {
-        YahooFinanceClient client = new YahooFinanceClient(new RestTemplate());
-        Double price = client.getStockPrice("AVAX-USD");
-        System.out.println(price);
-
-        System.out.println(client.getChart("AVAX-USD"));
-        System.out.println(client.getChart("AVAX-sss"));
+        return getChart(tickerSymbol, null, null, null, null);
     }
 }
