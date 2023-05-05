@@ -3,6 +3,8 @@ package com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class YahooFinanceQuoteResponse {
     @JsonProperty("quoteResponse")
@@ -11,7 +13,7 @@ public class YahooFinanceQuoteResponse {
     @Data
     public static class QuoteResponse {
         @JsonProperty("result")
-        private Result[] result;
+        private List<Result> result;
 
         @JsonProperty("error")
         private Object error;
