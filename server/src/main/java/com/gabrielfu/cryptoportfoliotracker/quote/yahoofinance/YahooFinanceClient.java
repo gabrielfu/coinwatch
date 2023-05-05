@@ -6,7 +6,7 @@ import org.apache.http.client.utils.URIBuilder;
 import java.net.URISyntaxException;
 
 public class YahooFinanceClient {
-    private final String QUOTE_BASE_URL = "https://query1.finance.yahoo.com/v7/finance/quote";
+    private final String QUOTE_BASE_URL = "https://query1.finance.yahoo.com/v6/finance/quote";
     private final String CHART_BASE_URL = "https://query1.finance.yahoo.com/v8/finance/chart";
     private final RestTemplate restTemplate;
 
