@@ -3,8 +3,8 @@ package com.gabrielfu.cryptoportfoliotracker.quote;
 import java.util.List;
 
 public interface QuoteService {
-    public QuoteDTO getTokenQuote(String tokenSymbol);
+    public SpotPriceDTO getTokenSpotPrice(String token);
 
-    public HistoricalPricesDTO getTokenHistoricalPrices(String tokenSymbol);
+    public HistoricalPricesDTO getTokenHistoricalPrices(String token);
 }
 

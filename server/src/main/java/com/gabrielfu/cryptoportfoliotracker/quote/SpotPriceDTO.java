@@ -1,6 +1,6 @@
 package com.gabrielfu.cryptoportfoliotracker.quote;
 
-public record QuoteDTO(
+public record SpotPriceDTO(
         String symbol,
         Double marketPrice,
         Double marketChange,
