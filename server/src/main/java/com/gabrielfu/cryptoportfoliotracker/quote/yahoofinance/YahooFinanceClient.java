@@ -9,7 +9,7 @@ import org.apache.http.client.utils.URIBuilder;
 import java.net.URISyntaxException;
 
 @Component
-class T {
+class Rest {
     @Bean
     public RestTemplate getRestTemplate() {
         return new RestTemplate();

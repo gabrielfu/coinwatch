@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "api/v1/quote")
-//@AllArgsConstructor
 public class QuoteController {
     private final QuoteService quoteService;
 
