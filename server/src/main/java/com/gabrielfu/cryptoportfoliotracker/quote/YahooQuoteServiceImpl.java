@@ -3,17 +3,13 @@ package com.gabrielfu.cryptoportfoliotracker.quote;
 import com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance.YahooFinanceChartResponse;
 import com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance.YahooFinanceClient;
 import com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance.YahooFinanceQuoteResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class YahooQuoteServiceImpl implements QuoteService {
     private final YahooFinanceClient yahooFinanceClient;
-
-    @Autowired
-    public YahooQuoteServiceImpl(YahooFinanceClient yahooFinanceClient) {
-        this.yahooFinanceClient = yahooFinanceClient;
-    }
 
     @Override
     public SpotPriceDTO getTokenSpotPrice(String token) {

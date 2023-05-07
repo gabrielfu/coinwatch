@@ -1,7 +1,6 @@
 package com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.apache.http.client.utils.URIBuilder;
@@ -9,22 +8,13 @@ import org.apache.http.client.utils.URIBuilder;
 import java.net.URISyntaxException;
 
 @Component
-class Rest {
-    @Bean
-    public RestTemplate getRestTemplate() {
-        return new RestTemplate();
-    }
-}
-
-@Component
 public class YahooFinanceClient {
     private final String QUOTE_BASE_URL = "https://query1.finance.yahoo.com/v6/finance/quote";
     private final String CHART_BASE_URL = "https://query1.finance.yahoo.com/v8/finance/chart";
     private final RestTemplate restTemplate;
 
-    @Autowired
-    public YahooFinanceClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public YahooFinanceClient(RestTemplateBuilder builder) {
+        restTemplate = builder.build();
     }
 
     public String getTickerFromToken(String token) {
