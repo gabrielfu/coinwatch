@@ -1,5 +1,7 @@
-package com.gabrielfu.cryptoportfoliotracker.portfolio;
+package com.gabrielfu.cryptoportfoliotracker.transaction;
 
+import com.gabrielfu.cryptoportfoliotracker.portfolio.Portfolio;
+import com.gabrielfu.cryptoportfoliotracker.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

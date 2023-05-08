@@ -1,4 +1,4 @@
-package com.gabrielfu.cryptoportfoliotracker.portfolio;
+package com.gabrielfu.cryptoportfoliotracker.transaction;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
