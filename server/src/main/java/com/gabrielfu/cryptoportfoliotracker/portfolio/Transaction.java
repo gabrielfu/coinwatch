@@ -5,13 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Portfolio {
+public class Transaction {
     @Id
     @SequenceGenerator(
             name = "portfolio_id_sequence",
@@ -23,8 +23,18 @@ public class Portfolio {
             generator = "portfolio_id_sequence"
     )
     private Long id;
-    private String name;
 
-    @OneToMany(mappedBy = "portfolio")
-    private Set<Transaction> transactions;
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id")
+    private Portfolio portfolio;
+
+    @ManyToOne
+    @JoinColumn(name = "token_id")
+    private Token token;
+
+    private LocalDateTime timestamp;
+
+    private Double position;
+
+    private Double averagePrice;
 }
