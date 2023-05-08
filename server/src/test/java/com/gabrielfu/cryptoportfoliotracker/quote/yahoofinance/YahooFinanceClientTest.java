@@ -112,4 +112,138 @@ class YahooFinanceClientTest {
                 1928.1384
         );
     }
+
+    @Test
+    void getChart() {
+        String json = """
+                {
+                  "chart": {
+                    "result": [
+                      {
+                        "meta": {
+                          "currency": "USD",
+                          "symbol": "ETH-USD",
+                          "exchangeName": "CCC",
+                          "instrumentType": "CRYPTOCURRENCY",
+                          "firstTradeDate": 1510185600,
+                          "regularMarketTime": 1683508980,
+                          "gmtoffset": 0,
+                          "timezone": "UTC",
+                          "exchangeTimezoneName": "UTC",
+                          "regularMarketPrice": 1881.0114,
+                          "chartPreviousClose": 1867.8713,
+                          "previousClose": 1867.8713,
+                          "scale": 4,
+                          "priceHint": 2,
+                          "currentTradingPeriod": {
+                            "pre": {
+                              "timezone": "UTC",
+                              "start": 1683504000,
+                              "end": 1683504000,
+                              "gmtoffset": 0
+                            },
+                            "regular": {
+                              "timezone": "UTC",
+                              "start": 1683504000,
+                              "end": 1683590340,
+                              "gmtoffset": 0
+                            },
+                            "post": {
+                              "timezone": "UTC",
+                              "start": 1683590340,
+                              "end": 1683590340,
+                              "gmtoffset": 0
+                            }
+                          },
+                          "tradingPeriods": [
+                            [
+                              {
+                                "timezone": "UTC",
+                                "start": 1683504000,
+                                "end": 1683590340,
+                                "gmtoffset": 0
+                              }
+                            ]
+                          ],
+                          "dataGranularity": "1h",
+                          "range": "1d",
+                          "validRanges": [
+                            "1d",
+                            "5d",
+                            "1mo",
+                            "3mo",
+                            "6mo",
+                            "1y",
+                            "2y",
+                            "5y",
+                            "10y",
+                            "ytd",
+                            "max"
+                          ]
+                        },
+                        "timestamp": [
+                          1683504000,
+                          1683507600,
+                          1683508980
+                        ],
+                        "indicators": {
+                          "quote": [
+                            {
+                              "open": [
+                                1872.47509765625,
+                                1883.8590087890625,
+                                1881.0113525390625
+                              ],
+                              "low": [
+                                1867.871337890625,
+                                1879.4700927734375,
+                                1881.0113525390625
+                              ],
+                              "close": [
+                                1882.529052734375,
+                                1881.5496826171875,
+                                1881.0113525390625
+                              ],
+                              "volume": [
+                                504769536,
+                                13790208,
+                                0
+                              ],
+                              "high": [
+                                1886.162109375,
+                                1883.8590087890625,
+                                1881.0113525390625
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "error": null
+                  }
+                }
+                """;
+        String expectedUri = "https://query1.finance.yahoo.com/v8/finance/chart/ETH-USD";
+        mockRestServiceServer
+                .expect(requestTo(expectedUri))
+                .andRespond(withSuccess(json, MediaType.APPLICATION_JSON));
+        YahooFinanceChartResponse response = yahooFinanceClient.getChart("ETH-USD");
+        assertNotNull(response);
+        assertEquals(
+                response.getChart().getResult().size(),
+                1
+        );
+        assertEquals(
+                response.getChart().getResult().get(0).getMeta().getSymbol(),
+                "ETH-USD"
+        );
+        assertEquals(
+                response.getChart().getResult().get(0).getIndicators().getQuote().get(0).getClose().size(),
+                3
+        );
+        assertEquals(
+                response.getChart().getResult().get(0).getTimestamp().size(),
+                3
+        );
+    }
 }
