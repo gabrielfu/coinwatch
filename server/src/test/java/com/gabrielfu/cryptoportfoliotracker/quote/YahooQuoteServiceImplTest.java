@@ -31,7 +31,7 @@ class YahooQuoteServiceImplTest {
     @BeforeEach
     void setup() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        String json = """
+        yahooFinanceQuoteResponse = objectMapper.readValue("""
         {
           "quoteResponse": {
             "result": [
@@ -45,9 +45,57 @@ class YahooQuoteServiceImplTest {
             "error": null
           }
         }
-        """;
-        yahooFinanceQuoteResponse = objectMapper.readValue(json, YahooFinanceQuoteResponse.class);
-        System.out.println(yahooFinanceQuoteResponse);
+        """, YahooFinanceQuoteResponse.class);
+        yahooFinanceChartResponse = objectMapper.readValue("""
+        {
+          "chart": {
+            "result": [
+              {
+                "meta": {
+                  "symbol": "ETH-USD"
+                },
+                "timestamp": [
+                  1683504000,
+                  1683507600,
+                  1683508980
+                ],
+                "indicators": {
+                  "quote": [
+                    {
+                      "open": [
+                        1872.47509765625,
+                        1883.8590087890625,
+                        1881.0113525390625
+                      ],
+                      "low": [
+                        1867.871337890625,
+                        1879.4700927734375,
+                        1881.0113525390625
+                      ],
+                      "close": [
+                        1882.529052734375,
+                        1881.5496826171875,
+                        1881.0113525390625
+                      ],
+                      "volume": [
+                        504769536,
+                        13790208,
+                        0
+                      ],
+                      "high": [
+                        1886.162109375,
+                        1883.8590087890625,
+                        1881.0113525390625
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "error": null
+          }
+        }
+        """, YahooFinanceChartResponse.class);
     }
 
     @Test
@@ -65,5 +113,13 @@ class YahooQuoteServiceImplTest {
 
     @Test
     void getTokenHistoricalPrices() {
+        given(yahooFinanceClient.getTickerFromToken(token))
+                .willReturn(ticker);
+        given(yahooFinanceClient.getChart(ticker))
+                .willReturn(yahooFinanceChartResponse);
+        HistoricalPricesDTO historicalPricesDTO = yahooQuoteService.getTokenHistoricalPrices(token);
+        assertEquals(historicalPricesDTO.symbol(), ticker);
+        assertEquals(historicalPricesDTO.timestamp().size(), 3);
+        assertEquals(historicalPricesDTO.close().size(), 3);
     }
 }
