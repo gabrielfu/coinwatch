@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -34,9 +34,11 @@ public class Transaction {
     @JoinColumn(name = "token_id")
     private Token token;
 
-    private LocalDateTime timestamp;
+    private LocalDate date;
 
-    private Double position;
+    private Double quantity;
 
-    private Double averagePrice;
+    private Double purchasePrice;
+
+    private TransactionType type;
 }

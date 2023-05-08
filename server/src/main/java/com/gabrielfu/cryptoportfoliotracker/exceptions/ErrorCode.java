@@ -4,7 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
     RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND),
-    RESOURCE_ALREADY_EXISTS(HttpStatus.CONFLICT);
+    RESOURCE_ALREADY_EXISTS(HttpStatus.CONFLICT),
+    INVALID_PARAMETER_VALUE(HttpStatus.BAD_REQUEST);
 
     private final HttpStatus httpStatus;
 
