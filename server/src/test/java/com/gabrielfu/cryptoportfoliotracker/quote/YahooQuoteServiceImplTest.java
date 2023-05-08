@@ -2,6 +2,7 @@ package com.gabrielfu.cryptoportfoliotracker.quote;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance.TestUtils;
 import com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance.YahooFinanceChartResponse;
 import com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance.YahooFinanceClient;
 import com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance.YahooFinanceQuoteResponse;
@@ -31,71 +32,14 @@ class YahooQuoteServiceImplTest {
     @BeforeEach
     void setup() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        yahooFinanceQuoteResponse = objectMapper.readValue("""
-        {
-          "quoteResponse": {
-            "result": [
-              {
-                "regularMarketChangePercent": 2.6048126,
-                "regularMarketPrice": 1928.1384,
-                "regularMarketChange": 48.949463,
-                "symbol": "ETH-USD"
-              }
-            ],
-            "error": null
-          }
-        }
-        """, YahooFinanceQuoteResponse.class);
-        yahooFinanceChartResponse = objectMapper.readValue("""
-        {
-          "chart": {
-            "result": [
-              {
-                "meta": {
-                  "symbol": "ETH-USD"
-                },
-                "timestamp": [
-                  1683504000,
-                  1683507600,
-                  1683508980
-                ],
-                "indicators": {
-                  "quote": [
-                    {
-                      "open": [
-                        1872.47509765625,
-                        1883.8590087890625,
-                        1881.0113525390625
-                      ],
-                      "low": [
-                        1867.871337890625,
-                        1879.4700927734375,
-                        1881.0113525390625
-                      ],
-                      "close": [
-                        1882.529052734375,
-                        1881.5496826171875,
-                        1881.0113525390625
-                      ],
-                      "volume": [
-                        504769536,
-                        13790208,
-                        0
-                      ],
-                      "high": [
-                        1886.162109375,
-                        1883.8590087890625,
-                        1881.0113525390625
-                      ]
-                    }
-                  ]
-                }
-              }
-            ],
-            "error": null
-          }
-        }
-        """, YahooFinanceChartResponse.class);
+        yahooFinanceQuoteResponse = objectMapper.readValue(
+                TestUtils.getYahooFinanceQuoteJson(),
+                YahooFinanceQuoteResponse.class
+        );
+        yahooFinanceChartResponse = objectMapper.readValue(
+                TestUtils.getYahooFinanceChartJson(),
+                YahooFinanceChartResponse.class
+        );
     }
 
     @Test

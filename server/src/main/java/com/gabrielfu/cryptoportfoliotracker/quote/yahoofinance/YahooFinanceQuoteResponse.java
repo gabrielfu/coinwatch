@@ -1,16 +1,19 @@
 package com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class YahooFinanceQuoteResponse {
     @JsonProperty("quoteResponse")
     private QuoteResponse quoteResponse;
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class QuoteResponse {
         @JsonProperty("result")
         private List<Result> result;
@@ -20,6 +23,7 @@ public class YahooFinanceQuoteResponse {
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Result {
         @JsonProperty("symbol")
         private String symbol;

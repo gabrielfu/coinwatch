@@ -14,6 +14,7 @@ public class YahooFinanceChartResponse {
     private Chart chart;
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Chart {
         @JsonProperty("result")
         private List<Result> result;
@@ -23,6 +24,7 @@ public class YahooFinanceChartResponse {
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Result {
         @JsonProperty("meta")
         private Meta meta;
@@ -35,12 +37,14 @@ public class YahooFinanceChartResponse {
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Indicators {
         @JsonProperty("quote")
         private List<Quote> quote;
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Quote {
         @JsonProperty("open")
         private List<Double> open;
@@ -61,6 +65,7 @@ public class YahooFinanceChartResponse {
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Meta {
         @JsonProperty("symbol")
         private String symbol;
