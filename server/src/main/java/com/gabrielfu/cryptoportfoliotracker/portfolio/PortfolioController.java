@@ -9,12 +9,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/portfolios")
 public class PortfolioController {
-    private final PortfolioService portfolioService;
-
     @Autowired
-    public PortfolioController(PortfolioService portfolioService) {
-        this.portfolioService = portfolioService;
-    }
+    private PortfolioService portfolioService;
 
     @GetMapping
     public List<Portfolio> getPortfolios() {

@@ -16,12 +16,8 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 
 @Service
 public class TokenService {
-    private final TokenRepository tokenRepository;
-
     @Autowired
-    public TokenService(TokenRepository tokenRepository) {
-        this.tokenRepository = tokenRepository;
-    }
+    private TokenRepository tokenRepository;
 
     public List<Token> getTokens() {
         return tokenRepository.findAll();

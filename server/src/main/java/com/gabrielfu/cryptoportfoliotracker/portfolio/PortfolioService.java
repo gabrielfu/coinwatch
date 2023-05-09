@@ -16,12 +16,8 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 
 @Service
 public class PortfolioService {
-    private final PortfolioRepository portfolioRepository;
-
     @Autowired
-    public PortfolioService(PortfolioRepository portfolioRepository) {
-        this.portfolioRepository = portfolioRepository;
-    }
+    private PortfolioRepository portfolioRepository;
 
     public List<Portfolio> getPortfolios() {
         return portfolioRepository.findAll();

@@ -9,12 +9,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/tokens")
 public class TokenController {
-    private final TokenService tokenService;
-
     @Autowired
-    public TokenController(TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
+    private TokenService tokenService;
 
     @GetMapping
     public List<Token> getTokens() {

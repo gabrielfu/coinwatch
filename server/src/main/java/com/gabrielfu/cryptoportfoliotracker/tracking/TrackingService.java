@@ -8,20 +8,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TrackingService {
-    private final PortfolioService portfolioService;
-    private final TokenService tokenService;
-    private final TransactionService transactionService;
-
     @Autowired
-    public TrackingService(
-            PortfolioService portfolioService,
-            TokenService tokenService,
-            TransactionService transactionService
-    ) {
-        this.portfolioService = portfolioService;
-        this.tokenService = tokenService;
-        this.transactionService = transactionService;
-    }
+    private PortfolioService portfolioService;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    private TransactionService transactionService;
 
 //    public TrackingPortfolioDTO getPortfolio() {
 //
