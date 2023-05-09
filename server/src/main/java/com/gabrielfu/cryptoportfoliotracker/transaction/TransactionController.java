@@ -2,20 +2,16 @@ package com.gabrielfu.cryptoportfoliotracker.transaction;
 
 import com.gabrielfu.cryptoportfoliotracker.exceptions.CryptoPortfolioTrackerException;
 import com.gabrielfu.cryptoportfoliotracker.exceptions.ErrorCode;
-import com.gabrielfu.cryptoportfoliotracker.portfolio.Portfolio;
 import com.gabrielfu.cryptoportfoliotracker.portfolio.PortfolioService;
-import com.gabrielfu.cryptoportfoliotracker.token.Token;
 import com.gabrielfu.cryptoportfoliotracker.token.TokenService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController
