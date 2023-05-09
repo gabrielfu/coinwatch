@@ -27,11 +27,25 @@ public class Transaction {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "portfolio_id")
+    @JoinColumn(
+            name = "portfolio_id",
+            foreignKey = @ForeignKey(
+                    name = "transaction_portfolio_id_fk"
+            )
+    )
     private Portfolio portfolio;
 
     @ManyToOne
-    @JoinColumn(name = "token_id")
+//    @JoinTable(
+//            name = "Token",
+//            joinColumns = { @JoinColumn(name = "id") }
+//    )
+    @JoinColumn(
+            name = "token_id",
+            foreignKey = @ForeignKey(
+                    name = "transaction_token_id_fk"
+            )
+    )
     private Token token;
 
     private LocalDate date;

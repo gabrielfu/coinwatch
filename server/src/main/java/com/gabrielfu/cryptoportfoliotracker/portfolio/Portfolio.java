@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -27,6 +28,11 @@ public class Portfolio {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "portfolio")
-    private Set<Transaction> transactions;
+    @OneToMany(
+            mappedBy = "portfolio",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.LAZY
+    )
+    private List<Transaction> transactions = new ArrayList<>();
 }

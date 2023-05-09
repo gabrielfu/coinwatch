@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -28,6 +29,11 @@ public class Token {
     private String symbol;
     private String name;
 
-    @OneToMany(mappedBy = "token")
-    private Set<Transaction> transactions;
+    @OneToMany(
+            mappedBy = "token",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.LAZY
+    )
+    private List<Transaction> transactions = new ArrayList<>();
 }
