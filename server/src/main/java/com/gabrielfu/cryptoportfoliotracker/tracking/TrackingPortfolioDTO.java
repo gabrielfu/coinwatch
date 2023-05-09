@@ -1,5 +1,6 @@
 package com.gabrielfu.cryptoportfoliotracker.tracking;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record TrackingPortfolioDTO(
@@ -8,7 +9,7 @@ public record TrackingPortfolioDTO(
         List<Position> positions
 ) {
     record Position(
-            String tradeDate,
+            LocalDate transactionDate,
 
             Double quantity,
             Double purchasePrice
