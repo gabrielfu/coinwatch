@@ -26,13 +26,23 @@ public class PortfolioController {
         return portfolioService.getPortfolioById(id);
     }
 
-    @GetMapping("{name}")
-    public Optional<Portfolio> getPortfolioByName(@PathVariable String name) {
+    @GetMapping("/get-by-name")
+    public Optional<Portfolio> getPortfolioByName(@RequestParam String name) {
         return portfolioService.getPortfolioByName(name);
     }
 
     @PostMapping
     public Long createPortfolio(@RequestBody Portfolio portfolio) {
         return portfolioService.createPortfolio(portfolio);
+    }
+
+    @PutMapping("{id}")
+    public void updatePortfolio(@PathVariable Long id, @RequestBody Portfolio portfolio) {
+        portfolioService.updatePortfolio(id, portfolio);
+    }
+
+    @DeleteMapping("{id}")
+    public void deletePortfolio(@PathVariable Long id) {
+        portfolioService.deletePortfolio(id);
     }
 }

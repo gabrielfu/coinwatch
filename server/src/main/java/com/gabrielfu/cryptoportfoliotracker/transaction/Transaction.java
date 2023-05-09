@@ -16,13 +16,13 @@ import java.time.LocalDate;
 public class Transaction {
     @Id
     @SequenceGenerator(
-            name = "portfolio_id_sequence",
-            sequenceName = "portfolio_id_sequence",
+            name = "transaction_id_sequence",
+            sequenceName = "transaction_id_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "portfolio_id_sequence"
+            generator = "transaction_id_sequence"
     )
     private Long id;
 

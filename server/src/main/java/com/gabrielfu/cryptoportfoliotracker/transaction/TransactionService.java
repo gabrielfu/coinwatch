@@ -37,4 +37,32 @@ public class TransactionService {
     public Long createTransaction(Transaction transaction) {
         return transactionRepository.save(transaction).getId();
     }
+
+    public void updateTransaction(Long id, Transaction newTransaction) {
+        Transaction transaction = getTransactionById(id);
+        if (newTransaction.getDate() != null) {
+            transaction.setDate(newTransaction.getDate());
+        }
+        if (newTransaction.getType() != null) {
+            transaction.setType(newTransaction.getType());
+        }
+        if (newTransaction.getQuantity() != null) {
+            transaction.setQuantity(newTransaction.getQuantity());
+        }
+        if (newTransaction.getPurchasePrice() != null) {
+            transaction.setPurchasePrice(newTransaction.getPurchasePrice());
+        }
+        if (newTransaction.getPortfolio() != null) {
+            transaction.setPortfolio(newTransaction.getPortfolio());
+        }
+        if (newTransaction.getToken() != null) {
+            transaction.setToken(newTransaction.getToken());
+        }
+        transactionRepository.save(transaction);
+    }
+
+    public void deleteTransaction(Long id) {
+        Transaction transaction = getTransactionById(id);
+        transactionRepository.delete(transaction);
+    }
 }

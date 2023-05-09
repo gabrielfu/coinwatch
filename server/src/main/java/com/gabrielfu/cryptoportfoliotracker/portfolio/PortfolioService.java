@@ -8,7 +8,9 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 
+import javax.sound.sampled.Port;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.ignoreCase;
@@ -49,6 +51,12 @@ public class PortfolioService {
 
     public Long createPortfolio(Portfolio portfolio) {
         String name = portfolio.getName();
+        if (name == null | Objects.equals(name, "")) {
+            throw new CryptoPortfolioTrackerException(
+                    ErrorCode.INVALID_PARAMETER_VALUE,
+                    "Missing required parameter 'name'"
+            );
+        }
         if (getPortfolioByName(name).isPresent()) {
             throw new CryptoPortfolioTrackerException(
                     ErrorCode.RESOURCE_ALREADY_EXISTS,
@@ -56,5 +64,18 @@ public class PortfolioService {
             );
         }
         return portfolioRepository.save(portfolio).getId();
+    }
+
+    public void updatePortfolio(Long id, Portfolio newPortfolio) {
+        Portfolio portfolio = getPortfolioById(id);
+        if (newPortfolio.getName() != null) {
+            portfolio.setName(newPortfolio.getName());
+        }
+        portfolioRepository.save(portfolio);
+    }
+
+    public void deletePortfolio(Long id) {
+        Portfolio portfolio = getPortfolioById(id);
+        portfolioRepository.delete(portfolio);
     }
 }

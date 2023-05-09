@@ -12,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(indexes = @Index(columnList = "name"))
 public class Portfolio {
     @Id
     @SequenceGenerator(

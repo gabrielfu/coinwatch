@@ -12,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(indexes = @Index(columnList = "symbol"))
 public class Token {
     @Id
     @SequenceGenerator(

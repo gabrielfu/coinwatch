@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.ignoreCase;
@@ -34,12 +35,12 @@ public class TokenService {
                 ));
     }
 
-    public Optional<Token> getTokenByName(String name) {
+    public Optional<Token> getTokenBySymbol(String symbol) {
         Token probe = new Token();
-        probe.setName(name);
+        probe.setSymbol(symbol);
         ExampleMatcher modelMatcher = ExampleMatcher.matching()
                 .withIgnorePaths("id")
-                .withMatcher("name", ignoreCase());
+                .withMatcher("symbol", ignoreCase());
         Example<Token> example = Example.of(probe, modelMatcher);
         return tokenRepository.findBy(
                 example,
@@ -48,13 +49,32 @@ public class TokenService {
     }
 
     public Long createToken(Token token) {
-        String name = token.getName();
-        if (getTokenByName(name).isPresent()) {
+        String symbol = token.getSymbol();
+        if (symbol == null | Objects.equals(symbol, "")) {
+            throw new CryptoPortfolioTrackerException(
+                    ErrorCode.INVALID_PARAMETER_VALUE,
+                    "Missing required parameter 'symbol'"
+            );
+        }
+        if (getTokenBySymbol(symbol).isPresent()) {
             throw new CryptoPortfolioTrackerException(
                     ErrorCode.RESOURCE_ALREADY_EXISTS,
-                    "Token with name '%s' already exists".formatted(name)
+                    "Token with symbol '%s' already exists".formatted(symbol)
             );
         }
         return tokenRepository.save(token).getId();
+    }
+
+    public void updateToken(Long id, Token newToken) {
+        Token token = getTokenById(id);
+        if (newToken.getName() != null) {
+            token.setName(newToken.getName());
+        }
+        tokenRepository.save(token);
+    }
+
+    public void deleteToken(Long id) {
+        Token token = getTokenById(id);
+        tokenRepository.delete(token);
     }
 }
