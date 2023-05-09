@@ -1,5 +1,6 @@
 package com.gabrielfu.cryptoportfoliotracker.portfolio;
 
+import com.fasterxml.jackson.annotation.*;
 import com.gabrielfu.cryptoportfoliotracker.transaction.Transaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Table(indexes = @Index(columnList = "name"))
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class Portfolio {
     @Id
     @SequenceGenerator(

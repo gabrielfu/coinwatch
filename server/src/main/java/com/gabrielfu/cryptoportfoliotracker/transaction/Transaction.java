@@ -1,5 +1,6 @@
 package com.gabrielfu.cryptoportfoliotracker.transaction;
 
+import com.fasterxml.jackson.annotation.*;
 import com.gabrielfu.cryptoportfoliotracker.portfolio.Portfolio;
 import com.gabrielfu.cryptoportfoliotracker.token.Token;
 import jakarta.persistence.*;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class Transaction {
     @Id
     @SequenceGenerator(
@@ -27,25 +29,12 @@ public class Transaction {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(
-            name = "portfolio_id",
-            foreignKey = @ForeignKey(
-                    name = "transaction_portfolio_id_fk"
-            )
-    )
+    @JoinColumn(name = "portfolio_id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Portfolio portfolio;
 
     @ManyToOne
-//    @JoinTable(
-//            name = "Token",
-//            joinColumns = { @JoinColumn(name = "id") }
-//    )
-    @JoinColumn(
-            name = "token_id",
-            foreignKey = @ForeignKey(
-                    name = "transaction_token_id_fk"
-            )
-    )
+    @JoinColumn(name = "token_id")
     private Token token;
 
     private LocalDate date;

@@ -1,5 +1,8 @@
 package com.gabrielfu.cryptoportfoliotracker.token;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gabrielfu.cryptoportfoliotracker.transaction.Transaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,5 +38,6 @@ public class Token {
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.LAZY
     )
+    @JsonIgnore
     private List<Transaction> transactions = new ArrayList<>();
 }
