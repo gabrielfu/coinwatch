@@ -6,7 +6,7 @@ import ClientOnly from './components/ClientOnly'
 const nunito = Nunito({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'cpt',
+  title: 'CoinWatch',
   description: 'Crypto Portfolio Tracker',
 }
 
