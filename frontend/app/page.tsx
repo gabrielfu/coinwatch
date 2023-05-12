@@ -1,7 +1,12 @@
+import ClientOnly from "./components/ClientOnly";
+import TokenPage from "./components/token/TokenPage";
+
 export default function Home() {
   return (
-    <div className="bg-gmx-dark text-rose-500 text-2xl">
-      Hello World!
-    </div>
+    <ClientOnly>
+      <div className="bg-gmx-dark">
+        <TokenPage />       
+      </div>
+    </ClientOnly>
   )
 }

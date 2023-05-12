@@ -19,6 +19,7 @@ module.exports = {
           'medium': '#16182E',
           'light': '#20243F',
           'blue': '#2E3ED3',
+          'text': '#9B9EA9',
         }
       },
     },
