@@ -1,6 +1,5 @@
 import ClientOnly from "./components/ClientOnly";
 import TokenOverview from "./components/token/TokenOverview";
-import TokenPage from "./tokens/[tokenAddress]/page";
 
 const AppWrapper = ({
   children,
