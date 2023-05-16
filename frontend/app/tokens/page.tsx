@@ -1,9 +1,9 @@
 import TokenOverview from "@/app/components/token/TokenOverview";
 
-const TokenOverviewPage = () => {
+const TokensPage = () => {
   return (
     <TokenOverview />
   )
 }
 
-export default TokenOverviewPage;
+export default TokensPage;
