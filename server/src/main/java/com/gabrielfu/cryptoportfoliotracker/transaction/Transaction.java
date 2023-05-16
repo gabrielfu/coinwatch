@@ -34,7 +34,7 @@ public class Transaction {
     private Portfolio portfolio;
 
     @ManyToOne
-    @JoinColumn(name = "token_id")
+    @JoinColumn(name = "token_symbol")
     private Token token;
 
     private LocalDate date;

@@ -48,7 +48,7 @@ public class TransactionController {
         }
         Transaction transaction = new Transaction();
         transaction.setPortfolio(portfolioService.getPortfolioById(request.portfolioId()));
-        transaction.setToken(tokenService.getTokenById(request.tokenId()));
+        transaction.setToken(tokenService.getToken(request.tokenSymbol()));
         transaction.setDate(LocalDate.parse(request.date()));
         transaction.setQuantity(request.quantity());
         transaction.setPurchasePrice(request.purchasePrice());

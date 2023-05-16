@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record TransactionRequest(
         @NotNull Long portfolioId,
-        @NotNull Long tokenId,
+        @NotNull String tokenSymbol,
         @NotNull String date,
         @NotNull Double quantity,
         @NotNull Double purchasePrice,

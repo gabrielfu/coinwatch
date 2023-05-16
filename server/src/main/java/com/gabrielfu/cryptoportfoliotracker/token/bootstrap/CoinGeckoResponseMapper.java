@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 public class CoinGeckoResponseMapper {
     public static Token asToken(CoinGeckoResponse response) {
         return new Token(
-                null,
                 response.getSymbol().toUpperCase(),
                 response.getName(),
                 response.getImage(),

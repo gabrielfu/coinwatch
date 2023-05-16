@@ -3,52 +3,34 @@ package com.gabrielfu.cryptoportfoliotracker.token;
 import com.gabrielfu.cryptoportfoliotracker.exceptions.CryptoPortfolioTrackerException;
 import com.gabrielfu.cryptoportfoliotracker.exceptions.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.ignoreCase;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TokenService {
     @Autowired
     private TokenRepository tokenRepository;
 
+    @Autowired
+    private TokenBootstrapper tokenBootstrapper;
+
     public List<Token> getTokens() {
         return tokenRepository.findAll();
     }
 
-    public Token getTokenById(Long id) {
-        return tokenRepository.findById(id)
+    public Token getToken(String symbol) {
+        return tokenRepository.findById(symbol)
                 .orElseThrow(() -> new CryptoPortfolioTrackerException(
                         ErrorCode.RESOURCE_NOT_FOUND,
-                        "Token with id '%s' not found".formatted(id)
+                        "Token with symbol '%s' not found".formatted(symbol)
                 ));
     }
 
-    public Optional<Token> getTokenBySymbol(String symbol) {
-        Token probe = new Token();
-        probe.setSymbol(symbol);
-        ExampleMatcher modelMatcher = ExampleMatcher.matching()
-                .withIgnorePaths("id")
-                .withMatcher("symbol", ignoreCase());
-        Example<Token> example = Example.of(probe, modelMatcher);
-        return tokenRepository.findBy(
-                example,
-                FluentQuery.FetchableFluentQuery::one
-        );
-    }
-
-    public Long createToken(Token token) {
-        return createToken(token, false);
-    }
-
-    public Long createToken(Token token, Boolean existOk) {
+    public String createToken(Token token) {
         String symbol = token.getSymbol();
         if (symbol == null | Objects.equals(symbol, "")) {
             throw new CryptoPortfolioTrackerException(
@@ -56,28 +38,31 @@ public class TokenService {
                     "Missing required parameter 'symbol'"
             );
         }
-        if (getTokenBySymbol(symbol).isPresent()) {
-            if (existOk) {
-                return getTokenBySymbol(symbol).get().getId();
-            }
-            throw new CryptoPortfolioTrackerException(
-                    ErrorCode.RESOURCE_ALREADY_EXISTS,
-                    "Token with symbol '%s' already exists".formatted(symbol)
-            );
-        }
-        return tokenRepository.save(token).getId();
+        return tokenRepository.save(token).getSymbol();
     }
 
-    public void updateToken(Long id, Token newToken) {
-        Token token = getTokenById(id);
+    public void updateToken(String symbol, Token newToken) {
+        Token token = getToken(symbol);
         if (newToken.getName() != null) {
             token.setName(newToken.getName());
         }
         tokenRepository.save(token);
     }
 
-    public void deleteToken(Long id) {
-        Token token = getTokenById(id);
+    public void deleteToken(String symbol) {
+        Token token = getToken(symbol);
         tokenRepository.delete(token);
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void bootstrapTokens() {
+        Set<String> existingSymbols = getTokens()
+                .stream().map(Token::getSymbol)
+                .collect(Collectors.toSet());
+        List<Token> tokens = tokenBootstrapper
+                .getTokens()
+                .stream().filter(t -> !existingSymbols.contains(t.getSymbol()))
+                .toList();
+        tokenRepository.saveAll(tokens);
     }
 }
