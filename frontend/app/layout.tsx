@@ -28,14 +28,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-    <body className="bg-gmx-dark">
+      <body className="bg-gmx-dark">
         <main className="relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6">
           <BodyWrapper>
             <Navbar />
             {children}
           </BodyWrapper>
         </main>
-    </body>
-  </html>
-  )
+      </body>
+    </html>
+   )
 }
