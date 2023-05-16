@@ -18,7 +18,7 @@ public class Token {
     @Id
     private String symbol;
     private String name;
-    private String image;
+    private String logo;
 
     @OneToMany(
             mappedBy = "token",

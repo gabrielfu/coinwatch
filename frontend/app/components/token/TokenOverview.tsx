@@ -19,7 +19,7 @@ interface TokenData {
 interface TokenInfo {
   name: string;
   symbol: string;
-  image: string;
+  logo: string;
 }
 
 interface QuoteData {
@@ -57,7 +57,7 @@ const TokenOverview = () => {
                     priceChange: q.priceChangePercent,
                     volume: 1000 - i,
                     marketCap: 1000 - i,
-                    logo: t.image,
+                    logo: t.logo,
                   }
               })
               .filter(t => t != null);
