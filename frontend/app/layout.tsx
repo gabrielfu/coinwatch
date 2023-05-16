@@ -1,7 +1,6 @@
 import "./globals.css"
 import { Nunito } from 'next/font/google'
 import Navbar from './components/navbar/Navbar'
-import ClientOnly from './components/ClientOnly'
 
 const nunito = Nunito({ subsets: ['latin'] })
 
@@ -17,10 +16,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={nunito.className}>
-        <ClientOnly>
-          <Navbar />
-        </ClientOnly>
+      <body className={nunito.className + " bg-gmx-dark"}>
+        <Navbar />
         {children}
       </body>
     </html>

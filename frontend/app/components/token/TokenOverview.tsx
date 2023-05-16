@@ -1,19 +1,24 @@
 'use client';
 
+import { useRouter } from "next/navigation";
+import { Text } from "rebass";
 import Card from "../../components/Card";
+import TokenTable from "./TokenTable";
+import { AutoColumn } from "../Column";
+import useAllTokenData from "@/dummy-data/all-tokens";
 
 const TokenOverview = () => {
+  const router = useRouter();
+
+  const data = useAllTokenData();
+
   return ( 
-    <div className="pt-20">
-      <div className="text-white">
-        Home &gt; Tokens &gt; ETH
-      </div>
-      <Card>
-        <div className="justify-between w-full text-white">
-          my card!
-        </div>
-      </Card>   
-    </div>
+    <Card>
+      <AutoColumn>
+        <Text className="text-white pb-4 text-xl">All Tokens</Text>
+        <TokenTable tokenDatas={data} />
+      </AutoColumn>
+    </Card>   
    );
 }
  

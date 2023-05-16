@@ -7,19 +7,16 @@ import Card from '../Card';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '@/tailwind.config.js';
-
-const twConfig = resolveConfig(tailwindConfig);
+import { twColors } from '@/app/twConfig';
 
 dayjs.extend(utc);
 
 const DEFAULT_HEIGHT = 300;
 const lineColor = 'rgba(35, 38, 59, 1.0)';
-const candleRed = 'rgba(250, 60, 88, 1.0)';
-const candleGreen = 'rgba(14, 204, 131, 1.0)';
-const backgroundColor = twConfig.theme.colors.gmx.medium;
-const textColor = twConfig.theme.colors.gmx.text;
+const candleRed = twColors.red;
+const candleGreen = twColors.green;
+const backgroundColor = twColors.gmx.medium;
+const textColor = twColors.gmx.text;
 
 const Wrapper = styled(Card)`
   width: 100%;

@@ -20,8 +20,15 @@ module.exports = {
           'light': '#20243F',
           'blue': '#2E3ED3',
           'text': '#9B9EA9',
-        }
+          'gray': '#696B73',
+          'break': '#2B3054',
+        },
+        'green': 'rgba(14, 204, 131, 1.0)',
+        'red': 'rgba(250, 60, 88, 1.0)',
       },
+      screens: {
+        'tosm': {'max': '639px'}
+      }
     },
   },
   plugins: [],

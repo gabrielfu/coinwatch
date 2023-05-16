@@ -1,23 +1,34 @@
 import styled from 'styled-components'
 import { Box } from 'rebass/styled-components'
 
-const Row = styled(Box)<{
-  width?: string
-  align?: string
-  justify?: string
-  padding?: string
-  border?: string
-  borderRadius?: string
-}>`
-  width: ${({ width }) => width ?? '100%'};
-  display: flex;
-  padding: 0;
-  align-items: ${({ align }) => align ?? 'center'};
-  justify-content: ${({ justify }) => justify ?? 'flex-start'};
-  padding: ${({ padding }) => padding};
-  border: ${({ border }) => border};
-  border-radius: ${({ borderRadius }) => borderRadius};
-`
+interface RowProps {
+  children: React.ReactNode;
+  width?: string;
+  align?: string;
+  justify?: string;
+  padding?: string;
+  border?: string;
+  borderRadius?: string;
+}
+
+// FIXME
+const Row: React.FC<RowProps> = ({
+  width = '100%',
+  align = 'center',
+  justify = 'flex-start',
+  padding,
+  border,
+  borderRadius,
+  children
+}) => {
+  const classNames = `flex w-${width} justify-${justify} items-${align} ${padding ? `p-${padding}` : ''} ${border ? `border-${border}` : ''} ${borderRadius ? `rounded-${borderRadius}` : ''}`;
+
+  return (
+    <Box className={classNames}>
+      {children}
+    </Box>
+  );
+};
 
 export const RowBetween = styled(Row)`
   justify-content: space-between;
