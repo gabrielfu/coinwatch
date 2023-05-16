@@ -45,6 +45,10 @@ public class TokenService {
     }
 
     public Long createToken(Token token) {
+        return createToken(token, false);
+    }
+
+    public Long createToken(Token token, Boolean existOk) {
         String symbol = token.getSymbol();
         if (symbol == null | Objects.equals(symbol, "")) {
             throw new CryptoPortfolioTrackerException(
@@ -53,6 +57,9 @@ public class TokenService {
             );
         }
         if (getTokenBySymbol(symbol).isPresent()) {
+            if (existOk) {
+                return getTokenBySymbol(symbol).get().getId();
+            }
             throw new CryptoPortfolioTrackerException(
                     ErrorCode.RESOURCE_ALREADY_EXISTS,
                     "Token with symbol '%s' already exists".formatted(symbol)

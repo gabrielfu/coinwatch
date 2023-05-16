@@ -31,6 +31,7 @@ public class Token {
     private Long id;
     private String symbol;
     private String name;
+    private String image;
 
     @OneToMany(
             mappedBy = "token",
