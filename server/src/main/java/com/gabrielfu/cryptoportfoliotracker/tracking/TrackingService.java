@@ -34,7 +34,7 @@ public class TrackingService {
                 .distinct()
                 .toList();
         Map<String, Double> marketPrices = tokenSymbols.stream()
-                .map(symbol -> Map.entry(symbol, quoteService.getTokenSpotPrice(symbol).marketPrice()))
+                .map(symbol -> Map.entry(symbol, quoteService.getTokenSpotPrice(symbol).price()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         return PositionCalculator.calculate(transactions, marketPrices);
     }
