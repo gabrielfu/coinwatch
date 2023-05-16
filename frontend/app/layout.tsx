@@ -1,6 +1,7 @@
 import "./globals.css"
 import { Nunito } from 'next/font/google'
 import Navbar from './components/navbar/Navbar'
+import ClientOnly from "./components/ClientOnly"
 
 const nunito = Nunito({ subsets: ['latin'] })
 
@@ -32,7 +33,9 @@ export default function RootLayout({
         <main className="relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6">
           <BodyWrapper>
             <Navbar />
-            {children}
+            <ClientOnly>
+              {children}
+            </ClientOnly>
           </BodyWrapper>
         </main>
       </body>

@@ -1,10 +1,5 @@
-import ClientOnly from "./components/ClientOnly";
-import TokenOverview from "./components/token/TokenOverview";
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  return (
-      <ClientOnly>
-        <TokenOverview />
-      </ClientOnly>
-  )
+  redirect('/tokens');
 }

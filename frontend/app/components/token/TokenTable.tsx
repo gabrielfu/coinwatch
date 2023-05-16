@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { BaseProps } from "rebass";
@@ -109,7 +109,7 @@ const DataRow = ({
     };
 
   return ( 
-    <Fragment key={index}>
+    <>
       <Link href={`/tokens/${tokenData.symbol}`} className="no-underline hover:cursor-pointer hover:opacity-70">
         <ResponsiveGrid>
           <Label color='white'>{index + 1}</Label>
@@ -140,7 +140,7 @@ const DataRow = ({
         </ResponsiveGrid>
       </Link>
       <Break />
-    </Fragment>
+    </>
    );
 } 
 

@@ -11,7 +11,7 @@ const Navbar = () => {
       {/* Desktop Navigation */}
       <div className='sm:flex hidden'>
           <div className='flex gap-3 md:gap-5'>
-            <NavLink href="/">
+            <NavLink href="/tokens">
               Tokens
             </NavLink>
             <NavLink href="/portfolios">

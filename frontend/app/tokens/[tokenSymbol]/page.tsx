@@ -1,14 +1,12 @@
 'use client';
 
-import Card from "../../components/Card";
-import CandleChart from "../../components/charts/CandleChart";
-import ClientOnly from "@/app/components/ClientOnly";
-
+import Card from "@/app/components/Card";
+import CandleChart from "@/app/components/charts/CandleChart";
 import data from "@/dummy-data/daily-data";
 
 const TokenPage = () => {
   return ( 
-    <ClientOnly>
+    <>
       <div className="text-white">
         Home &gt; Tokens &gt; ETH
       </div>
@@ -20,7 +18,7 @@ const TokenPage = () => {
           />
         </div>
       </Card>   
-    </ClientOnly>
+    </>
    );
 }
  
