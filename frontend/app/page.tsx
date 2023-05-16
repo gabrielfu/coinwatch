@@ -7,7 +7,7 @@ const AppWrapper = ({
   children: React.ReactNode
 }) => {
   return ( 
-    <div className="flex flex-col items-center overflow-x-hidden min-h-screen mx-16"> 
+    <div className="flex flex-col items-center overflow-x-hidden min-h-screen mx-2 md:mx-8 lg:mx-16"> 
       {children}
     </div>
    );

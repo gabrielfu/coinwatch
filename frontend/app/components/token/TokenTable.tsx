@@ -42,6 +42,9 @@ const ResponsiveGrid = styled.div`
     > *:first-child {
       display: none;
     }
+    & :nth-child(4) {
+      display: none;
+    }
     > *:nth-child(5) {
       display: none;
     }
