@@ -15,7 +15,7 @@ const TokenOverview = () => {
   return ( 
     <Card>
       <AutoColumn>
-        <Text className="text-white pb-4 text-xl">All Tokens</Text>
+        <Text className="text-white pb-4 text-xl font-medium">All Tokens</Text>
         <TokenTable tokenDatas={data} />
       </AutoColumn>
     </Card>   
