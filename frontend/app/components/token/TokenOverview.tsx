@@ -42,9 +42,6 @@ const TokenOverview = () => {
         fetch(`http://localhost:8080/api/v1/quote/batch-spot?tokens=${symbols}`)
           .then((res) => res.json())
           .then((quoteDatas: QuoteData[]) => {
-            console.log("=======================");
-            console.log(tokenInfos);
-            console.log(quoteDatas);
             const tokenDatas: TokenData[] = tokenInfos
               .map((t, i) => {
                 const q = quoteDatas[i];
@@ -61,8 +58,6 @@ const TokenOverview = () => {
                   }
               })
               .filter(t => t != null);
-              console.log(tokenDatas);
-              console.log("=======================");
             setData(tokenDatas);
             setLoading(false);
           })
