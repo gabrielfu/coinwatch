@@ -19,8 +19,7 @@ public class YahooQuoteServiceImpl implements QuoteService {
     public SpotPriceDTO getTokenSpotPrice(String token) {
         String ticker = yahooFinanceClient.getTickerFromToken(token);
         YahooFinanceQuoteResponse response = yahooFinanceClient.getQuote(ticker);
-        YahooFinanceQuoteResponse.Result result = response.getQuoteResponse().getResult().get(0);
-        return YahooSportPriceDTOMapper.asDTO(result);
+        return YahooSportPriceDTOMapper.asDTOs(response).get(0);
     }
 
     @Override
@@ -30,8 +29,7 @@ public class YahooQuoteServiceImpl implements QuoteService {
                         .toList();
         String ticker = String.join(",", tickers);
         YahooFinanceQuoteResponse response = yahooFinanceClient.getQuote(ticker);
-        List<YahooFinanceQuoteResponse.Result> results = response.getQuoteResponse().getResult();
-        return results.stream().map(YahooSportPriceDTOMapper::asDTO).toList();
+        return YahooSportPriceDTOMapper.asDTOs(response);
     }
 
     @Override
