@@ -25,11 +25,6 @@ public class QuoteController {
         return quoteService.batchGetTokenSpotPrice(Arrays.stream(tokens.split(",")).toList());
     }
 
-    @GetMapping("batch")
-    public List<Integer> xxx() {
-        return List.of(1,2,3);
-    }
-
     @GetMapping("historical")
     public HistoricalPricesDTO getTokenHistoricalPrices(@RequestParam String token) {
         return quoteService.getTokenHistoricalPrices(token);
