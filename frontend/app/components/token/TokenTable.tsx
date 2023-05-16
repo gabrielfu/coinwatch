@@ -59,13 +59,21 @@ const PageArrow = ({ disabled, left, onClick }: {disabled?: boolean, left: boole
   )
 }
 
-const PageButtons = ({ page, setPage, maxPage }: { page: number, setPage, maxPage: number }) => {
+const LastRow = ({ children }) => {
   return (
     <div className="text-gmx-text w-full flex justify-center items-center content-center mt-1 mb-2">
-      <PageArrow left={true} disabled={page == 1} onClick={() => {page == 1 ? null : setPage((p: number) => p - 1)}} />
-      {`Page ${page} / ${maxPage}`}
-      <PageArrow left={false} disabled={page == maxPage} onClick={() => {page == maxPage ? null : setPage((p: number) => p + 1)}} />
+      {children}
     </div>
+  )
+}
+
+const PageButtons = ({ page, setPage, maxPage }: { page: number, setPage, maxPage: number }) => {
+  return (
+    <LastRow>
+      <PageArrow left={true} disabled={page == 1} onClick={() => {page == 1 ? null : setPage((p: number) => p - 1)}} />
+        {`Page ${page} / ${maxPage}`}
+      <PageArrow left={false} disabled={page == maxPage} onClick={() => {page == maxPage ? null : setPage((p: number) => p + 1)}} />
+    </LastRow>
   )
 }
 
@@ -235,13 +243,19 @@ const TokenTable = ({ tokenDatas }: {tokenDatas: TokenData[]}) => {
         </ResponsiveGrid>
         <Break />
 
-        {sortedTokens.map((data, i) => {
-          return data 
-            ? <DataRow tokenData={data} index={i} />
-            : null;
-        })}
-
-        <PageButtons page={page} setPage={setPage} maxPage={maxPage} />
+        {sortedTokens.length > 0 
+          ? <>
+            {sortedTokens.map((data, i) => {
+              return data 
+                ? <DataRow tokenData={data} index={i} />
+                : null;
+            })}
+            <PageButtons page={page} setPage={setPage} maxPage={maxPage} />
+          </>
+          : <LastRow>
+            No Data
+          </LastRow>
+        }
       </AutoColumn>
     </Card>
    );
