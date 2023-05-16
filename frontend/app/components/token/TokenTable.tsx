@@ -37,7 +37,7 @@ const ResponsiveGrid = styled.div`
     }
   }
 
-  @media screen and (max-width: 670px) {
+  @media screen and (max-width: 724px) {
     grid-template-columns: repeat(2, 1fr);
     > *:first-child {
       display: none;
@@ -45,7 +45,7 @@ const ResponsiveGrid = styled.div`
     & :nth-child(4) {
       display: none;
     }
-    > *:nth-child(5) {
+    & *:nth-child(5) {
       display: none;
     }
   }

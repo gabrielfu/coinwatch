@@ -1,27 +1,26 @@
-import Container from "../Container";
+"use client";
+
+import NavLink from "./NavLink";
 import Logo from "./Logo";
 
 const Navbar = () => {
-  return ( 
-    <div className="fixed w-full bg-gmx-dark z-10 shadow-sm">
-      <div className="py-4 border-gmx-light border-b-[1px]">
-        <Container>
-          <div
-            className="
-              flex
-              flex-row
-              items-center
-              justify-between
-              gap-3
-              md:gap-0
-            "
-          >
-            <Logo />
+  return (
+    <nav className='flex sticky top-0 z-10 bg-gmx-dark justify-between items-center w-full mb-16 pt-3'>
+      <Logo />
+
+      {/* Desktop Navigation */}
+      <div className='sm:flex hidden'>
+          <div className='flex gap-3 md:gap-5'>
+            <NavLink href="/">
+              Tokens
+            </NavLink>
+            <NavLink href="/portfolios">
+              Portfolios
+            </NavLink>
           </div>
-        </Container>
       </div>
-    </div>
-    );
-  }
-  
-  export default Navbar;
+    </nav>
+  );
+};
+
+export default Navbar;

@@ -1,19 +1,19 @@
 'use client';
 
+import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 const Logo = () => {
-  const router = useRouter();
-
   return (
-    <Image 
-      alt="Logo"
-      className="hidden md:block cursor-pointer"
-      height="128"
-      width="128"
-      src="/images/logo-transparent-white.png"
-    />
+    <Link href='/' className='flex gap-2 justify-center items-center'>
+      <Image
+        src='/images/logo-transparent-white.png'
+        alt='logo'
+        width={180}
+        height={40}
+        className='object-contain'
+      />
+    </Link>
   )
 }
 
