@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class YahooQuoteServiceImpl implements QuoteService {
 
     @Override
     public SpotPriceDTO getTokenSpotPrice(String token) {
-        String ticker = yahooFinanceClient.getTickerFromToken(token);
+        String ticker = YahooFinanceClient.getTickerFromToken(token);
         YahooFinanceQuoteResponse response = yahooFinanceClient.getQuote(ticker);
         return YahooSportPriceDTOMapper.asDTOs(response).get(0);
     }
@@ -25,11 +27,13 @@ public class YahooQuoteServiceImpl implements QuoteService {
     @Override
     public List<SpotPriceDTO> batchGetTokenSpotPrice(List<String> tokens) {
         List<String> tickers = tokens.stream()
-                        .map(yahooFinanceClient::getTickerFromToken)
+                        .map(YahooFinanceClient::getTickerFromToken)
                         .toList();
         String ticker = String.join(",", tickers);
         YahooFinanceQuoteResponse response = yahooFinanceClient.getQuote(ticker);
-        return YahooSportPriceDTOMapper.asDTOs(response);
+        List<SpotPriceDTO> dtos = YahooSportPriceDTOMapper.asDTOs(response);
+        Map<String, SpotPriceDTO> dtoMap = dtos.stream().collect(Collectors.toMap(SpotPriceDTO::symbol, item -> item));
+        return tokens.stream().map(t -> dtoMap.getOrDefault(t, null)).toList();
     }
 
     @Override

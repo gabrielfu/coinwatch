@@ -108,11 +108,11 @@ const DataRow = ({
   const formattedData = {
       name: tokenData.name,
       symbol: tokenData.symbol,
-      price: formatPrice(tokenData.price),
-      priceChange: formatPriceChange(tokenData.priceChange),
+      price: tokenData.price == null ? "-" : formatPrice(tokenData.price),
+      priceChange: tokenData.priceChange == null ? "-" : formatPriceChange(tokenData.priceChange),
       negative: tokenData.priceChange < 0,
-      volume: formatDollarAmount(tokenData.volume),
-      marketCap: formatDollarAmount(tokenData.marketCap),
+      volume: tokenData.volume == null ? "-" : formatDollarAmount(tokenData.volume),
+      marketCap: tokenData.marketCap == null ? "-" : formatDollarAmount(tokenData.marketCap),
       logo: tokenData.logo,
     };
 

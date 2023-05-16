@@ -17,8 +17,12 @@ public class YahooFinanceClient {
         restTemplate = builder.build();
     }
 
-    public String getTickerFromToken(String token) {
+    public static String getTickerFromToken(String token) {
         return token + "-USD";
+    }
+
+    public static String getTokenFromTicker(String ticker) {
+        return ticker.replace("-USD", "");
     }
 
     public YahooFinanceQuoteResponse getQuote(String ticker) {

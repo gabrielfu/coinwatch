@@ -41,19 +41,28 @@ const TokenOverview = () => {
         const symbols = tokenInfos.map(t => t.symbol).join(",");
         fetch(`http://localhost:8080/api/v1/quote/batch-spot?tokens=${symbols}`)
           .then((res) => res.json())
-          .then((quoteData: QuoteData[]) => {
-            const tokenDatas: TokenData[] = tokenInfos.map((t, i) => {
-              const q = quoteData[i];
-              return {
-                name: t.name,
-                symbol: t.symbol,
-                price: q.price,
-                priceChange: q.priceChangePercent,
-                volume: 0,
-                marketCap: 0,
-                logo: t.image,
-              }
-            })
+          .then((quoteDatas: QuoteData[]) => {
+            console.log("=======================");
+            console.log(tokenInfos);
+            console.log(quoteDatas);
+            const tokenDatas: TokenData[] = tokenInfos
+              .map((t, i) => {
+                const q = quoteDatas[i];
+                return q == null
+                  ? null
+                  : {
+                    name: t.name,
+                    symbol: t.symbol,
+                    price: q.price,
+                    priceChange: q.priceChangePercent,
+                    volume: 1000 - i,
+                    marketCap: 1000 - i,
+                    logo: t.image,
+                  }
+              })
+              .filter(t => t != null);
+              console.log(tokenDatas);
+              console.log("=======================");
             setData(tokenDatas);
             setLoading(false);
           })
