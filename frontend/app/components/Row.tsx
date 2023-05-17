@@ -31,29 +31,26 @@ const Row = ({
   );
 };
 
-export const RowBetween = styled(Row)`
-  justify-content: space-between;
-`
-// export const RowBetween = (props: RowProps) => {
-//   return (
-//     <Row justify="between" {...props} />
-//   )
-// }
+export const RowBetween = (props: RowProps) => {
+  return (
+    <Row justify="between" {...props} />
+  )
+}
 
-export const RowFlat = styled.div`
-  display: flex;
-  align-items: flex-end;
-`
+// export const RowFlat = styled.div`
+//   display: flex;
+//   align-items: flex-end;
+// `
 
-export const AutoRow = styled(Row)<{ gap?: string; justify?: string }>`
-  flex-wrap: wrap;
-  margin: ${({ gap }) => gap && `-${gap}`};
-  justify-content: ${({ justify }) => justify && justify};
+// export const AutoRow = styled(Row)<{ gap?: string; justify?: string }>`
+//   flex-wrap: wrap;
+//   margin: ${({ gap }) => gap && `-${gap}`};
+//   justify-content: ${({ justify }) => justify && justify};
 
-  & > * {
-    margin: ${({ gap }) => gap} !important;
-  }
-`
+//   & > * {
+//     margin: ${({ gap }) => gap} !important;
+//   }
+// `
 
 export const RowFixed = ({ gap, children }: { gap?: string; children: React.ReactNode }) => {
   return (
