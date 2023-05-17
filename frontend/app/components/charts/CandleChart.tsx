@@ -15,14 +15,13 @@ const DEFAULT_HEIGHT = 300;
 const lineColor = 'rgba(35, 38, 59, 1.0)';
 const candleRed = twColors.red;
 const candleGreen = twColors.green;
-const backgroundColor = twColors.gmx.light;
 const textColor = twColors.gmx.text;
 
 const Wrapper = styled(Card)`
   width: 100%;
   padding: 1rem;
   display: flex;
-  background-color: ${backgroundColor};
+  background-color: "transparent";
   flex-direction: column;
   > * {
     font-size: 1rem;
