@@ -9,8 +9,8 @@ const Logo = () => {
       <Image
         src='/images/logo-transparent-white.png'
         alt='logo'
-        width={180}
-        height={40}
+        width={224}
+        height={32}
         className='object-contain'
       />
     </Link>
