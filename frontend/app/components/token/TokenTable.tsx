@@ -188,7 +188,7 @@ const formatDollarAmount = (num: number | undefined, digits = 2, round = true) =
 
 const TokenTable = ({ tokenDatas }: {tokenDatas: TokenData[]}) => {
   // sorting
-  const [sortField, setSortField] = useState<keyof TokenData>("volume");
+  const [sortField, setSortField] = useState<keyof TokenData>("marketCap");
   const [sortDescending, setSortDescending] = useState(1);
 
   // pagination

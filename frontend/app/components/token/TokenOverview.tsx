@@ -27,6 +27,8 @@ interface QuoteData {
   price: number;
   priceChange: number;
   priceChangePercent: number;
+  volume: number;
+  marketCap: number;
 }
 
 const TokenOverview = () => {
@@ -52,8 +54,8 @@ const TokenOverview = () => {
                     symbol: t.symbol,
                     price: q.price,
                     priceChange: q.priceChangePercent,
-                    volume: 1000 - i,
-                    marketCap: 1000 - i,
+                    volume: q.volume,
+                    marketCap: q.marketCap,
                     logo: t.logo,
                   }
               })
