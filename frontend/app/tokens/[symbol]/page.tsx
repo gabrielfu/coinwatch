@@ -4,7 +4,7 @@ import { Text } from "rebass";
 import Card from "@/app/components/Card";
 import Column, { AutoColumn } from "@/app/components/Column";
 import CandleChart from "@/app/components/charts/CandleChart";
-import data from "@/dummy-data/daily-data";
+import data from "@/dummy-data/hourly-data";
 import { RowBetween, RowFixed } from "@/app/components/Row";
 import styled from "styled-components";
 import { Label } from "@/app/components/Text";
