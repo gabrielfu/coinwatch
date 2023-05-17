@@ -1,7 +1,8 @@
 import styled from 'styled-components'
-import { Box } from 'rebass/styled-components'
+import { Box, BoxProps } from 'rebass/styled-components'
+import React from 'react';
 
-interface RowProps {
+interface RowProps extends BoxProps {
   children: React.ReactNode;
   width?: string;
   align?: string;
@@ -12,15 +13,15 @@ interface RowProps {
 }
 
 // FIXME
-const Row: React.FC<RowProps> = ({
-  width = '100%',
+const Row = ({
+  width = 'auto',
   align = 'center',
-  justify = 'flex-start',
+  justify = 'start',
   padding,
   border,
   borderRadius,
   children
-}) => {
+}: RowProps) => {
   const classNames = `flex w-${width} justify-${justify} items-${align} ${padding ? `p-${padding}` : ''} ${border ? `border-${border}` : ''} ${borderRadius ? `rounded-${borderRadius}` : ''}`;
 
   return (
@@ -33,6 +34,11 @@ const Row: React.FC<RowProps> = ({
 export const RowBetween = styled(Row)`
   justify-content: space-between;
 `
+// export const RowBetween = (props: RowProps) => {
+//   return (
+//     <Row justify="between" {...props} />
+//   )
+// }
 
 export const RowFlat = styled.div`
   display: flex;
@@ -49,10 +55,13 @@ export const AutoRow = styled(Row)<{ gap?: string; justify?: string }>`
   }
 `
 
-export const RowFixed = styled(Row)<{ gap?: string; justify?: string }>`
-  width: fit-content;
-  margin: ${({ gap }) => gap && `-${gap}`};
-`
+export const RowFixed = ({ gap, children }: { gap?: string; children: React.ReactNode }) => {
+  return (
+    <Row margin={gap || 0} width="fit">
+      {children}
+    </Row>
+  )
+}
 
 export const ResponsiveRow = styled(RowBetween)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
