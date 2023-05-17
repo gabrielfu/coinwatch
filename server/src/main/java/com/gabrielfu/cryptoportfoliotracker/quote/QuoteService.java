@@ -7,5 +7,7 @@ public interface QuoteService {
     public List<SpotPriceDTO> batchGetTokenSpotPrice(List<String> tokens);
 
     public HistoricalPricesDTO getTokenHistoricalPrices(String token);
+
+    public HistoricalPricesDTO getTokenHistoricalPrices(String token, String interval, String range);
 }
 

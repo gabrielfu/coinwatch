@@ -1,10 +1,10 @@
 'use client';
 
-import { Text } from "rebass";
 import Card from "../../components/Card";
 import TokenTable from "./TokenTable";
 import { AutoColumn } from "../Column";
 import { useEffect, useState } from "react";
+import { Label } from "../Text";
 
 interface TokenData {
   name: string;
@@ -68,8 +68,10 @@ const TokenOverview = () => {
 
   return ( 
     <Card>
-      <AutoColumn>
-        <Text className="text-white pb-4 text-xl font-medium">All Tokens</Text>
+      <AutoColumn gap="8px">
+        <Label>
+          <Label ml="16px" color={"white"} fontSize={24} marginBottom="16px">All Tokens</Label>
+        </Label>
         <TokenTable tokenDatas={data} />
       </AutoColumn>
     </Card>   

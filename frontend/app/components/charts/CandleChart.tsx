@@ -97,6 +97,7 @@ const CandleChart = ({
         },
         timeScale: {
           borderColor: lineColor,
+          timeVisible: true,
         },
         watermark: {
           visible: false,
@@ -137,8 +138,6 @@ const CandleChart = ({
         wickDownColor: candleRed,
         wickUpColor: candleGreen,
       });
-
-      data.forEach(row => row.time = dayjs(row.time, "YYYY-MM-DD").unix());
 
       series.setData(data);
 
