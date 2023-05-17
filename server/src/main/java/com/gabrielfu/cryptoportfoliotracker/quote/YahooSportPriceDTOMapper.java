@@ -14,7 +14,9 @@ public class YahooSportPriceDTOMapper {
                         YahooFinanceClient.getTokenFromTicker(r.getSymbol()),
                         r.getRegularMarketPrice(),
                         r.getRegularMarketChange(),
-                        r.getRegularMarketChangePercent()))
+                        r.getRegularMarketChangePercent(),
+                        r.getRegularMarketVolume(),
+                        r.getMarketCap()))
                 .toList();
     }
 }

@@ -55,6 +55,9 @@ public class YahooFinanceQuoteResponse {
         @JsonProperty("regularMarketVolume")
         private Long regularMarketVolume;
 
+        @JsonProperty("marketCap")
+        private Long marketCap;
+
         @JsonProperty("lastMarket")
         private String lastMarket;
     }

@@ -4,6 +4,8 @@ public record SpotPriceDTO(
         String symbol,
         Double price,
         Double priceChange,
-        Double priceChangePercent
+        Double priceChangePercent,
+        Long volume,
+        Long marketCap
 ) {
 }
