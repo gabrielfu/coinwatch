@@ -16,7 +16,7 @@ const BodyWrapper = ({
   children: React.ReactNode
 }) => {
   return ( 
-    <div className="flex flex-col w-full items-center flex-1 overflow-y-auto overflow-x-hidden z-0 max-w-7xl lg:px-16 sm:px-0 px-2">
+    <div className="flex flex-col w-full items-center flex-1 overflow-y-auto overflow-x-hidden z-0 max-w-7xl lg:px-8 sm:px-8 px-6">
       {children}
     </div>
    );
@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={nunito.className + " bg-gmx-dark"}>
-        <main className="relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6">
+        <main className="relative z-10 flex justify-center items-center flex-col">
           <BodyWrapper>
             <Navbar />
             <ClientOnly>
