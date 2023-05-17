@@ -39,10 +39,12 @@ class QuoteControllerTest {
                 "ETH-USD",
                 1.0,
                 2.0,
-                3.0
+                3.0,
+                4L,
+                5L
         );
         String expectedJson = """
-                {"symbol":"ETH-USD","marketPrice":1.0,"marketChange":2.0,"marketChangePercent":3.0}
+                {"symbol":"ETH-USD","price":1.0,"priceChange":2.0,"priceChangePercent":3.0,"volume":4,"marketCap":5}
             """;
         given(quoteService.getTokenSpotPrice("ETH"))
                 .willReturn(spotPriceDTO);
@@ -56,13 +58,15 @@ class QuoteControllerTest {
     void getTokenHistoricalPrices() throws Exception{
         HistoricalPricesDTO historicalPricesDTO = new HistoricalPricesDTO(
                 "ETH-USD",
-                List.of(1L, 2L, 3L),
-                List.of(1.0, 2.0, 3.0)
+                List.of(
+                        new HistoricalPricesDTO.Series(1L, 1.0, 1.0, 1.0, 1.0, 1L),
+                        new HistoricalPricesDTO.Series(2L, 2.0, 2.0, 2.0, 2.0, 2L)
+                )
         );
         String expectedJson = """
-                {"symbol":"ETH-USD","timestamp":[1,2,3],"close":[1.0,2.0,3.0]}
+                {"symbol":"ETH-USD","series":[{"time":1,"open":1.0,"high":1.0,"low":1.0,"volume":1},{"time":2,"open":2.0,"high":2.0,"low":2.0,"volume":2}]}
             """;
-        given(quoteService.getTokenHistoricalPrices("ETH"))
+        given(quoteService.getTokenHistoricalPrices("ETH", null, null))
                 .willReturn(historicalPricesDTO);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/quote/historical?token=ETH"))
                 .andDo(print())

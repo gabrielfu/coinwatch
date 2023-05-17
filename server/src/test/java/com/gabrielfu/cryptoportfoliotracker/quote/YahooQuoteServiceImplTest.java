@@ -44,26 +44,21 @@ class YahooQuoteServiceImplTest {
 
     @Test
     void getTokenSpotPrice() {
-        given(yahooFinanceClient.getTickerFromToken(token))
-                .willReturn(ticker);
         given(yahooFinanceClient.getQuote(ticker))
                 .willReturn(yahooFinanceQuoteResponse);
         SpotPriceDTO spotPriceDTO = yahooQuoteService.getTokenSpotPrice(token);
-        assertEquals(spotPriceDTO.symbol(), ticker);
-        assertEquals(spotPriceDTO.marketPrice(), 1928.1384);
-        assertEquals(spotPriceDTO.marketChange(), 48.949463);
-        assertEquals(spotPriceDTO.marketChangePercent(), 2.6048126);
+        assertEquals(spotPriceDTO.symbol(), YahooFinanceClient.getTokenFromTicker(ticker));
+        assertEquals(spotPriceDTO.price(), 1928.1384);
+        assertEquals(spotPriceDTO.priceChange(), 48.949463);
+        assertEquals(spotPriceDTO.priceChangePercent(), 2.6048126);
     }
 
     @Test
     void getTokenHistoricalPrices() {
-        given(yahooFinanceClient.getTickerFromToken(token))
-                .willReturn(ticker);
-        given(yahooFinanceClient.getChart(ticker))
+        given(yahooFinanceClient.getChart(ticker, (String) null, (String) null))
                 .willReturn(yahooFinanceChartResponse);
         HistoricalPricesDTO historicalPricesDTO = yahooQuoteService.getTokenHistoricalPrices(token);
         assertEquals(historicalPricesDTO.symbol(), ticker);
-        assertEquals(historicalPricesDTO.timestamp().size(), 3);
-        assertEquals(historicalPricesDTO.close().size(), 3);
+        assertEquals(historicalPricesDTO.series().size(), 3);
     }
 }
