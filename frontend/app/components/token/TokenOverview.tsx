@@ -59,7 +59,7 @@ const TokenOverview = () => {
                     logo: t.logo,
                   }
               })
-              .filter(t => t != null);
+              .filter(t => (t != null) && (t.marketCap > 1_000_000));
             setData(tokenDatas);
             setLoading(false);
           })
