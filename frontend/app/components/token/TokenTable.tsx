@@ -110,7 +110,7 @@ const DataRow = ({
       symbol: tokenData.symbol,
       price: tokenData.price == null ? "-" : formatPrice(tokenData.price),
       priceChange: tokenData.priceChange == null ? "-" : formatPriceChange(tokenData.priceChange),
-      negative: tokenData.priceChange < 0,
+      negative: isNegative(tokenData.priceChange),
       volume: tokenData.volume == null ? "-" : formatDollarAmount(tokenData.volume),
       marketCap: tokenData.marketCap == null ? "-" : formatDollarAmount(tokenData.marketCap),
       logo: tokenData.logo,
@@ -161,6 +161,11 @@ const formatPrice = (x: number) => {
     maximumSignificantDigits: 3,
     minimumSignificantDigits: 3,
   }));
+}
+
+const isNegative = (x: number) => {
+  const y = Math.round(x * 100) / 100;
+  return y < 0;
 }
 
 const formatPriceChange = (x: number) => {
