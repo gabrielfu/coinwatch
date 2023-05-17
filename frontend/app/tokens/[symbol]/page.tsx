@@ -58,7 +58,7 @@ const Header = ({ symbol, name, logo }) => {
       <RowFixed>
         <TokenLogo src={logo} alt={name} size={20} />
       </RowFixed>
-      <Label ml="16px" color={"white"} fontSize={24}>
+      <Label ml="16px" color="white" fontSize={24}>
         {name}
       </Label>
       <Label ml="8px" color={twColors.gmx.text} fontSize={24}>
@@ -68,6 +68,22 @@ const Header = ({ symbol, name, logo }) => {
   );
 }
 
+const PriceText = ({ price, priceChangePercent, negative }) => {
+  const color = (negative ?
+    twColors.red : 
+    twColors.green) as string;
+
+  return ( 
+    <Label mt="16px" color="white">
+      <Label fontSize={36} mr="16px">
+        {price}
+      </Label>
+      <Label fontSize={14} fontWeight={600} backgroundColor={color} padding="4px 8px" style={{ borderRadius: "8px" }}>
+        {priceChangePercent}
+      </Label>
+    </Label>
+   );
+}
 
 const TokenPage = ({ params }: {params: any}) => {
   const symbol: string = params.symbol;
@@ -95,11 +111,17 @@ const TokenPage = ({ params }: {params: any}) => {
     <Card>
       <AutoColumn gap="8px">
         <Header symbol={symbol} name={name} logo={logo} />
+        {quoteData && 
+          <PriceText 
+            price={formatPrice(quoteData.price)} 
+            priceChangePercent={formatPriceChange(quoteData.priceChangePercent)} 
+            negative={isNegative(quoteData.priceChangePercent)}
+          />}
         
-        {/* <ResponsiveRow> */}
-          <ContentLayout>
+        <ContentLayout>
           <Card padding={"1rem 0 1rem 0"} backgroundColor={twColors.gmx.light}>
-            {quoteData && <InfoTable data={quoteData}/>}
+            {quoteData && 
+            <InfoTable data={quoteData}/>}
           </Card>
             
           <Card backgroundColor={twColors.gmx.light}>
@@ -108,8 +130,7 @@ const TokenPage = ({ params }: {params: any}) => {
               height={400}
             />
           </Card>
-          </ContentLayout>
-        {/* </ResponsiveRow> */}
+        </ContentLayout>
       </AutoColumn>
     </Card>
    );
