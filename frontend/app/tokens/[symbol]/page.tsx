@@ -2,7 +2,7 @@
 
 import { Text } from "rebass";
 import Card from "@/app/components/Card";
-import { AutoColumn } from "@/app/components/Column";
+import Column, { AutoColumn } from "@/app/components/Column";
 import CandleChart from "@/app/components/charts/CandleChart";
 import data from "@/dummy-data/daily-data";
 import { RowBetween, RowFixed } from "@/app/components/Row";
@@ -13,45 +13,41 @@ import { useEffect, useState } from "react";
 import TokenLogo from "@/app/components/token/TokenLogo";
 import { formatPrice, formatPriceChange, formatDollarAmount, isNegative } from "@/app/components/util/format";
 
+const ContentLayout = styled.div`
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 2fr 7fr;
+  grid-gap: 2em;
 
-const ResponsiveRow = styled(RowBetween)`
-  @media screen and (max-width: 679px) {
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: 24px;
-    width: 100%:
+  @media screen and (max-width: 1080px) {
+    grid-template-columns: 2fr 5fr;
+  }
+
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 1fr;
+    grid-auto-rows: min-content;
   }
 `
 
 const InfoRow = ({ rowName, rowValue }) => {
   return (
-    <RowBetween>
-      <Label color="white" fontSize={18}>
+    <AutoColumn gap="2px" margin="0" justify="space-between">
+      <Label color={twColors.gmx.text} fontWeight={400} fontSize={18}>
         {rowName}
       </Label>
-      <Label color={twColors.gmx.text} end={1}>
+      <Label color="white" fontWeight={600} fontSize={24}>
         {rowValue}
       </Label>
-    </RowBetween>
+    </AutoColumn>
   );
 }
 
 const InfoTable = ({ data }) => {
   return (
-    <ResponsiveRow>
-      <Card>
-        <AutoColumn gap="16px" margin="0 2em 0 2em" justify="space-between">
-          <InfoRow rowName="Volume" rowValue={formatDollarAmount(data.volume)} />
-          <InfoRow rowName="Market Cap" rowValue={formatDollarAmount(data.marketCap)} />
-        </AutoColumn>
-      </Card>
-      <Card>
-        <AutoColumn gap="16px" margin="0 2em 0 2em" justify="space-between">
-          <InfoRow rowName="Key1" rowValue="Value1" />
-          <InfoRow rowName="Key2" rowValue="Value2" />
-        </AutoColumn>
-      </Card>
-    </ResponsiveRow>
+    <AutoColumn gap="20px" margin="1em 2em 1em 2em" justify="flex-start">
+      <InfoRow rowName="Volume" rowValue={formatDollarAmount(data.volume)} />
+      <InfoRow rowName="Market Cap" rowValue={formatDollarAmount(data.marketCap)} />
+    </AutoColumn>
    );
 }
 
@@ -100,16 +96,20 @@ const TokenPage = ({ params }: {params: any}) => {
       <AutoColumn gap="8px">
         <Header symbol={symbol} name={name} logo={logo} />
         
-        <Card>
-          {quoteData && <InfoTable data={quoteData}/>}
-        </Card>
-          
-        <Card backgroundColor={twColors.gmx.light}>
-          <CandleChart 
-            data={data}
-            height={400}
-          />
-        </Card>
+        {/* <ResponsiveRow> */}
+          <ContentLayout>
+          <Card padding={"1rem 0 1rem 0"} backgroundColor={twColors.gmx.light}>
+            {quoteData && <InfoTable data={quoteData}/>}
+          </Card>
+            
+          <Card backgroundColor={twColors.gmx.light}>
+            <CandleChart 
+              data={data}
+              height={400}
+            />
+          </Card>
+          </ContentLayout>
+        {/* </ResponsiveRow> */}
       </AutoColumn>
     </Card>
    );
