@@ -26,7 +26,11 @@ public class QuoteController {
     }
 
     @GetMapping("historical")
-    public HistoricalPricesDTO getTokenHistoricalPrices(@RequestParam String token) {
-        return quoteService.getTokenHistoricalPrices(token);
+    public HistoricalPricesDTO getTokenHistoricalPrices(
+            @RequestParam String token,
+            @RequestParam(required = false) String interval,
+            @RequestParam(required = false) String range
+    ) {
+        return quoteService.getTokenHistoricalPrices(token, interval, range);
     }
 }

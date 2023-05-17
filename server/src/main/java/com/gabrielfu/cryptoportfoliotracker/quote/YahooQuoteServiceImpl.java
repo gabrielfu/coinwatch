@@ -36,8 +36,13 @@ public class YahooQuoteServiceImpl implements QuoteService {
 
     @Override
     public HistoricalPricesDTO getTokenHistoricalPrices(String token) {
+        return getTokenHistoricalPrices(token, null, null);
+    }
+
+    @Override
+    public HistoricalPricesDTO getTokenHistoricalPrices(String token, String interval, String range) {
         String ticker = YahooFinanceClient.getTickerFromToken(token);
-        YahooFinanceChartResponse response = yahooFinanceClient.getChart(ticker);
+        YahooFinanceChartResponse response = yahooFinanceClient.getChart(ticker, interval, range);
         return YahooDTOMapper.asHistoricalPricesDTO(response);
     }
 }

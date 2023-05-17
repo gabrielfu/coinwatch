@@ -4,7 +4,6 @@ import { Text } from "rebass";
 import Card from "@/app/components/Card";
 import Column, { AutoColumn } from "@/app/components/Column";
 import CandleChart from "@/app/components/charts/CandleChart";
-import data from "@/dummy-data/hourly-data";
 import { RowBetween, RowFixed } from "@/app/components/Row";
 import styled from "styled-components";
 import { Label } from "@/app/components/Text";
@@ -91,6 +90,7 @@ const TokenPage = ({ params }: {params: any}) => {
   const [logo, setLogo] = useState<string>();
 
   const [quoteData, setQuoteData] = useState();
+  const [chartData, setChartData] = useState();
 
   useEffect(() => {
     fetch(`http://localhost:8080/api/v1/tokens/${symbol}`)
@@ -105,7 +105,14 @@ const TokenPage = ({ params }: {params: any}) => {
       .then((info) => {
         setQuoteData(info);
       });
-  })
+    
+    fetch(`http://localhost:8080/api/v1/quote/historical?token=${symbol}&range=3d&interval=1h`)
+      .then((res) => res.json())
+      .then((data) => {
+        const series = data.series.filter(d => Object.values(d).every(v => v != null));
+        setChartData(series);
+      });
+  }, []);
 
   return ( 
     <Card>
@@ -125,10 +132,13 @@ const TokenPage = ({ params }: {params: any}) => {
           </Card>
             
           <Card backgroundColor={twColors.gmx.light}>
-            <CandleChart 
-              data={data}
-              height={400}
-            />
+            {chartData == null 
+              ? "Loading..."
+              : <CandleChart 
+                  data={chartData}
+                  height={400}
+                />
+            }
           </Card>
         </ContentLayout>
       </AutoColumn>
