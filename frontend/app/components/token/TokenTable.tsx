@@ -213,7 +213,7 @@ const TokenTable = ({ tokenDatas }: {tokenDatas: TokenData[]}) => {
           ? <>
             {sortedTokens.map((data, i) => {
               return data 
-                ? <DataRow tokenData={data} index={(page - 1) * itemsPerPage + i} />
+                ? <DataRow key={i} tokenData={data} index={(page - 1) * itemsPerPage + i} />
                 : null;
             })}
             <PageButtons page={page} setPage={setPage} maxPage={maxPage} />
