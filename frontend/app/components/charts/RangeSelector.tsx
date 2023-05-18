@@ -18,7 +18,7 @@ const RangeButton = ({
 }) => {
   return ( 
     <Label 
-      className={"py-1 px-3 hover:cursor-pointer " + (end ? "" : " border-r-2 border-gmx-text")} 
+      className={"py-0 px-3 hover:cursor-pointer " + (end ? "" : " border-r-2 border-gmx-light")} 
       onClick={() => {
         setRange(range);
         setInterval(interval);
@@ -38,7 +38,7 @@ const RangeSelector = ({
 }) => {
   return ( 
     <Label 
-      backgroundColor="transparent" 
+      backgroundColor={twColors.gmx.extralight} 
       color={twColors.gmx.text}
       type="text"
       justifyContent="space-between"
@@ -46,15 +46,14 @@ const RangeSelector = ({
       height={36}
       style={{ 
         borderRadius: "8px", 
-        borderWidth: "2px", 
-        borderColor: twColors.gmx.text
-      }}>
-        <RangeButton text="1D" range="24h" interval="15m" setRange={setRange} setInterval={setInterval} />
-        <RangeButton text="5D" range="5d" interval="1h" setRange={setRange} setInterval={setInterval} />
-        <RangeButton text="1M" range="1mo" interval="1h" setRange={setRange} setInterval={setInterval} />
-        <RangeButton text="6M" range="6mo" interval="1d" setRange={setRange} setInterval={setInterval} />
-        <RangeButton text="1Y" range="1y" interval="1d" setRange={setRange} setInterval={setInterval} />
-        <RangeButton text="5Y" range="5y" interval="1wk" setRange={setRange} setInterval={setInterval} end />
+      }}
+    >
+      <RangeButton text="1D" range="24h" interval="15m" setRange={setRange} setInterval={setInterval} />
+      <RangeButton text="5D" range="5d" interval="1h" setRange={setRange} setInterval={setInterval} />
+      <RangeButton text="1M" range="1mo" interval="1h" setRange={setRange} setInterval={setInterval} />
+      <RangeButton text="6M" range="6mo" interval="1d" setRange={setRange} setInterval={setInterval} />
+      <RangeButton text="1Y" range="1y" interval="1d" setRange={setRange} setInterval={setInterval} />
+      <RangeButton text="5Y" range="5y" interval="1wk" setRange={setRange} setInterval={setInterval} end />
     </Label>
    );
 }

@@ -145,8 +145,7 @@ const TokenPage = ({ params }: {params: any}) => {
               : <CandleChart 
                   data={chartData}
                   height={400}
-                  topLeft={<div></div>}
-                  topRight={<RangeSelector setRange={setRange} setInterval={setInterval} />}
+                  topLeft={<RangeSelector setRange={setRange} setInterval={setInterval} />}
                 />
             }
           </Card>
