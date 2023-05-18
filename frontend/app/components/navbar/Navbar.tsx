@@ -5,7 +5,7 @@ import Logo from "./Logo";
 
 const Navbar = () => {
   return (
-    <nav className='flex sticky top-0 z-10 bg-gmx-dark justify-between items-center w-full mb-16 pt-3'>
+    <nav className='flex sticky top-0 z-10 bg-gmx-dark justify-between items-center w-full mb-8 pt-3'>
       <Logo />
 
       {/* Desktop Navigation */}
