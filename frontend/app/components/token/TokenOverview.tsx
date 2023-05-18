@@ -31,7 +31,11 @@ const TokenOverview = () => {
 
     setSearchTimeout(
       setTimeout(() => {
-        setSearchedData(data ? data.filter(item => item.name.toLowerCase().match(searchValue) != null) : data);
+        setSearchedData(data 
+          ? data.filter(item => 
+            (item.name.toLowerCase().match(searchValue) != null) || (item.symbol.toLowerCase().match(searchValue) != null)
+          ) 
+          : data);
       }, 250)
     );
   }
