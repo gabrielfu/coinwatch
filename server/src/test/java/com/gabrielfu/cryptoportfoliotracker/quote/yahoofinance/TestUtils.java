@@ -74,6 +74,7 @@ public class TestUtils {
               }
             }
             """;
+
     private final static String yahooFinanceChartJson = """
             {
               "chart": {

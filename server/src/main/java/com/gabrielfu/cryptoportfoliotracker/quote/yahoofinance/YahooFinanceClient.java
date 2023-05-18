@@ -1,7 +1,9 @@
 package com.gabrielfu.cryptoportfoliotracker.quote.yahoofinance;
 
+import com.gabrielfu.cryptoportfoliotracker.exceptions.CryptoPortfolioTrackerException;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.apache.http.client.utils.URIBuilder;
 
@@ -25,9 +27,20 @@ public class YahooFinanceClient {
         return ticker.replace("-USD", "");
     }
 
+    public <T> T getRequest(String url, Class<T> clazz) {
+        try {
+            return restTemplate.getForObject(url, clazz);
+        } catch (HttpStatusCodeException e) {
+            throw new CryptoPortfolioTrackerException(
+                    e.getStatusCode(),
+                    "Failed to fetch from Yahoo Finance: " + e.getMessage()
+            );
+        }
+    }
+
     public YahooFinanceQuoteResponse getQuote(String ticker) {
         String url = String.format("%s?symbols=%s", QUOTE_BASE_URL, ticker);
-        return restTemplate.getForObject(url, YahooFinanceQuoteResponse.class);
+        return getRequest(url, YahooFinanceQuoteResponse.class);
     }
 
     public YahooFinanceChartResponse getChart(
@@ -59,7 +72,7 @@ public class YahooFinanceClient {
                     e
             );
         }
-        return restTemplate.getForObject(url, YahooFinanceChartResponse.class);
+        return getRequest(url, YahooFinanceChartResponse.class);
     }
 
     public YahooFinanceChartResponse getChart(String ticker, String interval, String range) {
