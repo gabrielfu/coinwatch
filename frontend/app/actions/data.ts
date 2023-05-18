@@ -1,6 +1,6 @@
 
 
-interface TokenData {
+export interface TokenData {
   name: string;
   symbol: string;
   price: number;
@@ -10,13 +10,13 @@ interface TokenData {
   logo: string;
 }
 
-interface TokenInfo {
+export interface TokenInfo {
   name: string;
   symbol: string;
   logo: string;
 }
 
-interface QuoteData {
+export interface QuoteData {
   symbol: string;
   price: number;
   priceChange: number;
