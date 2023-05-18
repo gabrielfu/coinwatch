@@ -8,9 +8,10 @@ import { RowBetween, RowFixed } from "@/app/components/Row";
 import styled from "styled-components";
 import { Label } from "@/app/components/Text";
 import { twColors } from "@/app/twConfig";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TokenLogo from "@/app/components/token/TokenLogo";
 import { formatPrice, formatPriceChange, formatDollarAmount, isNegative, formatInteger } from "@/app/components/util/format";
+import RangeSelector from "@/app/components/charts/RangeSelector";
 
 const ContentLayout = styled.div`
   margin-top: 16px;
@@ -92,6 +93,17 @@ const TokenPage = ({ params }: {params: any}) => {
 
   const [quoteData, setQuoteData] = useState();
   const [chartData, setChartData] = useState();
+  const [interval, setInterval] = useState("15m");
+  const [range, setRange] = useState("24h");
+
+  const fetchChartData = useCallback(() => {    
+    fetch(`http://localhost:8080/api/v1/quote/historical?token=${symbol}&range=${range}&interval=${interval}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const series = data.series.filter(d => Object.values(d).every(v => v != null));
+        setChartData(series);
+      });
+  }, [symbol, range, interval]);
 
   useEffect(() => {
     fetch(`http://localhost:8080/api/v1/tokens/${symbol}`)
@@ -107,13 +119,8 @@ const TokenPage = ({ params }: {params: any}) => {
         setQuoteData(info);
       });
     
-    fetch(`http://localhost:8080/api/v1/quote/historical?token=${symbol}&range=3d&interval=1h`)
-      .then((res) => res.json())
-      .then((data) => {
-        const series = data.series.filter(d => Object.values(d).every(v => v != null));
-        setChartData(series);
-      });
-  }, []);
+    fetchChartData();
+  }, [symbol, fetchChartData]);
 
   return ( 
     <Card>
@@ -138,6 +145,8 @@ const TokenPage = ({ params }: {params: any}) => {
               : <CandleChart 
                   data={chartData}
                   height={400}
+                  topLeft={<div></div>}
+                  topRight={<RangeSelector />}
                 />
             }
           </Card>
