@@ -7,7 +7,7 @@ const Logo = () => {
   return (
     <Link href='/' className='flex gap-2 justify-center items-center'>
       <Image
-        src='/images/logo-transparent-white.png'
+        src='/images/logo-transparent-white.svg'
         alt='logo'
         width={224}
         height={32}
