@@ -1,7 +1,7 @@
 import { twColors } from "@/app/twConfig";
 import { Label } from "../Text";
 
-const RangeButton = ({
+const RangeOption = ({
   setRange,
   setInterval,
   range,
@@ -48,12 +48,12 @@ const RangeSelector = ({
         borderRadius: "8px", 
       }}
     >
-      <RangeButton text="1D" range="24h" interval="15m" setRange={setRange} setInterval={setInterval} />
-      <RangeButton text="5D" range="5d" interval="1h" setRange={setRange} setInterval={setInterval} />
-      <RangeButton text="1M" range="1mo" interval="1h" setRange={setRange} setInterval={setInterval} />
-      <RangeButton text="6M" range="6mo" interval="1d" setRange={setRange} setInterval={setInterval} />
-      <RangeButton text="1Y" range="1y" interval="1d" setRange={setRange} setInterval={setInterval} />
-      <RangeButton text="5Y" range="5y" interval="1wk" setRange={setRange} setInterval={setInterval} end />
+      <RangeOption text="1D" range="24h" interval="15m" setRange={setRange} setInterval={setInterval} />
+      <RangeOption text="5D" range="5d" interval="1h" setRange={setRange} setInterval={setInterval} />
+      <RangeOption text="1M" range="1mo" interval="1h" setRange={setRange} setInterval={setInterval} />
+      <RangeOption text="6M" range="6mo" interval="1d" setRange={setRange} setInterval={setInterval} />
+      <RangeOption text="1Y" range="1y" interval="1d" setRange={setRange} setInterval={setInterval} />
+      <RangeOption text="5Y" range="5y" interval="1wk" setRange={setRange} setInterval={setInterval} end />
     </Label>
    );
 }
