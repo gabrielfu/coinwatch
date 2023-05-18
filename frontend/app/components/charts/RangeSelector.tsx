@@ -7,18 +7,22 @@ const RangeOption = ({
   range,
   interval,
   text,
-  end=false
+  activeRange,
+  activeInterval,
 }: {
   setRange: (range: string) => void;
   setInterval: (interval: string) => void;
   range: string;
   interval: string;
   text: string;
-  end?: boolean;
+  activeRange: string;
+  activeInterval: string;
 }) => {
+  const isActive = (range == activeRange) && (interval == activeInterval);
+
   return ( 
     <Label 
-      className={"py-0 px-3 hover:cursor-pointer " + (end ? "" : " border-r-2 border-gmx-light")} 
+      className={"py-0 px-3 hover:cursor-pointer " + (isActive && "text-white")} 
       onClick={() => {
         setRange(range);
         setInterval(interval);
@@ -31,14 +35,18 @@ const RangeOption = ({
 
 const RangeSelector = ({
   setRange,
-  setInterval
+  setInterval,
+  activeRange,
+  activeInterval,
 }: {
   setRange: (range: string) => void;
   setInterval: (interval: string) => void;
+  activeRange: string;
+  activeInterval: string;
 }) => {
   return ( 
     <Label 
-      backgroundColor={twColors.gmx.extralight} 
+      backgroundColor={twColors.gmx.medium} 
       color={twColors.gmx.text}
       type="text"
       justifyContent="space-between"
@@ -48,12 +56,12 @@ const RangeSelector = ({
         borderRadius: "8px", 
       }}
     >
-      <RangeOption text="1D" range="24h" interval="15m" setRange={setRange} setInterval={setInterval} />
-      <RangeOption text="5D" range="5d" interval="1h" setRange={setRange} setInterval={setInterval} />
-      <RangeOption text="1M" range="1mo" interval="1h" setRange={setRange} setInterval={setInterval} />
-      <RangeOption text="6M" range="6mo" interval="1d" setRange={setRange} setInterval={setInterval} />
-      <RangeOption text="1Y" range="1y" interval="1d" setRange={setRange} setInterval={setInterval} />
-      <RangeOption text="5Y" range="5y" interval="1wk" setRange={setRange} setInterval={setInterval} end />
+      <RangeOption text="1D" range="24h" interval="15m" setRange={setRange} setInterval={setInterval} activeRange={activeRange} activeInterval={activeInterval} />
+      <RangeOption text="5D" range="5d" interval="1h" setRange={setRange} setInterval={setInterval} activeRange={activeRange} activeInterval={activeInterval} />
+      <RangeOption text="1M" range="1mo" interval="1h" setRange={setRange} setInterval={setInterval} activeRange={activeRange} activeInterval={activeInterval} />
+      <RangeOption text="6M" range="6mo" interval="1d" setRange={setRange} setInterval={setInterval} activeRange={activeRange} activeInterval={activeInterval} />
+      <RangeOption text="1Y" range="1y" interval="1d" setRange={setRange} setInterval={setInterval} activeRange={activeRange} activeInterval={activeInterval} />
+      <RangeOption text="5Y" range="5y" interval="1wk" setRange={setRange} setInterval={setInterval} activeRange={activeRange} activeInterval={activeInterval} />
     </Label>
    );
 }

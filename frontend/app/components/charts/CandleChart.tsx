@@ -170,7 +170,7 @@ const CandleChart = ({
         }
       })
     }
-  }, [chartCreated, data, height, setValue, setLabel]);
+  }, [chartCreated, data, candleSeries, height, setValue, setLabel]);
 
   return (
     <Wrapper minHeight={minHeight}>

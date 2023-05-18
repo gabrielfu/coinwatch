@@ -132,20 +132,20 @@ const TokenPage = ({ params }: {params: any}) => {
             priceChangePercent={formatPriceChange(quoteData.priceChangePercent)} 
             negative={isNegative(quoteData.priceChangePercent)}
           />}
-        
+
         <ContentLayout>
           <Card padding={"1rem 0 1rem 0"} backgroundColor={twColors.gmx.light}>
             {quoteData && 
             <InfoTable data={quoteData}/>}
           </Card>
-            
+
           <Card backgroundColor={twColors.gmx.light}>
             {chartData == null 
               ? "Loading..."
               : <CandleChart 
                   data={chartData}
                   height={400}
-                  topLeft={<RangeSelector setRange={setRange} setInterval={setInterval} />}
+                  topLeft={<RangeSelector setRange={setRange} setInterval={setInterval} activeRange={range} activeInterval={interval} />}
                 />
             }
           </Card>
