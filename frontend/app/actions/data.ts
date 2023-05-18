@@ -7,6 +7,7 @@ export interface TokenData {
   priceChange: number;
   volume: number;
   marketCap: number;
+  totalSupply: number;
   logo: string;
 }
 
@@ -23,6 +24,7 @@ export interface QuoteData {
   priceChangePercent: number;
   volume: number;
   marketCap: number;
+  totalSupply: number;
 }
 
 export const getTokenWithQuoteDatas = async () => {
@@ -45,6 +47,7 @@ export const getTokenWithQuoteDatas = async () => {
                   priceChange: q.priceChangePercent,
                   volume: q.volume,
                   marketCap: q.marketCap,
+                  totalSupply: q.totalSupply,
                   logo: t.logo,
                 }
             })

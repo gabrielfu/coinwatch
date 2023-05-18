@@ -60,5 +60,8 @@ public class YahooFinanceQuoteResponse {
 
         @JsonProperty("lastMarket")
         private String lastMarket;
+
+        @JsonProperty("circulatingSupply")
+        private Long circulatingSupply;
     }
 }

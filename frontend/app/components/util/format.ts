@@ -37,3 +37,9 @@ export const formatDollarAmount = (num: number | undefined, digits = 2, round = 
     },
   })
 }
+
+export const formatInteger = (x: number) => {
+  return parseInt(x).toLocaleString("en-US", {
+    maximumFractionDigits: 0,
+  })
+}

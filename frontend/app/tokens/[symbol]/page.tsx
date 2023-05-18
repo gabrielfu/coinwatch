@@ -10,7 +10,7 @@ import { Label } from "@/app/components/Text";
 import { twColors } from "@/app/twConfig";
 import { useEffect, useState } from "react";
 import TokenLogo from "@/app/components/token/TokenLogo";
-import { formatPrice, formatPriceChange, formatDollarAmount, isNegative } from "@/app/components/util/format";
+import { formatPrice, formatPriceChange, formatDollarAmount, isNegative, formatInteger } from "@/app/components/util/format";
 
 const ContentLayout = styled.div`
   margin-top: 16px;
@@ -30,7 +30,7 @@ const ContentLayout = styled.div`
 
 const InfoRow = ({ rowName, rowValue }) => {
   return (
-    <AutoColumn gap="2px" margin="0" justify="space-between">
+    <AutoColumn gap="4px" margin="0" justify="space-between">
       <Label color={twColors.gmx.text} fontWeight={400} fontSize={18}>
         {rowName}
       </Label>
@@ -44,8 +44,9 @@ const InfoRow = ({ rowName, rowValue }) => {
 const InfoTable = ({ data }) => {
   return (
     <AutoColumn gap="20px" margin="1em 2em 1em 2em" justify="flex-start">
-      <InfoRow rowName="Volume" rowValue={formatDollarAmount(data.volume)} />
+      <InfoRow rowName="Volume (24h)" rowValue={formatDollarAmount(data.volume)} />
       <InfoRow rowName="Market Cap" rowValue={formatDollarAmount(data.marketCap)} />
+      <InfoRow rowName="Total Supply" rowValue={formatInteger(data.totalSupply)} />
     </AutoColumn>
    );
 }

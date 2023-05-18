@@ -18,7 +18,8 @@ public class YahooDTOMapper {
                         r.getRegularMarketChange(),
                         r.getRegularMarketChangePercent(),
                         r.getRegularMarketVolume(),
-                        r.getMarketCap()))
+                        r.getMarketCap(),
+                        r.getCirculatingSupply()))
                 .toList();
     }
 

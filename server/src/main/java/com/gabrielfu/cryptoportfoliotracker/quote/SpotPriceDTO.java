@@ -6,6 +6,7 @@ public record SpotPriceDTO(
         Double priceChange,
         Double priceChangePercent,
         Long volume,
-        Long marketCap
+        Long marketCap,
+        Long totalSupply
 ) {
 }

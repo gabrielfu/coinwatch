@@ -41,10 +41,11 @@ class QuoteControllerTest {
                 2.0,
                 3.0,
                 4L,
-                5L
+                5L,
+                6L
         );
         String expectedJson = """
-                {"symbol":"ETH-USD","price":1.0,"priceChange":2.0,"priceChangePercent":3.0,"volume":4,"marketCap":5}
+                {"symbol":"ETH-USD","price":1.0,"priceChange":2.0,"priceChangePercent":3.0,"volume":4,"marketCap":5,"totalSupply":6}
             """;
         given(quoteService.getTokenSpotPrice("ETH"))
                 .willReturn(spotPriceDTO);
