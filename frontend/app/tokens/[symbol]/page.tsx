@@ -146,7 +146,7 @@ const TokenPage = ({ params }: {params: any}) => {
                   data={chartData}
                   height={400}
                   topLeft={<div></div>}
-                  topRight={<RangeSelector />}
+                  topRight={<RangeSelector setRange={setRange} setInterval={setInterval} />}
                 />
             }
           </Card>

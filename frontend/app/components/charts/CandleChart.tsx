@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect, useCallback, Dispatch, SetStateAction, ReactNode } from 'react';
-import { createChart, IChartApi, ColorType, CrosshairMode } from 'lightweight-charts';
+import { createChart, IChartApi, ISeriesApi, ColorType, CrosshairMode } from 'lightweight-charts';
 import { RowBetween } from '../Row';
 import Card from '../Card';
 import styled from 'styled-components';
@@ -60,6 +60,7 @@ const CandleChart = ({
 }: LineChartProps) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartCreated, setChart] = useState<IChartApi | undefined>();
+  const [candleSeries, setCandleSeries] = useState<ISeriesApi<"Candlestick"> | undefined>();
 
   const handleResize = useCallback(() => {
     if (chartCreated && chartRef?.current?.parentElement) {
@@ -130,6 +131,10 @@ const CandleChart = ({
 
   useEffect(() => {
     if (chartCreated && data) {
+      if (candleSeries) {
+        chartCreated.removeSeries(candleSeries);
+      }
+
       const series = chartCreated.addCandlestickSeries({
         upColor: candleGreen,
         downColor: candleRed,
@@ -140,6 +145,7 @@ const CandleChart = ({
       });
 
       series.setData(data);
+      setCandleSeries(series);
 
       // update the title when hovering on the chart
       chartCreated.subscribeCrosshairMove(function (param) {
