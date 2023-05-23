@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect, useCallback, Dispatch, SetStateAction, ReactNode } from 'react';
-import { createChart, IChartApi, ISeriesApi, ColorType, CrosshairMode } from 'lightweight-charts';
+import { createChart, IChartApi, ISeriesApi, ColorType, CrosshairMode, MouseEventHandler, MouseEventParams, OhlcData } from 'lightweight-charts';
 import { RowBetween } from '../Row';
 import Card from '../Card';
 import styled from 'styled-components';
@@ -29,13 +29,7 @@ const Wrapper = styled(Card)`
 `
 
 type LineChartProps = {
-  data: {
-    time: string | number
-    open: number
-    high: number
-    close: number
-    low: number
-  }[]
+  data: OhlcData[]
   height?: number | undefined
   minHeight?: number
   setValue?: Dispatch<SetStateAction<number | undefined>> // used for value on hover
@@ -60,7 +54,8 @@ const CandleChart = ({
 }: LineChartProps) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartCreated, setChart] = useState<IChartApi | undefined>();
-  const [candleSeries, setCandleSeries] = useState<ISeriesApi<"Candlestick"> | undefined>();
+  const [series, setSeries] = useState<ISeriesApi<"Candlestick"> | undefined>();
+  const crosshairMoveHandlerRef = useRef<MouseEventHandler | null>(null);
 
   const handleResize = useCallback(() => {
     if (chartCreated && chartRef?.current?.parentElement) {
@@ -82,7 +77,7 @@ const CandleChart = ({
 
   // if chart not instantiated in canvas, create it
   useEffect(() => {
-    if (!chartCreated && data && !!chartRef?.current?.parentElement) {
+    if (!chartCreated && !!chartRef?.current?.parentElement) {
       const chart: IChartApi = createChart(chartRef.current, {
         height: height,
         width: chartRef.current.parentElement.clientWidth - 32,
@@ -125,17 +120,8 @@ const CandleChart = ({
           bottom: 0.1,
         },
       })
-      setChart(chart);
-    }
-  }, [chartCreated, data, height, setValue]);
 
-  useEffect(() => {
-    if (chartCreated && data) {
-      if (candleSeries) {
-        chartCreated.removeSeries(candleSeries);
-      }
-
-      const series = chartCreated.addCandlestickSeries({
+      const candleSeries = chart.addCandlestickSeries({
         upColor: candleGreen,
         downColor: candleRed,
         borderDownColor: candleRed,
@@ -144,11 +130,20 @@ const CandleChart = ({
         wickUpColor: candleGreen,
       });
 
+      setChart(chart);
+      setSeries(candleSeries);
+    }
+  }, [chartCreated, height, setValue]);
+
+  useEffect(() => {
+    if (chartCreated && series && data) {
       series.setData(data);
-      setCandleSeries(series);
 
       // update the title when hovering on the chart
-      chartCreated.subscribeCrosshairMove(function (param) {
+      if (crosshairMoveHandlerRef.current) {
+        chartCreated.unsubscribeCrosshairMove(crosshairMoveHandlerRef.current);
+      }
+      crosshairMoveHandlerRef.current = (param: MouseEventParams) => {
         if (
           chartRef?.current &&
           (param === undefined ||
@@ -168,9 +163,10 @@ const CandleChart = ({
           setValue && setValue(parsed?.open);
           setLabel && setLabel(time);
         }
-      })
+      }
+      chartCreated.subscribeCrosshairMove(crosshairMoveHandlerRef.current);
     }
-  }, [chartCreated, data, candleSeries, height, setValue, setLabel]);
+  }, [chartCreated, data, series, height, setValue, setLabel]);
 
   return (
     <Wrapper minHeight={minHeight}>
