@@ -157,10 +157,12 @@ const CandleChart = ({
   }, [chartCreated, height, setValue, setLabel]);
 
   useEffect(() => {
-    if (series && data) {
+    if (chartCreated && series && data) {
       series.setData(data);
+      chartCreated.timeScale().fitContent();
+      chartCreated.timeScale().scrollToPosition(0, false);
     }
-  }, [data, series]);
+  }, [chartCreated, series, data]);
 
   return (
     <Wrapper minHeight={minHeight}>
