@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect, useCallback, Dispatch, SetStateAction, ReactNode } from 'react';
-import { createChart, IChartApi, ISeriesApi, ColorType, CrosshairMode, MouseEventHandler, MouseEventParams, OhlcData } from 'lightweight-charts';
+import { createChart, IChartApi, ISeriesApi, ColorType, CrosshairMode, MouseEventParams, OhlcData } from 'lightweight-charts';
 import { RowBetween } from '../Row';
 import Card from '../Card';
 import styled from 'styled-components';
@@ -55,7 +55,6 @@ const CandleChart = ({
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartCreated, setChart] = useState<IChartApi | undefined>();
   const [series, setSeries] = useState<ISeriesApi<"Candlestick"> | undefined>();
-  const crosshairMoveHandlerRef = useRef<MouseEventHandler | null>(null);
 
   const handleResize = useCallback(() => {
     if (chartCreated && chartRef?.current?.parentElement) {
@@ -130,20 +129,7 @@ const CandleChart = ({
         wickUpColor: candleGreen,
       });
 
-      setChart(chart);
-      setSeries(candleSeries);
-    }
-  }, [chartCreated, height, setValue]);
-
-  useEffect(() => {
-    if (chartCreated && series && data) {
-      series.setData(data);
-
-      // update the title when hovering on the chart
-      if (crosshairMoveHandlerRef.current) {
-        chartCreated.unsubscribeCrosshairMove(crosshairMoveHandlerRef.current);
-      }
-      crosshairMoveHandlerRef.current = (param: MouseEventParams) => {
+      chart.subscribeCrosshairMove((param: MouseEventParams) => {
         if (
           chartRef?.current &&
           (param === undefined ||
@@ -156,17 +142,25 @@ const CandleChart = ({
           // reset values
           setValue && setValue(undefined);
           setLabel && setLabel(undefined);
-        } else if (series && param) {
+        } else if (candleSeries && param) {
           const timestamp = param.time as number;
           const time = dayjs.unix(timestamp).utc().format('DD MMM YYYY h:mm A') + ' (UTC)';
-          const parsed = param.seriesData.get(series) as { open: number } | undefined;
+          const parsed = param.seriesData.get(candleSeries) as { open: number } | undefined;
           setValue && setValue(parsed?.open);
           setLabel && setLabel(time);
         }
-      }
-      chartCreated.subscribeCrosshairMove(crosshairMoveHandlerRef.current);
+      });
+
+      setChart(chart);
+      setSeries(candleSeries);
     }
-  }, [chartCreated, data, series, height, setValue, setLabel]);
+  }, [chartCreated, height, setValue, setLabel]);
+
+  useEffect(() => {
+    if (series && data) {
+      series.setData(data);
+    }
+  }, [data, series]);
 
   return (
     <Wrapper minHeight={minHeight}>
