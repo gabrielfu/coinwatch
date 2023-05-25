@@ -1,4 +1,4 @@
-package com.coinwatch.quote.yahoofinance;
+package com.coinwatch.clients.yahoofinance;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

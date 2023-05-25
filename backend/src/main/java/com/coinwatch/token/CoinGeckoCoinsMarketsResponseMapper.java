@@ -1,11 +1,11 @@
-package com.coinwatch.token.bootstrap;
+package com.coinwatch.token;
 
-import com.coinwatch.token.Token;
+import com.coinwatch.clients.coingecko.CoinGeckoCoinsMarketsResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CoinGeckoResponseMapper {
-    public static Token asToken(CoinGeckoResponse response) {
+public class CoinGeckoCoinsMarketsResponseMapper {
+    public static Token asToken(CoinGeckoCoinsMarketsResponse response) {
         return new Token(
                 response.getSymbol().toUpperCase(),
                 response.getName(),

@@ -1,5 +1,8 @@
 package com.coinwatch.quote.yahoofinance;
 
+import com.coinwatch.clients.yahoofinance.YahooFinanceChartResponse;
+import com.coinwatch.clients.yahoofinance.YahooFinanceClient;
+import com.coinwatch.clients.yahoofinance.YahooFinanceQuoteResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;

@@ -1,8 +1,8 @@
 package com.coinwatch.quote;
 
-import com.coinwatch.quote.yahoofinance.YahooFinanceChartResponse;
-import com.coinwatch.quote.yahoofinance.YahooFinanceClient;
-import com.coinwatch.quote.yahoofinance.YahooFinanceQuoteResponse;
+import com.coinwatch.clients.yahoofinance.YahooFinanceChartResponse;
+import com.coinwatch.clients.yahoofinance.YahooFinanceClient;
+import com.coinwatch.clients.yahoofinance.YahooFinanceQuoteResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

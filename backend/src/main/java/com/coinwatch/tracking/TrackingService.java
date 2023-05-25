@@ -6,6 +6,7 @@ import com.coinwatch.transaction.TransactionService;
 import com.coinwatch.quote.QuoteService;
 import com.coinwatch.token.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class TrackingService {
     @Autowired
     private TransactionService transactionService;
     @Autowired
+    @Qualifier("hybridService")
     private QuoteService quoteService;
 
 //    public TrackingPortfolioDTO getPortfolio() {

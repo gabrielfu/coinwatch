@@ -1,7 +1,6 @@
 package com.coinwatch.token;
 
-import com.coinwatch.token.bootstrap.CoinGeckoClient;
-import com.coinwatch.token.bootstrap.CoinGeckoResponseMapper;
+import com.coinwatch.clients.coingecko.CoinGeckoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,7 @@ public class TokenBootstrapper {
 
     public List<Token> getTokens() {
         return coinGeckoClient.getTokens().stream()
-                .map(CoinGeckoResponseMapper::asToken)
+                .map(CoinGeckoCoinsMarketsResponseMapper::asToken)
                 .collect(Collectors.toList());
     }
 }

@@ -1,4 +1,4 @@
-package com.coinwatch.token.bootstrap;
+package com.coinwatch.clients.coingecko;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +24,15 @@ public class CoinGeckoClient {
         this.mapper = mapper;
     }
 
-    public List<CoinGeckoResponse> getTokens() {
+    public List<CoinGeckoCoinsMarketsResponse> getTokens() {
         ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity(
                 "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en",
                 Object[].class
         );
         Object[] objects = responseEntity.getBody();
         return Arrays.stream(objects)
-                .map(object -> mapper.convertValue(object, CoinGeckoResponse.class))
-                .sorted(Comparator.comparingInt(CoinGeckoResponse::getMarket_cap_rank))
+                .map(object -> mapper.convertValue(object, CoinGeckoCoinsMarketsResponse.class))
+                .sorted(Comparator.comparingInt(CoinGeckoCoinsMarketsResponse::getMarketCapRank))
                 .collect(Collectors.toList());
     }
 }

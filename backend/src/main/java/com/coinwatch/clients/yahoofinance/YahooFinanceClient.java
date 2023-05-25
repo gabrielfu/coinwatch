@@ -1,4 +1,4 @@
-package com.coinwatch.quote.yahoofinance;
+package com.coinwatch.clients.yahoofinance;
 
 import com.coinwatch.exceptions.CoinwatchException;
 import org.springframework.boot.web.client.RestTemplateBuilder;
