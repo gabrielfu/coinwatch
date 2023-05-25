@@ -22,7 +22,7 @@ public class TrackingService {
     @Autowired
     private TransactionService transactionService;
     @Autowired
-    @Qualifier("hybridService")
+    @Qualifier("aggregateService")
     private QuoteService quoteService;
 
 //    public TrackingPortfolioDTO getPortfolio() {

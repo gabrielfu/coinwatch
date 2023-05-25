@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(path = "api/v1/quote")
 public class QuoteController {
     @Autowired
-    @Qualifier("hybridService")
+    @Qualifier("aggregateService")
     private QuoteService quoteService;
 
     @GetMapping("spot")
