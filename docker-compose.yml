@@ -14,7 +14,7 @@ services:
       - 5432:5432
 
   backend:
-    build: server
+    build: backend
     container_name: backend
     depends_on:
       - db
