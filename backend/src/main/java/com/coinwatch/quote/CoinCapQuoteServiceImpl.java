@@ -6,9 +6,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +33,11 @@ public class CoinCapQuoteServiceImpl implements QuoteService {
     public List<SpotPriceDTO> batchGetTokenSpotPrice(List<String> tokens) {
         CoinCapAssetsResponse response = coinCapClient.getAssets(tokens);
         List<SpotPriceDTO> dtos = CoinCapDTOMapper.asSpotPriceDTOs(response);
-        Map<String, SpotPriceDTO> dtoMap = dtos.stream().collect(Collectors.toMap(SpotPriceDTO::symbol, item -> item));
+        Map<String, SpotPriceDTO> dtoMap = dtos.stream()
+                .collect(collectingAndThen(toCollection(() -> new TreeSet<>(comparing(SpotPriceDTO::symbol))),
+                        ArrayList::new))
+                .stream()
+                .collect(Collectors.toMap(SpotPriceDTO::symbol, item -> item));
         return tokens.stream().map(t -> dtoMap.getOrDefault(t, null)).toList();
     }
 
