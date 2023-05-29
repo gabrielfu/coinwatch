@@ -2,7 +2,6 @@
 
 import React, { SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import styled from "styled-components";
 import { BaseProps } from "rebass";
 import Card from "../Card";
 import { AutoColumn } from "../Column";
@@ -13,42 +12,32 @@ import { TokenData } from "@/dummy-data/all-tokens";
 import TokenLogo from "./TokenLogo";
 import { formatPrice, formatPriceChange, formatDollarAmount, isNegative } from "../util/format";
 
-const ResponsiveGrid = styled.div`
-  display: grid;
-  grid-gap: 1em;
-  align-items: center;
-  margin-left: 1em;
-  margin-right: 1em;
+const ResponsiveGrid = (props: React.PropsWithChildren) => {
+  return (
+    <div
+      className="
+      grid items-center mx-4 gap-4
 
-  grid-template-columns: 20px 3fr repeat(4, 1fr);
+      max-screen679:grid-cols-[repeat(2,1fr)]
+      max-screen679:[&>*:first-child]:hidden
+      max-screen679:[&>*:nth-child(4)]:hidden
+      max-screen679:[&>*:nth-child(5)]:hidden
+      max-screen679:[&>*:nth-child(6)]:hidden
 
-  @media screen and (max-width: 900px) {
-    grid-template-columns: 20px 1.5fr repeat(3, 1fr);
-    & :nth-child(5) {
-      display: none;
-    }
-  }
+      screen679:max-screen800:grid-cols-[20px_1.5fr_repeat(2,1fr)]
+      screen679:max-screen800:[&>*:nth-child(5)]:hidden
+      screen679:max-screen800:[&>*:nth-child(6)]:hidden
 
-  @media screen and (max-width: 800px) {
-    grid-template-columns: 20px 1.5fr repeat(2, 1fr);
-    & :nth-child(6) {
-      display: none;
-    }
-  }
+      screen800:max-screen900:grid-cols-[20px_1.5fr_repeat(3,1fr)]
+      screen800:max-screen900:[&>*:nth-child(5)]:hidden
 
-  @media screen and (max-width: 679px) {
-    grid-template-columns: repeat(2, 1fr);
-    > *:first-child {
-      display: none;
-    }
-    & :nth-child(4) {
-      display: none;
-    }
-    & *:nth-child(5) {
-      display: none;
-    }
-  }
-`
+      screen900:grid-cols-[20px_3fr_repeat(4,1fr)]
+      "
+    >
+      {props.children}
+    </div>
+   );
+}
 
 const PageArrow = ({ disabled, left, onClick }: {disabled?: boolean, left: boolean, onClick?: () => void}) => {
   return (
