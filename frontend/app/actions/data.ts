@@ -28,11 +28,11 @@ export interface QuoteData {
 }
 
 export const getTokenWithQuoteDatas = async () => {
-  return await fetch("http://localhost:8080/api/v1/tokens")
+  return await fetch("/api/v1/tokens")
     .then((res) => res.json())
     .then(async (tokenInfos: TokenInfo[]) => {
       const symbols = tokenInfos.map(t => t.symbol).join(",");
-      const innerRes = await fetch(`http://localhost:8080/api/v1/quote/batch-spot?tokens=${symbols}`)
+      const innerRes = await fetch(`/api/v1/quote/batch-spot?tokens=${symbols}`)
         .then((res) => res.json())
         .then((quoteDatas: QuoteData[]) => {
           const tokenDatas: TokenData[] = tokenInfos

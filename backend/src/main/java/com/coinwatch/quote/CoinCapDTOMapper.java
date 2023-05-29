@@ -10,7 +10,7 @@ public class CoinCapDTOMapper {
         return response.getData()
                 .stream().map(r -> {
                     Double price = Double.parseDouble(r.getPriceUsd());
-                    Double priceChangePercent = Double.parseDouble(r.getChangePercent24Hr()) / 100;
+                    Double priceChangePercent = Double.parseDouble(r.getChangePercent24Hr());
                     Double priceChange = price * (1 - 1 / (1 + priceChangePercent));
                     return new SpotPriceDTO(
                             r.getSymbol(),

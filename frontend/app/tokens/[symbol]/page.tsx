@@ -97,7 +97,7 @@ const TokenPage = ({ params }: {params: any}) => {
   const [range, setRange] = useState("24h");
 
   const fetchChartData = useCallback(() => {    
-    fetch(`http://localhost:8080/api/v1/quote/historical?token=${symbol}&range=${range}&interval=${interval}`)
+    fetch(`/api/v1/quote/historical?token=${symbol}&range=${range}&interval=${interval}`)
       .then((res) => res.json())
       .then((data) => {
         const series = data.series.filter(d => Object.values(d).every(v => v != null));
@@ -106,14 +106,14 @@ const TokenPage = ({ params }: {params: any}) => {
   }, [symbol, range, interval]);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/v1/tokens/${symbol}`)
+    fetch(`/api/v1/tokens/${symbol}`)
       .then((res) => res.json())
       .then((info) => {
         setName(info.name);
         setLogo(info.logo);
       });
     
-    fetch(`http://localhost:8080/api/v1/quote/spot?token=${symbol}`)
+    fetch(`/api/v1/quote/spot?token=${symbol}`)
       .then((res) => res.json())
       .then((info) => {
         setQuoteData(info);
