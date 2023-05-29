@@ -15,7 +15,7 @@ export const isNegative = (x: number) => {
   return y < 0;
 }
 
-export const formatPriceChange = (x: number) => {
+export const formatPriceChangePercent = (x: number) => {
   const y = Math.round(x * 100) / 100;
   const arrow = y > 0 ? '▲ ' : (y < 0 ? '▼ ': '');
   return arrow + Math.abs(y).toFixed(2) + "%"
@@ -39,7 +39,7 @@ export const formatDollarAmount = (num: number | undefined, digits = 2, round = 
 }
 
 export const formatInteger = (x: number) => {
-  return parseInt(x).toLocaleString("en-US", {
+  return Math.round(x).toLocaleString("en-US", {
     maximumFractionDigits: 0,
   })
 }

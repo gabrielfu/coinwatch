@@ -2,15 +2,14 @@
 
 import React, { SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { BaseProps } from "rebass";
 import Card from "../Card";
 import { AutoColumn } from "../Column";
 import { RowFixed } from "../Row";
 import { Label, ClickableText, Percent } from "../Text";
 import { twColors } from '@/app/twConfig';
-import { TokenData } from "@/dummy-data/all-tokens";
+import { TokenData } from "@/app/actions/data";
 import TokenLogo from "./TokenLogo";
-import { formatPrice, formatPriceChange, formatDollarAmount, isNegative } from "../util/format";
+import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative } from "../util/format";
 
 const ResponsiveGrid = (props: React.PropsWithChildren) => {
   return (
@@ -72,14 +71,14 @@ const Break = () => {
 }
 
 
-const ExtraSmallOnly = (props: BaseProps) => {
+const ExtraSmallOnly = (props: React.PropsWithChildren & { style: React.CSSProperties; }) => {
   return (
     <span className="block sm:hidden" {...props} />
   )
 }
 
 
-const HideExtraSmall = (props: BaseProps) => {
+const HideExtraSmall = (props: React.PropsWithChildren & { style: React.CSSProperties; }) => {
   return (
     <span className="hidden sm:block" {...props} />
   )
@@ -97,8 +96,8 @@ const DataRow = ({
       name: tokenData.name,
       symbol: tokenData.symbol,
       price: tokenData.price == null ? "-" : formatPrice(tokenData.price),
-      priceChange: tokenData.priceChange == null ? "-" : formatPriceChange(tokenData.priceChange),
-      negative: isNegative(tokenData.priceChange),
+      priceChangePercent: tokenData.priceChangePercent == null ? "-" : formatPriceChangePercent(tokenData.priceChangePercent),
+      negative: isNegative(tokenData.priceChangePercent),
       volume: tokenData.volume == null ? "-" : formatDollarAmount(tokenData.volume),
       marketCap: tokenData.marketCap == null ? "-" : formatDollarAmount(tokenData.marketCap),
       logo: tokenData.logo,
@@ -130,7 +129,7 @@ const DataRow = ({
             </HideExtraSmall>
           </Label>
           <Label color='white' end={1}>{formattedData.price}</Label>
-          <Percent negative={formattedData.negative} end={1}>{formattedData.priceChange}</Percent>
+          <Percent negative={formattedData.negative} end={1}>{formattedData.priceChangePercent}</Percent>
           <Label color='white' end={1}>{formattedData.volume}</Label>
           <Label color='white' end={1}>{formattedData.marketCap}</Label>
         </ResponsiveGrid>

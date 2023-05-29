@@ -5,6 +5,7 @@ export interface TokenData {
   symbol: string;
   price: number;
   priceChange: number;
+  priceChangePercent: number;
   volume: number;
   marketCap: number;
   totalSupply: number;
@@ -35,7 +36,7 @@ export const getTokenWithQuoteDatas = async () => {
       const innerRes = await fetch(`/api/v1/quote/batch-spot?tokens=${symbols}`)
         .then((res) => res.json())
         .then((quoteDatas: QuoteData[]) => {
-          const tokenDatas: TokenData[] = tokenInfos
+          const tokenDatas: (TokenData | null)[] = tokenInfos
             .map((t, i) => {
               const q = quoteDatas[i];
               return q == null
@@ -44,7 +45,8 @@ export const getTokenWithQuoteDatas = async () => {
                   name: t.name,
                   symbol: t.symbol,
                   price: q.price,
-                  priceChange: q.priceChangePercent,
+                  priceChange: q.priceChange,
+                  priceChangePercent: q.priceChangePercent,
                   volume: q.volume,
                   marketCap: q.marketCap,
                   totalSupply: q.totalSupply,

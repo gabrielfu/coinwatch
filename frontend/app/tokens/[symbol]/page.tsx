@@ -8,8 +8,9 @@ import { AutoColumn } from "@/app/components/Column";
 import { RowFixed } from "@/app/components/Row";
 import { Label } from "@/app/components/Text";
 import TokenLogo from "@/app/components/token/TokenLogo";
-import { formatPrice, formatPriceChange, formatDollarAmount, isNegative, formatInteger } from "@/app/components/util/format";
+import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative, formatInteger } from "@/app/components/util/format";
 import { twColors } from "@/app/twConfig";
+import { TokenData } from "@/app/actions/data";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -30,7 +31,10 @@ const ContentLayout = (props: React.PropsWithChildren) => {
    );
 }
 
-const InfoRow = ({ rowName, rowValue }) => {
+const InfoRow = ({ rowName, rowValue }: {
+  rowName: string;
+  rowValue: string;
+}) => {
   return (
     <AutoColumn gap="4px" margin="0" justify="space-between">
       <Label color={twColors.gmx.text} fontWeight={400} fontSize={18}>
@@ -43,7 +47,9 @@ const InfoRow = ({ rowName, rowValue }) => {
   );
 }
 
-const InfoTable = ({ data }) => {
+const InfoTable = ({ data }: {
+  data: TokenData
+}) => {
   return (
     <AutoColumn gap="20px" margin="1em 2em 1em 2em" justify="flex-start">
       <InfoRow rowName="Volume (24h)" rowValue={formatDollarAmount(data.volume)} />
@@ -54,7 +60,11 @@ const InfoTable = ({ data }) => {
 }
 
 
-const Header = ({ symbol, name, logo }) => {
+const Header = ({ symbol, name, logo }: {
+  symbol: string;
+  name: string;
+  logo: string;
+}) => {
   return (
     <Label>
       <RowFixed>
@@ -70,7 +80,11 @@ const Header = ({ symbol, name, logo }) => {
   );
 }
 
-const PriceText = ({ price, priceChangePercent, negative }) => {
+const PriceText = ({ price, priceChangePercent, negative }: {
+  price: string;
+  priceChangePercent: string;
+  negative: boolean;
+}) => {
   const color = (negative ?
     twColors.red : 
     twColors.green) as string;
@@ -89,10 +103,10 @@ const PriceText = ({ price, priceChangePercent, negative }) => {
 
 const TokenPage = ({ params }: {params: any}) => {
   const symbol: string = params.symbol;
-  const [name, setName] = useState<string>();
-  const [logo, setLogo] = useState<string>();
+  const [name, setName] = useState<string>("");
+  const [logo, setLogo] = useState<string>("");
 
-  const [quoteData, setQuoteData] = useState();
+  const [quoteData, setQuoteData] = useState<TokenData>();
   const [chartData, setChartData] = useState();
   const [interval, setInterval] = useState("15m");
   const [range, setRange] = useState("24h");
@@ -130,7 +144,7 @@ const TokenPage = ({ params }: {params: any}) => {
         {quoteData && 
           <PriceText 
             price={formatPrice(quoteData.price)} 
-            priceChangePercent={formatPriceChange(quoteData.priceChangePercent)} 
+            priceChangePercent={formatPriceChangePercent(quoteData.priceChangePercent)} 
             negative={isNegative(quoteData.priceChangePercent)}
           />}
 
