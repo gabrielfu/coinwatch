@@ -58,3 +58,7 @@ hs_err_pid*
 # frontend
 **/node_modules
 **/.next
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
