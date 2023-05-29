@@ -10,7 +10,7 @@ const Logo = () => {
         src='/images/logo-transparent-white.svg'
         alt='logo'
         width={224}
-        height={32}
+        height={56}
         className='object-contain'
       />
     </Link>
