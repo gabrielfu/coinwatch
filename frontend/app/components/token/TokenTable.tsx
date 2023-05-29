@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, { SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { BaseProps } from "rebass";
@@ -12,7 +12,6 @@ import { twColors } from '@/app/twConfig';
 import { TokenData } from "@/dummy-data/all-tokens";
 import TokenLogo from "./TokenLogo";
 import { formatPrice, formatPriceChange, formatDollarAmount, isNegative } from "../util/format";
-
 
 const ResponsiveGrid = styled.div`
   display: grid;
@@ -59,15 +58,15 @@ const PageArrow = ({ disabled, left, onClick }: {disabled?: boolean, left: boole
   )
 }
 
-const LastRow = ({ children }) => {
+const LastRow = (props: React.PropsWithChildren) => {
   return (
     <div className="text-gmx-text w-full flex justify-center items-center content-center mt-1 mb-2">
-      {children}
+      {props.children}
     </div>
   )
 }
 
-const PageButtons = ({ page, setPage, maxPage }: { page: number, setPage, maxPage: number }) => {
+const PageButtons = ({ page, setPage, maxPage }: { page: number, setPage: (value: SetStateAction<number>) => void, maxPage: number }) => {
   return (
     <LastRow>
       <PageArrow left={true} disabled={page == 1} onClick={() => {page == 1 ? null : setPage((p: number) => p - 1)}} />
@@ -86,14 +85,14 @@ const Break = () => {
 
 const ExtraSmallOnly = (props: BaseProps) => {
   return (
-    <span className="hidden tosm:block" {...props} />
+    <span className="block sm:hidden" {...props} />
   )
 }
 
 
 const HideExtraSmall = (props: BaseProps) => {
   return (
-    <span className="tosm:hidden" {...props} />
+    <span className="hidden sm:block" {...props} />
   )
 }
 

@@ -2,13 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-interface ClientOnlyProps {
-  children: React.ReactNode;
-}
-
-const ClientOnly: React.FC<ClientOnlyProps> = ({ 
-  children
-}) => {
+const ClientOnly = (props: React.PropsWithChildren) => {
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -19,7 +13,7 @@ const ClientOnly: React.FC<ClientOnlyProps> = ({
 
   return (
     <>
-      {children}
+      {props.children}
     </>
   );
 };

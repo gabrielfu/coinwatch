@@ -27,9 +27,6 @@ module.exports = {
         'green': 'rgba(14, 204, 131, 1.0)',
         'red': 'rgba(250, 60, 88, 1.0)',
       },
-      screens: {
-        'tosm': {'max': '639px'}
-      }
     },
   },
   plugins: [],

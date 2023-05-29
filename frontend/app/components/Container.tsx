@@ -1,12 +1,8 @@
 'use client';
 
-interface ContainerProps {
-  children: React.ReactNode;
-}
+import React from 'react';
 
-const Container: React.FC<ContainerProps> = ({
-  children
-}) => {
+const Container = (props: React.PropsWithChildren) => {
   return ( 
       <div 
         className="
@@ -18,7 +14,7 @@ const Container: React.FC<ContainerProps> = ({
           px-4
         "
       >
-        {children}
+        {props.children}
       </div>
    );
 }
