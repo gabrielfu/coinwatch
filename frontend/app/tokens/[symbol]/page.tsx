@@ -1,33 +1,34 @@
 'use client';
 
-import { Text } from "rebass";
-import Card from "@/app/components/Card";
-import Column, { AutoColumn } from "@/app/components/Column";
+import React, { useCallback, useEffect, useState } from "react";
 import CandleChart from "@/app/components/charts/CandleChart";
-import { RowBetween, RowFixed } from "@/app/components/Row";
-import styled from "styled-components";
+import RangeSelector from "@/app/components/charts/RangeSelector";
+import Card from "@/app/components/Card";
+import { AutoColumn } from "@/app/components/Column";
+import { RowFixed } from "@/app/components/Row";
 import { Label } from "@/app/components/Text";
-import { twColors } from "@/app/twConfig";
-import { useCallback, useEffect, useState } from "react";
 import TokenLogo from "@/app/components/token/TokenLogo";
 import { formatPrice, formatPriceChange, formatDollarAmount, isNegative, formatInteger } from "@/app/components/util/format";
-import RangeSelector from "@/app/components/charts/RangeSelector";
+import { twColors } from "@/app/twConfig";
 
-const ContentLayout = styled.div`
-  margin-top: 16px;
-  display: grid;
-  grid-template-columns: 2fr 7fr;
-  grid-gap: 2em;
+const ContentLayout = (props: React.PropsWithChildren) => {
+  return (
+    <div
+      className="
+        grid mt-4 gap-8
+      
+        max-screen800:auto-cols-min
+        max-screen800:grid-cols-[1fr]
+      
+        screen800:max-lg:grid-cols-[2fr_5fr]
 
-  @media screen and (max-width: 1080px) {
-    grid-template-columns: 2fr 5fr;
-  }
-
-  @media screen and (max-width: 800px) {
-    grid-template-columns: 1fr;
-    grid-auto-rows: min-content;
-  }
-`
+        lg:grid-cols-[2fr_7fr]
+      "
+    >
+      {props.children}
+    </div>
+   );
+}
 
 const InfoRow = ({ rowName, rowValue }) => {
   return (

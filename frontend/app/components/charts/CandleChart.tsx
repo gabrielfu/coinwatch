@@ -4,10 +4,10 @@ import React, { useRef, useState, useEffect, useCallback, Dispatch, SetStateActi
 import { createChart, IChartApi, ISeriesApi, ColorType, CrosshairMode, MouseEventParams, OhlcData } from 'lightweight-charts';
 import { RowBetween } from '../Row';
 import Card from '../Card';
-import styled from 'styled-components';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { twColors } from '@/app/twConfig';
+import { BoxProps } from 'rebass';
 
 dayjs.extend(utc);
 
@@ -16,17 +16,6 @@ const lineColor = 'rgba(35, 38, 59, 1.0)';
 const candleRed = twColors.red;
 const candleGreen = twColors.green;
 const textColor = twColors.gmx.text;
-
-const Wrapper = styled(Card)`
-  width: 100%;
-  padding: 1rem;
-  display: flex;
-  background-color: "transparent";
-  flex-direction: column;
-  > * {
-    font-size: 1rem;
-  }
-`
 
 type LineChartProps = {
   data: OhlcData[]
@@ -165,7 +154,7 @@ const CandleChart = ({
   }, [chartCreated, series, data]);
 
   return (
-    <Wrapper minHeight={minHeight}>
+    <Card className="w-full p-4 flex rounded-2xl bg-transparent flex-col"  minHeight={minHeight}>
       <RowBetween>
         {topLeft ?? null}
         {topRight ?? null}
@@ -175,7 +164,7 @@ const CandleChart = ({
         {bottomLeft ?? null}
         {bottomRight ?? null}
       </RowBetween>
-    </Wrapper>
+    </Card>
   );
 }
 
