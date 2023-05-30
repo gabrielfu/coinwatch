@@ -30,13 +30,13 @@ const PortfoliosPage = () => {
               padding="6px 12px" 
               width={180}
               height={42}
-              justifyContent="space-between"
+              justifyContent="center"
               style={{ 
                 borderRadius: "8px",
               }}
             >
               <IoAddCircleOutline color="white" size={22} />
-              <Box className="text-white text-[16px] font-semilight" margin="0 6px">
+              <Box className="text-white text-[16px] font-semilight" margin="0 12px">
                 Add Portfolio
               </Box>
             </Label>
