@@ -7,6 +7,7 @@ import { AutoColumn } from "../components/Column";
 import { Label } from "../components/Text";
 import PortfolioTable from "../components/portfolio/PortfolioTable";
 import { twColors } from "../twConfig";
+import usePortfolioModal from "../hooks/usePortfolioModal";
 
 
 const Header = () => {
@@ -19,12 +20,14 @@ const Header = () => {
 
 
 const PortfoliosPage = () => {
+  const portfolioModal = usePortfolioModal();
+
   return ( 
     <Card>
       <AutoColumn gap="8px">
         <div className="flex w-full justify-between">
           <Label ml="16px" color="white" fontSize={24}>Portfolios</Label>
-          <div className="hover:cursor-pointer">
+          <div className="hover:cursor-pointer" onClick={portfolioModal.onOpen}>
             <Label backgroundColor={twColors.gmx.gray}
               marginBottom="12px" 
               padding="6px 12px" 
