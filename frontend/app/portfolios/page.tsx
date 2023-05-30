@@ -28,7 +28,7 @@ const PortfoliosPage = () => {
             <Label backgroundColor={twColors.gmx.gray}
               marginBottom="12px" 
               padding="6px 12px" 
-              width={180}
+              width={200}
               height={42}
               justifyContent="center"
               style={{ 
@@ -37,7 +37,7 @@ const PortfoliosPage = () => {
             >
               <IoMdAddCircleOutline color="white" size={22} />
               <Box className="text-white text-[16px] font-semilight" margin="0 12px">
-                Add Portfolio
+                Create Portfolio
               </Box>
             </Label>
           </div>
