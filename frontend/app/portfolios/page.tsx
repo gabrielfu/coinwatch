@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from "rebass";
-import { IoAddCircleOutline } from "react-icons/io5";
+import { IoMdAddCircleOutline } from "react-icons/io";
 import Card from "../components/Card";
 import { AutoColumn } from "../components/Column";
 import { Label } from "../components/Text";
@@ -35,7 +35,7 @@ const PortfoliosPage = () => {
                 borderRadius: "8px",
               }}
             >
-              <IoAddCircleOutline color="white" size={22} />
+              <IoMdAddCircleOutline color="white" size={22} />
               <Box className="text-white text-[16px] font-semilight" margin="0 12px">
                 Add Portfolio
               </Box>
