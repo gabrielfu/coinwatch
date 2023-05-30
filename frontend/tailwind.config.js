@@ -13,7 +13,17 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        'midnight': '#121063',
+        'extradark': '#101124',
+        'dark': '#20243F',
+        'medium': '#2A2E62',
+        'light': '#3C428C',
+        'highlight': '#2E3ED3',
+        'text': '#BABAC1',
+        'highlight_text': '#FFFFFF',
+        'disabled_text': '#454759',
+        'shadow': '#212439',
+        'tick_green': 'rgba(14, 204, 131, 1.0)',
+        'tick_red': 'rgba(250, 60, 88, 1.0)',
         'gmx': {
           'dark': '#101124',
           'medium': '#16182E',
