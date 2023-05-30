@@ -24,7 +24,7 @@ export const Heading = ({
       <div className="text-2xl font-bold">
         {title}
       </div>
-      <div className="font-light text-neutral-500 mt-2">
+      <div className="font-light text-gmx-text mt-2">
         {subtitle}
       </div>
     </div>
@@ -75,7 +75,7 @@ export const Input = ({
           p-4
           pt-6 
           font-light 
-          bg-white 
+          bg-gmx-extralight 
           border-2
           rounded-md
           outline-none
@@ -83,8 +83,8 @@ export const Input = ({
           disabled:opacity-70
           disabled:cursor-not-allowed
           ${formatPrice ? 'pl-9' : 'pl-4'}
-          ${errors[id] ? 'border-rose-500' : 'border-neutral-300'}
-          ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}
+          ${errors[id] ? 'border-red' : 'border-gmx-gray'}
+          ${errors[id] ? 'focus:border-red' : 'focus:border-white'}
         `}
       />
       <label 
@@ -102,7 +102,7 @@ export const Input = ({
           peer-placeholder-shown:translate-y-0 
           peer-focus:scale-75
           peer-focus:-translate-y-4
-          ${errors[id] ? 'text-rose-500' : 'text-zinc-400'}
+          ${errors[id] ? 'text-red' : 'text-gmx-text'}
         `}
       >
         {label}
@@ -173,79 +173,23 @@ const Modal = ({
 
   return (
     <>
-      <div
-        className="
-          justify-center 
-          items-center 
-          flex 
-          overflow-x-hidden 
-          overflow-y-auto 
-          fixed 
-          inset-0 
-          z-50 
-          outline-none 
-          focus:outline-none
-          bg-neutral-800/70
-        "
+      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto 
+        fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70"
       >
-        <div className="
-          relative 
-          w-full
-          md:w-4/6
-          lg:w-3/6
-          xl:w-2/5
-          my-6
-          mx-auto 
-          h-full 
-          lg:h-auto
-          md:h-auto
-          "
-        >
+        <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto">
           {/*content*/}
           <div className={`
-            translate
-            duration-300
-            h-full
+            translate duration-300 h-full 
             ${showModal ? 'translate-y-0' : 'translate-y-full'}
             ${showModal ? 'opacity-100' : 'opacity-0'}
           `}>
-            <div className="
-              translate
-              h-full
-              lg:h-auto
-              md:h-auto
-              border-0 
-              rounded-lg 
-              shadow-lg 
-              relative 
-              flex 
-              flex-col 
-              w-full 
-              bg-white 
-              outline-none 
-              focus:outline-none
-            "
+            <div className="translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg 
+              relative flex flex-col w-full bg-gmx-light text-white outline-none focus:outline-none"
             >
               {/*header*/}
-              <div className="
-                flex 
-                items-center 
-                p-6
-                rounded-t
-                justify-center
-                relative
-                border-b-[1px]
-                "
-              >
+              <div className="flex items-center p-6 rounded-t justify-center relative border-b-[1px] border-gmx-gray">
                 <button
-                  className="
-                    p-1
-                    border-0 
-                    hover:opacity-70
-                    transition
-                    absolute
-                    left-9
-                  "
+                  className="p-1 border-0 hover:opacity-70 transition absolute left-9"
                   onClick={handleClose}
                 >
                   <IoMdClose size={18} />
@@ -260,15 +204,7 @@ const Modal = ({
               </div>
               {/*footer*/}
               <div className="flex flex-col gap-2 p-6">
-                <div 
-                  className="
-                    flex 
-                    flex-row 
-                    items-center 
-                    gap-4 
-                    w-full
-                  "
-                >
+                <div className="flex flex-row items-center gap-4 w-full">
                   {secondaryAction && secondaryActionLabel && (
                     <Button 
                       disabled={disabled} 
