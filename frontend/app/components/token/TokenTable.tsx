@@ -153,7 +153,7 @@ const TokenTable = ({ tokenDatas }: {tokenDatas: TokenData[]}) => {
             Price
           </ClickableText>
           <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("priceChange")}>
-            Price Change %
+            Price Chg %
           </ClickableText>
           <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("volume")}>
             Volume 24H

@@ -20,11 +20,11 @@ const ResponsiveGrid = (props: React.PropsWithChildren) => {
         max-md:[&>*:nth-child(6)]:hidden
         max-md:[&>*:nth-child(7)]:hidden
 
-        md:max-xl:grid-cols-[20px_1.5fr_repeat(3,1fr)]
-        md:max-xl:[&>*:nth-child(4)]:hidden
-        md:max-xl:[&>*:nth-child(6)]:hidden
+        md:max-lg:grid-cols-[20px_1.5fr_repeat(3,1fr)]
+        md:max-lg:[&>*:nth-child(4)]:hidden
+        md:max-lg:[&>*:nth-child(6)]:hidden
 
-        xl:grid-cols-[20px_2fr_repeat(5,1fr)]
+        lg:grid-cols-[20px_2fr_repeat(5,1fr)]
       "
     >
       {props.children}
@@ -100,20 +100,19 @@ const PortfolioTable = () => {
             Market Value
           </ClickableText>
           <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("dayChange")}>
-            Day Change
+            Day Chg
           </ClickableText>
           <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("dayChangePercent")}>
-            Day Change %
+            Day Chg %
           </ClickableText>
           <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("totalChange")}>
-            Total Change
+            Total Chg
           </ClickableText>
           <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("totalChangePercent")}>
-            Total Change %
+            Total Chg %
           </ClickableText>
         </ResponsiveGrid>
-
-        
+        <Break />
 
         {datas.length > 0 
           ? <>
@@ -128,7 +127,6 @@ const PortfolioTable = () => {
             No Data
           </LastRow>
         }
-
       </AutoColumn>
     </Card>
    );
