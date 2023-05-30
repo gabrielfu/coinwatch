@@ -49,12 +49,12 @@ const TokensPage = () => {
           sm:grid-cols-[1fr_1fr]
           lg:grid-cols-[2fr_1fr]
         ">
-          <Label ml="16px" color="white" fontSize={24}>All Tokens</Label>
+          <Label ml="16px" color="white" fontSize={24}>Tokens</Label>
           <TokenSearch width="100%" onChange={handleSearchChange} />
         </div>
         <TokenTable tokenDatas={searchValue ? searchedData : data} />
       </AutoColumn>
-    </Card>   
+    </Card>
    );
 }
  

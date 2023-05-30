@@ -9,6 +9,7 @@ import { Label, ClickableText, Percent } from "../Text";
 import { twColors } from '@/app/twConfig';
 import { TokenData } from "@/app/actions/data";
 import TokenLogo from "./TokenLogo";
+import { Break, PageButtons, LastRow } from "@/app/components/Table";
 import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative } from "../util/format";
 
 const ResponsiveGrid = (props: React.PropsWithChildren) => {
@@ -37,39 +38,6 @@ const ResponsiveGrid = (props: React.PropsWithChildren) => {
     </div>
    );
 }
-
-const PageArrow = ({ disabled, left, onClick }: {disabled?: boolean, left: boolean, onClick?: () => void}) => {
-  return (
-    <div className={"pt-0 pb-0 pl-5 pr-5 select-none hover:cursor-pointer " + (disabled ? "opacity-40" : "opacity-100")} onClick={onClick}>
-      {left ? "◀" : "▶"}
-    </div>
-  )
-}
-
-const LastRow = (props: React.PropsWithChildren) => {
-  return (
-    <div className="text-gmx-text w-full flex justify-center items-center content-center mt-1 mb-2">
-      {props.children}
-    </div>
-  )
-}
-
-const PageButtons = ({ page, setPage, maxPage }: { page: number, setPage: (value: SetStateAction<number>) => void, maxPage: number }) => {
-  return (
-    <LastRow>
-      <PageArrow left={true} disabled={page == 1} onClick={() => {page == 1 ? null : setPage((p: number) => p - 1)}} />
-        {`Page ${page} / ${maxPage}`}
-      <PageArrow left={false} disabled={page == maxPage} onClick={() => {page == maxPage ? null : setPage((p: number) => p + 1)}} />
-    </LastRow>
-  )
-}
-
-const Break = () => {
-  return ( 
-    <div className="h-px w-full bg-gmx-break" />
-   );
-}
-
 
 const ExtraSmallOnly = (props: React.PropsWithChildren & { style: React.CSSProperties; }) => {
   return (
@@ -185,7 +153,7 @@ const TokenTable = ({ tokenDatas }: {tokenDatas: TokenData[]}) => {
             Price
           </ClickableText>
           <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("priceChange")}>
-            PriceChange
+            Price Change %
           </ClickableText>
           <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("volume")}>
             Volume 24H
