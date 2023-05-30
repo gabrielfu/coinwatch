@@ -17,15 +17,15 @@ const ResponsiveGrid = (props: React.PropsWithChildren) => {
       className="
         grid items-center mx-4 gap-4
 
-        max-screen679:grid-cols-[repeat(2,1fr)]
-        max-screen679:[&>*:first-child]:hidden
-        max-screen679:[&>*:nth-child(4)]:hidden
-        max-screen679:[&>*:nth-child(5)]:hidden
-        max-screen679:[&>*:nth-child(6)]:hidden
+        max-sm:grid-cols-[repeat(2,1fr)]
+        max-sm:[&>*:first-child]:hidden
+        max-sm:[&>*:nth-child(4)]:hidden
+        max-sm:[&>*:nth-child(5)]:hidden
+        max-sm:[&>*:nth-child(6)]:hidden
 
-        screen679:max-screen800:grid-cols-[20px_1.5fr_repeat(2,1fr)]
-        screen679:max-screen800:[&>*:nth-child(5)]:hidden
-        screen679:max-screen800:[&>*:nth-child(6)]:hidden
+        sm:max-screen800:grid-cols-[20px_1.5fr_repeat(2,1fr)]
+        sm:max-screen800:[&>*:nth-child(5)]:hidden
+        sm:max-screen800:[&>*:nth-child(6)]:hidden
 
         screen800:max-screen900:grid-cols-[20px_1.5fr_repeat(3,1fr)]
         screen800:max-screen900:[&>*:nth-child(5)]:hidden

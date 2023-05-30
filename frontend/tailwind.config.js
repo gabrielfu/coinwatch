@@ -28,7 +28,6 @@ module.exports = {
         'red': 'rgba(250, 60, 88, 1.0)',
       },
       screens: {
-        'screen679': '679px',
         'screen800': '800px',
         'screen900': '900px',
       },

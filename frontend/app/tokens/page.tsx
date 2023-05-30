@@ -43,10 +43,15 @@ const TokensPage = () => {
   return ( 
     <Card>
       <AutoColumn gap="8px">
-        <Label justifyContent="space-between" marginBottom="16px">
+        <div className="
+          grid grid-flow-row gap-4 w-full justify-between
+          max-sm:auto-cols-min max-sm:grid-cols-[1fr] 
+          sm:grid-cols-[1fr_1fr]
+          lg:grid-cols-[2fr_1fr]
+        ">
           <Label ml="16px" color="white" fontSize={24}>All Tokens</Label>
-          <TokenSearch onChange={handleSearchChange} />
-        </Label>
+          <TokenSearch width="100%" onChange={handleSearchChange} />
+        </div>
         <TokenTable tokenDatas={searchValue ? searchedData : data} />
       </AutoColumn>
     </Card>   

@@ -3,9 +3,12 @@ import { Label } from "../Text";
 import { twColors } from "@/app/twConfig";
 import { Input } from "@rebass/forms";
 
-const TokenSearch = ({ onChange }: { onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
+const TokenSearch = ({ onChange, width }: { 
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  width?: number | string;
+}) => {
   return ( 
-    <Label backgroundColor="transparent" color={twColors.gmx.gray} padding="4px 12px" width={300} 
+    <Label backgroundColor="transparent" color={twColors.gmx.gray} marginBottom="12px" padding="4px 12px" width={width ?? 300} 
       type="text"
       justifyContent="space-between"
       style={{ 
