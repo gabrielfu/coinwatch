@@ -104,7 +104,7 @@ const PriceText = ({ price, priceChangePercent, negative }: {
 
 const Widget = ({ data }: {data?: OhlcData}) => {
   if (!data) {
-    return <div></div>;
+    return <div className="h-10 mt-4 screen800:mt-0"></div>;
   }
 
   const change = data.close - data.open;
@@ -120,7 +120,7 @@ const Widget = ({ data }: {data?: OhlcData}) => {
   };
   const color = negative ? "text-tickDown" : "text-tickUp";
   return (
-    <div className="text-white">
+    <div className="text-white h-10 mt-4 screen800:mt-0">
       <span>O</span>
       <span className={color}>{formatted.open} </span>
       <span>H</span>

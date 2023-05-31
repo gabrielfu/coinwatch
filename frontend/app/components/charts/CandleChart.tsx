@@ -155,10 +155,16 @@ const CandleChart = ({
 
   return (
     <Card className="w-full p-4 flex rounded-2xl bg-transparent flex-col"  minHeight={minHeight}>
-      <RowBetween marginBottom={16}>
-        {topLeft ?? null}
+      <div className="hidden screen800:block">
+        <RowBetween marginBottom={16}>
+          {topLeft ?? null}
+          {topRight ?? null}
+        </RowBetween>
+      </div>
+      <div className="screen800:hidden flex flex-col justify-start">
         {topRight ?? null}
-      </RowBetween>
+        {topLeft ?? null}
+      </div>
       <div ref={chartRef} id={'candle-chart'} {...rest} />
       <RowBetween>
         {bottomLeft ?? null}
