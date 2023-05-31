@@ -6,14 +6,14 @@ const Button = ({
   label, 
   onClick, 
   disabled, 
-  outline,
+  secondary,
   small,
   icon: Icon,
 }: {
   label: string;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
-  outline?: boolean;
+  secondary?: boolean;
   small?: boolean;
   icon?: IconType;
 }) => {
@@ -29,9 +29,9 @@ const Button = ({
         hover:opacity-80
         transition
         w-full
-        ${outline ? 'bg-white' : 'bg-rose-500'}
-        ${outline ? 'border-black' : 'border-rose-500'}
-        ${outline ? 'text-black' : 'text-white'}
+        ${secondary ? 'bg-tertiary' : 'bg-highlight'}
+        ${secondary ? 'border-tertiary' : 'border-highlight'}
+        ${secondary ? 'text-text' : 'text-white'}
         ${small ? 'text-sm' : 'text-md'}
         ${small ? 'py-1' : 'py-3'}
         ${small ? 'font-light' : 'font-semibold'}

@@ -72,10 +72,10 @@ export const Input = ({
         className={`
           peer
           w-full
-          p-4
+          p-2
           pt-6 
           font-light 
-          bg-tertiary 
+          bg-secondary 
           border-2
           rounded-md
           outline-none
@@ -83,8 +83,8 @@ export const Input = ({
           disabled:opacity-70
           disabled:cursor-not-allowed
           ${formatPrice ? 'pl-9' : 'pl-4'}
-          ${errors[id] ? 'border-red' : 'border-border'}
-          ${errors[id] ? 'focus:border-red' : 'focus:border-white'}
+          ${errors[id] ? 'border-red-500' : 'border-border'}
+          ${errors[id] ? 'focus:border-red-500' : 'focus:border-border'}
         `}
       />
       <label 
@@ -94,7 +94,7 @@ export const Input = ({
           duration-150 
           transform 
           -translate-y-3 
-          top-5 
+          top-4 
           z-10 
           origin-[0] 
           ${formatPrice ? 'left-9' : 'left-4'}
@@ -102,7 +102,7 @@ export const Input = ({
           peer-placeholder-shown:translate-y-0 
           peer-focus:scale-75
           peer-focus:-translate-y-4
-          ${errors[id] ? 'text-red' : 'text-text'}
+          ${errors[id] ? 'text-red-500' : 'text-text'}
         `}
       >
         {label}
@@ -116,6 +116,7 @@ const Modal = ({
   onClose, 
   onSubmit, 
   title, 
+  subtitle, 
   body, 
   actionLabel, 
   footer, 
@@ -126,7 +127,8 @@ const Modal = ({
   isOpen?: boolean;
   onClose: () => void;
   onSubmit: () => void;
-  title?: string;
+  title: string;
+  subtitle?: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
   actionLabel: string;
@@ -183,34 +185,35 @@ const Modal = ({
             ${showModal ? 'translate-y-0' : 'translate-y-full'}
             ${showModal ? 'opacity-100' : 'opacity-0'}
           `}>
-            <div className="translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg 
+            <div className="translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg p-4 
               relative flex flex-col w-full bg-primary text-white outline-none focus:outline-none"
             >
               {/*header*/}
-              <div className="flex items-center p-6 rounded-t justify-center relative border-b-[1px] border-border">
+              <div className="flex p-6 rounded-t justify-between items-start">
+                <Heading
+                  title={title}
+                  subtitle={subtitle}
+                />
                 <button
-                  className="p-1 border-0 hover:opacity-70 transition absolute left-9"
+                  className="p-1 border-0 hover:opacity-70 transition"
                   onClick={handleClose}
                 >
                   <IoMdClose size={18} />
                 </button>
-                <div className="text-lg font-semibold">
-                  {title}
-                </div>
               </div>
               {/*body*/}
-              <div className="relative p-6 flex-auto">
+              <div className="relative px-6 flex-auto">
                 {body}
               </div>
-              {/*footer*/}
               <div className="flex flex-col gap-2 p-6">
+                {/*action*/}
                 <div className="flex flex-row items-center gap-4 w-full">
                   {secondaryAction && secondaryActionLabel && (
                     <Button 
                       disabled={disabled} 
                       label={secondaryActionLabel} 
                       onClick={handleSecondaryAction}
-                      outline
+                      secondary
                     />  
                   )}
                   <Button 
@@ -219,6 +222,7 @@ const Modal = ({
                     onClick={handleSubmit}
                   />
                 </div>
+                {/*footer*/}
                 {footer}
               </div>
             </div>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc"
+import { SiBinance } from "react-icons/si"
 import Modal, { Heading, Input } from "./Modal";
 import usePortfolioModal from "@/app/hooks/usePortfolioModal";
 import Button from "../Button";
@@ -46,13 +46,9 @@ const PortfolioModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading
-        title="Create a new portfolio"
-        subtitle="subtitle!"
-      />
       <Input
         id="name"
-        label="Name"
+        label="Portfolio Name"
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -63,32 +59,14 @@ const PortfolioModal = () => {
 
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
-      <hr />
+      <hr className="border-tertiary my-4" />
+      <Heading title="Import Portfolio" />
       <Button 
-        outline 
-        label="Continue with Google"
-        icon={FcGoogle}
+        label="Import from Binance"
+        icon={SiBinance}
         onClick={() => {}} 
+        secondary
       />
-      <div 
-        className="
-          text-neutral-500 
-          text-center 
-          mt-4 
-          font-light
-        "
-      >
-        <p>Already have an account?
-          <span 
-            // onClick={onToggle} 
-            className="
-              text-neutral-800
-              cursor-pointer 
-              hover:underline
-            "
-            > Log in</span>
-        </p>
-      </div>
     </div>
   )
 
@@ -99,7 +77,7 @@ const PortfolioModal = () => {
       onSubmit={handleSubmit(onSubmit)}
       onClose={portfolioModal.onClose}
       title="Create New Portfolio"
-      actionLabel="Create"
+      actionLabel="Submit"
       body={bodyContent}
       footer={footerContent}
     />
