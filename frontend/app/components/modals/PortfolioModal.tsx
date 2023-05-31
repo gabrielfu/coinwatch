@@ -7,6 +7,7 @@ import { SiBinance } from "react-icons/si"
 import Modal, { Heading, Input } from "./Modal";
 import usePortfolioModal from "@/app/hooks/usePortfolioModal";
 import Button from "../Button";
+import axios from "axios";
 
 const PortfolioModal = () => {
   const portfolioModal = usePortfolioModal();
@@ -26,22 +27,17 @@ const PortfolioModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    setTimeout(() => {
-      portfolioModal.onClose();
-      setIsLoading(false);
-    }, 5000);
-
-    // axios.post('/api/register', data)
-    // .then(() => {
-    //   toast.success(`Created portfolio ${data.name}`);
-    //   portfolioModal.onClose();
-    // })
-    // .catch((error) => {
-    //   toast.error(error);
-    // })
-    // .finally(() => {
-    //   setIsLoading(false);
-    // })
+    axios.post('/api/v1/portfolios', data)
+      .then(() => {
+        toast.success(`Created portfolio ${data.name}`);
+        portfolioModal.onClose();
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   const bodyContent = (
