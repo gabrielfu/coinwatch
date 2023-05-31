@@ -159,7 +159,7 @@ const TokenPage = ({ params }: {params: any}) => {
               ? "Loading..."
               : <CandleChart 
                   data={chartData}
-                  height={400}
+                  height={360}
                   topLeft={<RangeSelector setRange={setRange} setInterval={setInterval} activeRange={range} activeInterval={interval} />}
                 />
             }
