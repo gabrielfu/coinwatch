@@ -13,7 +13,7 @@ export const PageArrow = ({ disabled, left, onClick }: {disabled?: boolean, left
 
 export const LastRow = (props: React.PropsWithChildren) => {
   return (
-    <div className="text-gmx-text w-full flex justify-center items-center content-center mt-1 mb-2">
+    <div className="text-text w-full flex justify-center items-center content-center mt-1 mb-2">
       {props.children}
     </div>
   )
@@ -31,6 +31,6 @@ export const PageButtons = ({ page, setPage, maxPage }: { page: number, setPage:
 
 export const Break = () => {
   return ( 
-    <div className="h-px w-full bg-gmx-break" />
+    <div className="h-px w-full bg-shadow" />
    );
 }

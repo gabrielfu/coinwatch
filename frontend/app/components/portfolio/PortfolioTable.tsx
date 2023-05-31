@@ -89,26 +89,26 @@ const PortfolioTable = () => {
   const datas = [1,2,3];
 
   return ( 
-    <Card backgroundColor={twColors.gmx.light}>
+    <Card backgroundColor={twColors.primary}>
       <AutoColumn gap="16px" margin="0.25em 0 0.25em 0">
         <ResponsiveGrid>
-          <Label color={twColors.gmx.text}>#</Label>
-          <ClickableText color={twColors.gmx.text} onClick={() => handleSort("name")}>
+          <Label color={twColors.text}>#</Label>
+          <ClickableText color={twColors.text} onClick={() => handleSort("name")}>
             Name
           </ClickableText>
-          <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("marketValue")}>
+          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("marketValue")}>
             Market Value
           </ClickableText>
-          <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("dayChange")}>
+          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("dayChange")}>
             Day Chg
           </ClickableText>
-          <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("dayChangePercent")}>
+          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("dayChangePercent")}>
             Day Chg %
           </ClickableText>
-          <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("totalChange")}>
+          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("totalChange")}>
             Total Chg
           </ClickableText>
-          <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("totalChangePercent")}>
+          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("totalChangePercent")}>
             Total Chg %
           </ClickableText>
         </ResponsiveGrid>

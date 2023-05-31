@@ -24,7 +24,7 @@ export const Heading = ({
       <div className="text-2xl font-bold">
         {title}
       </div>
-      <div className="font-light text-gmx-text mt-2">
+      <div className="font-light text-text mt-2">
         {subtitle}
       </div>
     </div>
@@ -75,7 +75,7 @@ export const Input = ({
           p-4
           pt-6 
           font-light 
-          bg-gmx-extralight 
+          bg-tertiary 
           border-2
           rounded-md
           outline-none
@@ -83,7 +83,7 @@ export const Input = ({
           disabled:opacity-70
           disabled:cursor-not-allowed
           ${formatPrice ? 'pl-9' : 'pl-4'}
-          ${errors[id] ? 'border-red' : 'border-gmx-gray'}
+          ${errors[id] ? 'border-red' : 'border-border'}
           ${errors[id] ? 'focus:border-red' : 'focus:border-white'}
         `}
       />
@@ -102,7 +102,7 @@ export const Input = ({
           peer-placeholder-shown:translate-y-0 
           peer-focus:scale-75
           peer-focus:-translate-y-4
-          ${errors[id] ? 'text-red' : 'text-gmx-text'}
+          ${errors[id] ? 'text-red' : 'text-text'}
         `}
       >
         {label}
@@ -184,10 +184,10 @@ const Modal = ({
             ${showModal ? 'opacity-100' : 'opacity-0'}
           `}>
             <div className="translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg 
-              relative flex flex-col w-full bg-gmx-light text-white outline-none focus:outline-none"
+              relative flex flex-col w-full bg-primary text-white outline-none focus:outline-none"
             >
               {/*header*/}
-              <div className="flex items-center p-6 rounded-t justify-center relative border-b-[1px] border-gmx-gray">
+              <div className="flex items-center p-6 rounded-t justify-center relative border-b-[1px] border-border">
                 <button
                   className="p-1 border-0 hover:opacity-70 transition absolute left-9"
                   onClick={handleClose}

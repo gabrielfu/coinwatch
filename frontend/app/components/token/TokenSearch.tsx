@@ -8,18 +8,18 @@ const TokenSearch = ({ onChange, width }: {
   width?: number | string;
 }) => {
   return ( 
-    <Label backgroundColor="transparent" color={twColors.gmx.gray} marginBottom="12px" padding="4px 12px" width={width ?? 300} 
+    <Label backgroundColor="transparent" color={twColors.border} marginBottom="12px" padding="4px 12px" width={width ?? 300} 
       type="text"
       justifyContent="space-between"
       style={{ 
         borderRadius: "8px", 
         borderWidth: "2px", 
-        borderColor: twColors.gmx.gray
+        borderColor: twColors.border
       }}>
       <Input 
         className="focus:outline-none"
         name="token" placeholder="Search tokens" 
-        color={twColors.gmx.text} margin="0 4px" padding="0" width={300} height={32} backgroundColor="transparent" 
+        color={twColors.text} margin="0 4px" padding="0" width={300} height={32} backgroundColor="transparent" 
         style={{borderWidth: 0, border: 0, borderRadius: 0}}
         onChange={onChange || ((e) => {})}
       />

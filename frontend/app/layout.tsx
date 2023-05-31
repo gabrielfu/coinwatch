@@ -30,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={nunito.className + " bg-gmx-dark"}>
+      <body className={nunito.className + " bg-backdrop"}>
         <main className="relative z-10 flex justify-center items-center flex-col">
           <BodyWrapper>
             <PortfolioModal />

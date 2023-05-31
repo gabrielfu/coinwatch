@@ -37,7 +37,7 @@ const InfoRow = ({ rowName, rowValue }: {
 }) => {
   return (
     <AutoColumn gap="4px" margin="0" justify="space-between">
-      <Label color={twColors.gmx.text} fontWeight={400} fontSize={18}>
+      <Label color={twColors.text} fontWeight={400} fontSize={18}>
         {rowName}
       </Label>
       <Label color="white" fontWeight={600} fontSize={24}>
@@ -73,7 +73,7 @@ const Header = ({ symbol, name, logo }: {
       <Label ml="16px" color="white" fontSize={24}>
         {name}
       </Label>
-      <Label ml="8px" color={twColors.gmx.text} fontSize={24}>
+      <Label ml="8px" color={twColors.text} fontSize={24}>
         ({symbol})
       </Label>
     </Label>
@@ -86,8 +86,8 @@ const PriceText = ({ price, priceChangePercent, negative }: {
   negative: boolean;
 }) => {
   const color = (negative ?
-    twColors.red : 
-    twColors.green) as string;
+    twColors.tick_down : 
+    twColors.tick_up) as string;
 
   return ( 
     <Label mt="16px" color="white">
@@ -149,12 +149,12 @@ const TokenPage = ({ params }: {params: any}) => {
           />}
 
         <ContentLayout>
-          <Card padding={"1rem 0 1rem 0"} backgroundColor={twColors.gmx.light}>
+          <Card padding={"1rem 0 1rem 0"} backgroundColor={twColors.primary}>
             {quoteData && 
             <InfoTable data={quoteData}/>}
           </Card>
 
-          <Card backgroundColor={twColors.gmx.light}>
+          <Card backgroundColor={twColors.primary}>
             {chartData == null 
               ? "Loading..."
               : <CandleChart 

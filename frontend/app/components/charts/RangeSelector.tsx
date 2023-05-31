@@ -46,8 +46,8 @@ const RangeSelector = ({
 }) => {
   return ( 
     <Label 
-      backgroundColor={twColors.gmx.medium} 
-      color={twColors.gmx.text}
+      backgroundColor={twColors.tertiary} 
+      color={twColors.text}
       type="text"
       justifyContent="space-between"
       marginBottom="16px"

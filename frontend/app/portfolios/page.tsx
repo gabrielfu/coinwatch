@@ -28,7 +28,7 @@ const PortfoliosPage = () => {
         <div className="flex w-full justify-between">
           <Label ml="16px" color="white" fontSize={24}>Portfolios</Label>
           <div className="hover:cursor-pointer" onClick={portfolioModal.onOpen}>
-            <Label backgroundColor={twColors.gmx.gray}
+            <Label backgroundColor={twColors.highlight}
               marginBottom="12px" 
               padding="6px 12px" 
               width={200}

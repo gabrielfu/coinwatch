@@ -90,7 +90,7 @@ const DataRow = ({
                 <Label>
                   {formattedData.name}
                 </Label>
-                <Label ml="8px" color={twColors.gmx.text}>
+                <Label ml="8px" color={twColors.text}>
                   ({formattedData.symbol})
                 </Label>
               </RowFixed>
@@ -142,23 +142,23 @@ const TokenTable = ({ tokenDatas }: {tokenDatas: TokenData[]}) => {
   );
 
   return ( 
-    <Card backgroundColor={twColors.gmx.light}>
+    <Card backgroundColor={twColors.primary}>
       <AutoColumn gap="16px" margin="0.25em 0 0.25em 0">
         <ResponsiveGrid>
-          <Label color={twColors.gmx.text}>#</Label>
-          <ClickableText color={twColors.gmx.text} onClick={() => handleSort("name")}>
+          <Label color={twColors.text}>#</Label>
+          <ClickableText color={twColors.text} onClick={() => handleSort("name")}>
             Name
           </ClickableText>
-          <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("price")}>
+          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("price")}>
             Price
           </ClickableText>
-          <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("priceChange")}>
+          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("priceChange")}>
             Price Chg %
           </ClickableText>
-          <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("volume")}>
+          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("volume")}>
             Volume 24H
           </ClickableText>
-          <ClickableText end={1} color={twColors.gmx.text} onClick={() => handleSort("marketCap")}>
+          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("marketCap")}>
             Market Cap
           </ClickableText>
         </ResponsiveGrid>
