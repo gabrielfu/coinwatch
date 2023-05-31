@@ -13,15 +13,15 @@ dayjs.extend(utc);
 
 const DEFAULT_HEIGHT = 300;
 const lineColor = 'rgba(35, 38, 59, 1.0)';
-const candleRed = twColors.tick_down;
-const candleGreen = twColors.tick_up;
+const candleRed = twColors.tickDown;
+const candleGreen = twColors.tickUp;
 const textColor = twColors.text;
 
 type LineChartProps = {
   data: OhlcData[]
   height?: number | undefined
   minHeight?: number
-  setValue?: Dispatch<SetStateAction<number | undefined>> // used for value on hover
+  setValue?: Dispatch<SetStateAction<OhlcData | undefined>> // used for value on hover
   setLabel?: Dispatch<SetStateAction<string | undefined>> // used for value label on hover
   topLeft?: ReactNode | undefined
   topRight?: ReactNode | undefined
@@ -134,8 +134,8 @@ const CandleChart = ({
         } else if (candleSeries && param) {
           const timestamp = param.time as number;
           const time = dayjs.unix(timestamp).utc().format('DD MMM YYYY h:mm A') + ' (UTC)';
-          const parsed = param.seriesData.get(candleSeries) as { open: number } | undefined;
-          setValue && setValue(parsed?.open);
+          const ohlc = param.seriesData.get(candleSeries) as (OhlcData | undefined);
+          setValue && setValue(ohlc);
           setLabel && setLabel(time);
         }
       });

@@ -1,7 +1,12 @@
 import numbro from 'numbro';
 
-export const formatPrice = (x: number) => {
-  return "$" + (x >= 10 ? x.toLocaleString("en-US", { 
+export const formatPrice = (
+  x: number, 
+  dollarSign = true, 
+  f: number | undefined = undefined,
+  plusSign = false,
+) => {
+  return (dollarSign ? "$" : "") + (plusSign && (x >= 0) ? "+" : "") + ((f || x) >= 10 ? x.toLocaleString("en-US", { 
     maximumFractionDigits: 2, 
     minimumFractionDigits: 2, 
   }) : x.toLocaleString("en-US", { 

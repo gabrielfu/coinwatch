@@ -11,6 +11,7 @@ import TokenLogo from "@/app/components/token/TokenLogo";
 import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative, formatInteger } from "@/app/components/util/format";
 import { twColors } from "@/app/twConfig";
 import { TokenData } from "@/app/actions/tokens";
+import { OhlcData } from "lightweight-charts";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -86,8 +87,8 @@ const PriceText = ({ price, priceChangePercent, negative }: {
   negative: boolean;
 }) => {
   const color = (negative ?
-    twColors.tick_down : 
-    twColors.tick_up) as string;
+    twColors.tickDown : 
+    twColors.tickUp) as string;
 
   return ( 
     <Label mt="16px" color="white">
@@ -101,10 +102,43 @@ const PriceText = ({ price, priceChangePercent, negative }: {
    );
 }
 
+const Widget = ({ data }: {data?: OhlcData}) => {
+  if (!data) {
+    return <div></div>;
+  }
+
+  const change = data.close - data.open;
+  const changePercent = change / data.open * 100;
+  const negative = isNegative(changePercent);
+  const formatted = {
+    open: formatPrice(data.open, false),
+    high: formatPrice(data.high, false),
+    low: formatPrice(data.low, false),
+    close: formatPrice(data.close, false),
+    change: formatPrice(change, false, data.open, true),
+    changePercent: formatPriceChangePercent(changePercent),
+  };
+  const color = negative ? "text-tickDown" : "text-tickUp";
+  return (
+    <div className="text-white">
+      <span>O</span>
+      <span className={color}>{formatted.open} </span>
+      <span>H</span>
+      <span className={color}>{formatted.high} </span>
+      <span>L</span>
+      <span className={color}>{formatted.low} </span>
+      <span>C</span>
+      <span className={color}>{formatted.close} &nbsp;</span>
+      <span className={color}>{formatted.change} ({formatted.changePercent})</span>
+    </div>
+  );
+}
+
 const TokenPage = ({ params }: {params: any}) => {
   const symbol: string = params.symbol;
   const [name, setName] = useState<string>("");
   const [logo, setLogo] = useState<string>("");
+  const [widgetLabel, setWidgetLabel] = useState<OhlcData>();
 
   const [quoteData, setQuoteData] = useState<TokenData>();
   const [chartData, setChartData] = useState();
@@ -160,7 +194,9 @@ const TokenPage = ({ params }: {params: any}) => {
               : <CandleChart 
                   data={chartData}
                   height={360}
-                  topLeft={<RangeSelector setRange={setRange} setInterval={setInterval} activeRange={range} activeInterval={interval} />}
+                  setValue={setWidgetLabel}
+                  topLeft={<Widget data={widgetLabel} />}
+                  topRight={<RangeSelector setRange={setRange} setInterval={setInterval} activeRange={range} activeInterval={interval} />}
                 />
             }
           </Card>
