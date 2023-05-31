@@ -38,8 +38,8 @@ export const ClickableText = (props: LabelProps) => {
 
 export const Percent = (props: PercentProps) => {
   const color = (props.negative ?
-    twColors.red : 
-    twColors.green) as string;
+    twColors.tick_down : 
+    twColors.tick_up) as string;
   return (
     <Label 
       fontWeight={500}

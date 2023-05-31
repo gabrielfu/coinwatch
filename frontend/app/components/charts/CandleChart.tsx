@@ -13,9 +13,9 @@ dayjs.extend(utc);
 
 const DEFAULT_HEIGHT = 300;
 const lineColor = 'rgba(35, 38, 59, 1.0)';
-const candleRed = twColors.red;
-const candleGreen = twColors.green;
-const textColor = twColors.gmx.text;
+const candleRed = twColors.tick_down;
+const candleGreen = twColors.tick_up;
+const textColor = twColors.text;
 
 type LineChartProps = {
   data: OhlcData[]

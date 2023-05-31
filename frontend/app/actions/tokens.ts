@@ -54,7 +54,7 @@ export const getTokenWithQuoteDatas = async () => {
                 }
             })
             .filter(t => (t != null) && (t.marketCap > 1_000_000));
-          return tokenDatas;
+          return tokenDatas as TokenData[];
         });
         return innerRes;
     });
