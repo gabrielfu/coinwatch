@@ -11,16 +11,6 @@ import usePortfolioModal from "../hooks/usePortfolioModal";
 import { PortfolioInfo, getPortfolios } from "@/app/actions/portfolios";
 import { useEffect, useState } from "react";
 
-
-const Header = () => {
-  return (
-    <Label>
-
-    </Label>
-   );
-}
-
-
 const PortfoliosPage = () => {
   const [data, setData] = useState<PortfolioInfo[]>([]);
   const [isLoading, setLoading] = useState(false);
@@ -34,7 +24,6 @@ const PortfoliosPage = () => {
         setLoading(false);
       })
   }, []);
-
 
   return ( 
     <Card>

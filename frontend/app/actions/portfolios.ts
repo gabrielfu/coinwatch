@@ -1,8 +1,10 @@
 export interface PortfolioInfo {
+  id: number;
   name: string;
 }
 
 export interface PortfolioData {
+  id: number;
   name: string;
   marketValue: number;
   dayChange: number;

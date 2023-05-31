@@ -37,8 +37,8 @@ const DataRow = ({
   data, 
   index,
 }: {
-  data: any,
-  index: number,
+  data: PortfolioData;
+  index: number;
 }) => {
   const formattedData = {
     name: data.name,
@@ -53,7 +53,7 @@ const DataRow = ({
 
   return ( 
     <>
-      <Link href={`/portfolios/${data.name}`} className="no-underline hover:cursor-pointer hover:opacity-70">
+      <Link href={`/portfolios/${data.id}`} className="no-underline hover:cursor-pointer hover:opacity-70">
         <ResponsiveGrid>
           <Label color='white'>{index + 1}</Label>
           <Label color='white'>{formattedData.name}</Label>
