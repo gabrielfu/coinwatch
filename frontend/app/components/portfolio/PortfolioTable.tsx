@@ -6,6 +6,7 @@ import { Break, LastRow, PageButtons } from "../Table";
 import Link from "next/link";
 import { formatDollarAmount, formatPrice, formatPriceChangePercent, isNegative } from "../util/format";
 import { useState } from "react";
+import { PortfolioData, PortfolioInfo } from "@/app/actions/portfolios";
 
 
 const ResponsiveGrid = (props: React.PropsWithChildren) => {
@@ -39,14 +40,6 @@ const DataRow = ({
   data: any,
   index: number,
 }) => {
-  data = {
-    name: "p1",
-    marketValue: 27201.53,
-    dayChange: 679,
-    dayChangePercent: 2.56,
-    totalChange: 14201.50,
-    totalChangePercent: 109.24,
-  }
   const formattedData = {
     name: data.name,
     marketValue: data.marketValue == null ? "-" : formatPrice(data.marketValue),
@@ -60,7 +53,7 @@ const DataRow = ({
 
   return ( 
     <>
-      <Link href={`/portfolios/${data.symbol}`} className="no-underline hover:cursor-pointer hover:opacity-70">
+      <Link href={`/portfolios/${data.name}`} className="no-underline hover:cursor-pointer hover:opacity-70">
         <ResponsiveGrid>
           <Label color='white'>{index + 1}</Label>
           <Label color='white'>{formattedData.name}</Label>
@@ -77,7 +70,9 @@ const DataRow = ({
 }
 
 
-const PortfolioTable = () => {
+const PortfolioTable = ({ portfolioDatas }: {
+  portfolioDatas: PortfolioData[];
+}) => {
 
   // pagination
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -85,8 +80,6 @@ const PortfolioTable = () => {
   const [maxPage, setMaxPage] = useState(1);
 
   const handleSort = (x: any) => {}
-
-  const datas = [1,2,3];
 
   return ( 
     <Card backgroundColor={twColors.primary}>
@@ -114,11 +107,11 @@ const PortfolioTable = () => {
         </ResponsiveGrid>
         <Break />
 
-        {datas.length > 0 
+        {portfolioDatas.length > 0 
           ? <>
-            {datas.map((data, i) => {
+            {portfolioDatas.map((data, i) => {
               return data 
-                ? <DataRow key={i} index={(page - 1) * itemsPerPage + i} />
+                ? <DataRow key={i} data={data} index={(page - 1) * itemsPerPage + i} />
                 : null;
             })}
             <PageButtons page={page} setPage={setPage} maxPage={maxPage} />

@@ -7,7 +7,7 @@ import { AutoColumn } from "../Column";
 import { RowFixed } from "../Row";
 import { Label, ClickableText, Percent } from "../Text";
 import { twColors } from '@/app/twConfig';
-import { TokenData } from "@/app/actions/data";
+import { TokenData } from "@/app/actions/tokens";
 import TokenLogo from "./TokenLogo";
 import { Break, PageButtons, LastRow } from "@/app/components/Table";
 import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative } from "../util/format";

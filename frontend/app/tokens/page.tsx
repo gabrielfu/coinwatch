@@ -5,7 +5,7 @@ import TokenTable from "@/app/components/token/TokenTable";
 import { AutoColumn } from "@/app/components/Column";
 import { useEffect, useState } from "react";
 import { Label } from "@/app/components/Text";
-import { getTokenWithQuoteDatas, TokenData } from "@/app/actions/data";
+import { getTokenWithQuoteDatas, TokenData } from "@/app/actions/tokens";
 import TokenSearch from "@/app/components/token/TokenSearch";
 
 const TokensPage = () => {

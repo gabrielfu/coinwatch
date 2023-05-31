@@ -8,6 +8,8 @@ import { Label } from "../components/Text";
 import PortfolioTable from "../components/portfolio/PortfolioTable";
 import { twColors } from "../twConfig";
 import usePortfolioModal from "../hooks/usePortfolioModal";
+import { PortfolioInfo, getPortfolios } from "@/app/actions/portfolios";
+import { useEffect, useState } from "react";
 
 
 const Header = () => {
@@ -20,7 +22,19 @@ const Header = () => {
 
 
 const PortfoliosPage = () => {
+  const [data, setData] = useState<PortfolioInfo[]>([]);
+  const [isLoading, setLoading] = useState(false);
   const portfolioModal = usePortfolioModal();
+
+  useEffect(() => {
+    setLoading(true);
+    getPortfolios()
+      .then((datas) => {
+        setData(datas);
+        setLoading(false);
+      })
+  }, []);
+
 
   return ( 
     <Card>
@@ -45,7 +59,7 @@ const PortfoliosPage = () => {
             </Label>
           </div>
         </div>
-        <PortfolioTable />
+        <PortfolioTable portfolioDatas={data} />
       </AutoColumn>
     </Card>
    );

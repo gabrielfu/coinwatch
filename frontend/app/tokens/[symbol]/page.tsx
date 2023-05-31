@@ -10,7 +10,7 @@ import { Label } from "@/app/components/Text";
 import TokenLogo from "@/app/components/token/TokenLogo";
 import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative, formatInteger } from "@/app/components/util/format";
 import { twColors } from "@/app/twConfig";
-import { TokenData } from "@/app/actions/data";
+import { TokenData } from "@/app/actions/tokens";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
