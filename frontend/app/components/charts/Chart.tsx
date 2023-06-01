@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect, useCallback, Dispatch, SetStateAction, ReactNode } from 'react';
-import { createChart, IChartApi, ISeriesApi, ColorType, CrosshairMode, MouseEventParams, OhlcData, SeriesOptionsMap, SingleValueData, SeriesType } from 'lightweight-charts';
+import { createChart, IChartApi, ISeriesApi, ColorType, CrosshairMode, MouseEventParams, OhlcData, SingleValueData, SeriesType } from 'lightweight-charts';
 import { RowBetween } from '../Row';
 import Card from '../Card';
 import dayjs from 'dayjs';
