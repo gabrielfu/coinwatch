@@ -12,6 +12,7 @@ import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative, 
 import { twColors } from "@/app/twConfig";
 import { TokenData } from "@/app/actions/tokens";
 import { OhlcData } from "lightweight-charts";
+import { SiYahoo } from "react-icons/si";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -174,13 +175,20 @@ const TokenPage = ({ params }: {params: any}) => {
   return ( 
     <Card>
       <AutoColumn gap="8px">
-        <Header symbol={symbol} name={name} logo={logo} />
-        {quoteData && 
-          <PriceText 
-            price={formatPrice(quoteData.price)} 
-            priceChangePercent={formatPriceChangePercent(quoteData.priceChangePercent)} 
-            negative={isNegative(quoteData.priceChangePercent)}
-          />}
+        <div className="flex justify-between items-end">
+          <div className="ml-2">
+            <Header symbol={symbol} name={name} logo={logo} />
+            {quoteData && 
+              <PriceText 
+                price={formatPrice(quoteData.price)} 
+                priceChangePercent={formatPriceChangePercent(quoteData.priceChangePercent)} 
+                negative={isNegative(quoteData.priceChangePercent)}
+              />}
+          </div>
+          <a href={`https://finance.yahoo.com/quote/${symbol.toUpperCase()}-USD`} target="_blank">
+            <SiYahoo size={18} className="text-white hover:cursor-pointer mr-8" />
+          </a>
+        </div>
 
         <ContentLayout>
           <Card padding={"1rem 0 1rem 0"} backgroundColor={twColors.primary}>
