@@ -136,8 +136,10 @@ const Widget = ({ data }: {data?: OhlcData}) => {
   );
 }
 
-const TokenPage = ({ params }: {params: any}) => {
-  const symbol: string = params.symbol;
+const TokenPage = ({ params }: {
+  params: { symbol: string }
+}) => {
+  const symbol = params.symbol;
   const [name, setName] = useState<string>("");
   const [logo, setLogo] = useState<string>("");
   const [widgetLabel, setWidgetLabel] = useState<OhlcData>();
