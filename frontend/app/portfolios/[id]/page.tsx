@@ -11,8 +11,9 @@ import TokenLogo from "@/app/components/token/TokenLogo";
 import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative, formatInteger } from "@/app/components/util/format";
 import { twColors } from "@/app/twConfig";
 import { TokenData } from "@/app/actions/tokens";
-import { OhlcData, SingleValueData } from "lightweight-charts";
+import { OhlcData, LineData } from "lightweight-charts";
 import { SiYahoo } from "react-icons/si";
+import LineChart from "@/app/components/charts/LineChart";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -82,7 +83,7 @@ const PriceText = ({ price, priceChangePercent, negative }: {
    );
 }
 
-const Widget = ({ data }: {data?: SingleValueData}) => {
+const Widget = ({ data }: {data?: LineData}) => {
   if (!data) {
     return <div className="h-10 mt-4 screen800:mt-0"></div>;
   }
@@ -102,10 +103,10 @@ const PortfolioPage = ({ params }: {
 }) => {
   const id = params.id;
   const [name, setName] = useState<string>("");
-  const [widgetLabel, setWidgetLabel] = useState<SingleValueData>();
+  const [widgetLabel, setWidgetLabel] = useState<LineData>();
 
   const [quoteData, setQuoteData] = useState<TokenData>();
-  const [chartData, setChartData] = useState<SingleValueData[]>();
+  const [chartData, setChartData] = useState<LineData[]>();
   const [interval, setInterval] = useState("15m");
   const [range, setRange] = useState("24h");
 
@@ -169,10 +170,10 @@ const PortfolioPage = ({ params }: {
           <Card backgroundColor={twColors.primary}>
             {chartData == null 
               ? "Loading..."
-              : <CandleChart 
+              : <LineChart 
                   data={chartData}
+                  lineColor={twColors.tickUp}
                   height={360}
-                  seriesType="Line"
                   setValue={setWidgetLabel}
                   topLeft={<Widget data={widgetLabel} />}
                   topRight={<RangeSelector setRange={setRange} setInterval={setInterval} activeRange={range} activeInterval={interval} />}

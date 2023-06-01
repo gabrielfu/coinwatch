@@ -145,14 +145,14 @@ const TokenPage = ({ params }: {
   const [widgetLabel, setWidgetLabel] = useState<OhlcData>();
 
   const [quoteData, setQuoteData] = useState<TokenData>();
-  const [chartData, setChartData] = useState();
+  const [chartData, setChartData] = useState<OhlcData[]>();
   const [interval, setInterval] = useState("15m");
   const [range, setRange] = useState("24h");
 
   const fetchChartData = useCallback(() => {    
     fetch(`/api/v1/quote/historical?token=${symbol}&range=${range}&interval=${interval}`)
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: {series: OhlcData[]}) => {
         const series = data.series.filter(d => Object.values(d).every(v => v != null));
         setChartData(series);
       });
