@@ -50,6 +50,7 @@ const CandleChart = ({
       chartCreated.resize(chartRef.current.parentElement.clientWidth - 32, height);
       chartCreated.timeScale().fitContent();
       chartCreated.timeScale().scrollToPosition(0, false);
+      chartCreated.priceScale("right").applyOptions({ autoScale: true });
     }
   }, [chartCreated, chartRef, height]);
 
@@ -150,6 +151,7 @@ const CandleChart = ({
       series.setData(data);
       chartCreated.timeScale().fitContent();
       chartCreated.timeScale().scrollToPosition(0, false);
+      chartCreated.priceScale("right").applyOptions({ autoScale: true });
     }
   }, [chartCreated, series, data]);
 
