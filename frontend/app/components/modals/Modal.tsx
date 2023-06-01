@@ -15,7 +15,7 @@ export const Heading = ({
   subtitle,
   center
 }: {
-  title: string;
+  title?: string;
   subtitle?: string;
   center?: boolean;
 }) => {
@@ -104,7 +104,7 @@ const Modal = ({
   isOpen?: boolean;
   onClose: () => void;
   onSubmit: () => void;
-  title: string;
+  title?: string;
   subtitle?: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
