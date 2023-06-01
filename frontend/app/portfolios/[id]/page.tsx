@@ -11,7 +11,7 @@ import TokenLogo from "@/app/components/token/TokenLogo";
 import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative, formatInteger } from "@/app/components/util/format";
 import { twColors } from "@/app/twConfig";
 import { TokenData } from "@/app/actions/tokens";
-import { OhlcData } from "lightweight-charts";
+import { OhlcData, SingleValueData } from "lightweight-charts";
 import { SiYahoo } from "react-icons/si";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
@@ -82,35 +82,17 @@ const PriceText = ({ price, priceChangePercent, negative }: {
    );
 }
 
-const Widget = ({ data }: {data?: OhlcData}) => {
+const Widget = ({ data }: {data?: SingleValueData}) => {
   if (!data) {
     return <div className="h-10 mt-4 screen800:mt-0"></div>;
   }
 
-  const change = data.close - data.open;
-  const changePercent = change / data.open * 100;
-  const negative = isNegative(changePercent);
   const formatted = {
-    open: formatPrice(data.open, false),
-    high: formatPrice(data.high, false),
-    low: formatPrice(data.low, false),
-    close: formatPrice(data.close, false),
-    change: formatPrice(change, false, data.open, true),
-    changePercent: formatPriceChangePercent(changePercent),
+    value: formatPrice(data.value, false),
   };
-  const color = negative ? "text-tickDown" : "text-tickUp";
   return (
     <div className="text-white h-10 mt-4 screen800:mt-0">
-      <span>O</span>
-      <span className={color}>{formatted.open} </span>
-      <span>H</span>
-      <span className={color}>{formatted.high} </span>
-      <span>L</span>
-      <span className={color}>{formatted.low} </span>
-      <span>C</span>
-      <span className={color}>{formatted.close} &nbsp;</span>
-      <br />
-      <span className={color}>{formatted.change} ({formatted.changePercent})</span>
+      <span>{formatted.value} </span>
     </div>
   );
 }
@@ -120,10 +102,10 @@ const PortfolioPage = ({ params }: {
 }) => {
   const id = params.id;
   const [name, setName] = useState<string>("");
-  const [widgetLabel, setWidgetLabel] = useState<OhlcData>();
+  const [widgetLabel, setWidgetLabel] = useState<SingleValueData>();
 
   const [quoteData, setQuoteData] = useState<TokenData>();
-  const [chartData, setChartData] = useState();
+  const [chartData, setChartData] = useState<SingleValueData[]>();
   const [interval, setInterval] = useState("15m");
   const [range, setRange] = useState("24h");
 
@@ -132,8 +114,13 @@ const PortfolioPage = ({ params }: {
     id;
     fetch(`/api/v1/quote/historical?token=AVAX&range=${range}&interval=${interval}`)
       .then((res) => res.json())
-      .then((data) => {
-        const series = data.series.filter(d => Object.values(d).every(v => v != null));
+      .then((data: {series: OhlcData[]}) => {
+        const series = data.series
+          .filter(d => Object.values(d).every(v => v != null))
+          .map(d => { return {
+            time: d.time,
+            value: d.open,
+          } });
         setChartData(series);
       });
   }, [id, range, interval]);
@@ -185,6 +172,7 @@ const PortfolioPage = ({ params }: {
               : <CandleChart 
                   data={chartData}
                   height={360}
+                  seriesType="Line"
                   setValue={setWidgetLabel}
                   topLeft={<Widget data={widgetLabel} />}
                   topRight={<RangeSelector setRange={setRange} setInterval={setInterval} activeRange={range} activeInterval={interval} />}

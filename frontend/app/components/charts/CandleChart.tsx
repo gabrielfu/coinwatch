@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect, useCallback, Dispatch, SetStateAction, ReactNode } from 'react';
-import { createChart, IChartApi, ISeriesApi, ColorType, CrosshairMode, MouseEventParams, OhlcData } from 'lightweight-charts';
+import { createChart, IChartApi, ISeriesApi, ColorType, CrosshairMode, MouseEventParams, OhlcData, SeriesOptionsMap, SingleValueData, SeriesType } from 'lightweight-charts';
 import { RowBetween } from '../Row';
 import Card from '../Card';
 import dayjs from 'dayjs';
@@ -18,18 +18,19 @@ const candleGreen = twColors.tickUp;
 const textColor = twColors.text;
 
 type LineChartProps = {
-  data: OhlcData[]
+  data: OhlcData[] | SingleValueData[]
   height?: number | undefined
   minHeight?: number
-  setValue?: Dispatch<SetStateAction<OhlcData | undefined>> // used for value on hover
+  setValue?: Dispatch<SetStateAction<OhlcData | SingleValueData | undefined>> // used for value on hover
   setLabel?: Dispatch<SetStateAction<string | undefined>> // used for value label on hover
   topLeft?: ReactNode | undefined
   topRight?: ReactNode | undefined
   bottomLeft?: ReactNode | undefined
   bottomRight?: ReactNode | undefined
+  seriesType: SeriesType
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const CandleChart = ({
+function CandleChart ({
   data,
   setValue,
   setLabel,
@@ -39,11 +40,12 @@ const CandleChart = ({
   bottomRight,
   height = DEFAULT_HEIGHT,
   minHeight = DEFAULT_HEIGHT,
+  seriesType = "Candlestick",
   ...rest
-}: LineChartProps) => {
+}: LineChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartCreated, setChart] = useState<IChartApi | undefined>();
-  const [series, setSeries] = useState<ISeriesApi<"Candlestick"> | undefined>();
+  const [series, setSeries] = useState<ISeriesApi<typeof seriesType> | undefined>();
 
   const handleResize = useCallback(() => {
     if (chartCreated && chartRef?.current?.parentElement) {
@@ -110,14 +112,28 @@ const CandleChart = ({
         },
       })
 
-      const candleSeries = chart.addCandlestickSeries({
-        upColor: candleGreen,
-        downColor: candleRed,
-        borderDownColor: candleRed,
-        borderUpColor: candleGreen,
-        wickDownColor: candleRed,
-        wickUpColor: candleGreen,
-      });
+      let newSeries: ISeriesApi<typeof seriesType>;
+      
+      switch (seriesType) {
+        case "Candlestick":
+          newSeries = chart.addCandlestickSeries({
+            upColor: candleGreen,
+            downColor: candleRed,
+            borderDownColor: candleRed,
+            borderUpColor: candleGreen,
+            wickDownColor: candleRed,
+            wickUpColor: candleGreen,
+          });
+          break;
+        
+        case "Line":
+          newSeries = chart.addLineSeries({});
+          break;
+      
+        default:
+          throw new Error(`Invalid seriesType: ${seriesType}`);
+          break;
+      }
 
       chart.subscribeCrosshairMove((param: MouseEventParams) => {
         if (
@@ -132,19 +148,19 @@ const CandleChart = ({
           // reset values
           setValue && setValue(undefined);
           setLabel && setLabel(undefined);
-        } else if (candleSeries && param) {
+        } else if (newSeries && param) {
           const timestamp = param.time as number;
           const time = dayjs.unix(timestamp).utc().format('DD MMM YYYY h:mm A') + ' (UTC)';
-          const ohlc = param.seriesData.get(candleSeries) as (OhlcData | undefined);
-          setValue && setValue(ohlc);
+          const seriesData = param.seriesData.get(newSeries) as (OhlcData | SingleValueData | undefined);
+          setValue && setValue(seriesData);
           setLabel && setLabel(time);
         }
       });
 
       setChart(chart);
-      setSeries(candleSeries);
+      setSeries(newSeries);
     }
-  }, [chartCreated, height, setValue, setLabel]);
+  }, [chartCreated, height, seriesType, setValue, setLabel]);
 
   useEffect(() => {
     if (chartCreated && series && data) {
