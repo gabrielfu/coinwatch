@@ -29,7 +29,6 @@ export type BaseChartProps<T extends ChartData> = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 type DispatcherChartProps<DT extends ChartData, ST extends SeriesType> = {
-  seriesType: ST
   addSeriesCallback: AddSeriesCallback<ST>
 } & BaseChartProps<DT>;
 
@@ -37,7 +36,6 @@ export type AddSeriesCallback<T extends SeriesType> = (chart: IChartApi) => ISer
 
 function Chart<DT extends ChartData, ST extends SeriesType> ({
   data,
-  seriesType,
   addSeriesCallback,
   setValue,
   setLabel,
@@ -51,7 +49,7 @@ function Chart<DT extends ChartData, ST extends SeriesType> ({
 }: DispatcherChartProps<DT, ST>) {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartCreated, setChart] = useState<IChartApi | undefined>();
-  const [series, setSeries] = useState<ISeriesApi<typeof seriesType> | undefined>();
+  const [series, setSeries] = useState<ISeriesApi<ST> | undefined>();
 
   const handleResize = useCallback(() => {
     if (chartCreated && chartRef?.current?.parentElement) {
@@ -118,7 +116,7 @@ function Chart<DT extends ChartData, ST extends SeriesType> ({
         },
       })
 
-      let newSeries: ISeriesApi<typeof seriesType> = addSeriesCallback(chart);
+      let newSeries: ISeriesApi<ST> = addSeriesCallback(chart);
 
       chart.subscribeCrosshairMove((param: MouseEventParams) => {
         if (
@@ -145,7 +143,7 @@ function Chart<DT extends ChartData, ST extends SeriesType> ({
       setChart(chart);
       setSeries(newSeries);
     }
-  }, [chartCreated, height, seriesType, setValue, setLabel, addSeriesCallback]);
+  }, [chartCreated, height, setValue, setLabel, addSeriesCallback]);
 
   useEffect(() => {
     if (chartCreated && series && data) {

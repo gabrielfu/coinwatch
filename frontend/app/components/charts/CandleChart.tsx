@@ -23,7 +23,6 @@ const CandleChart = (props: BaseChartProps<OhlcData>) => {
 
   return ( 
     <Chart<OhlcData, "Candlestick"> 
-      seriesType="Candlestick"
       addSeriesCallback={addSeriesCallback}
       {...props}
     />

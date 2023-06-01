@@ -21,7 +21,6 @@ const LineChart = ({
 
   return ( 
     <Chart<LineData, "Line"> 
-      seriesType="Line"
       addSeriesCallback={addSeriesCallback}
       {...props}
     />
