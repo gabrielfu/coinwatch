@@ -130,6 +130,7 @@ const Widget = ({ data }: {data?: OhlcData}) => {
       <span className={color}>{formatted.low} </span>
       <span>C</span>
       <span className={color}>{formatted.close} &nbsp;</span>
+      <br />
       <span className={color}>{formatted.change} ({formatted.changePercent})</span>
     </div>
   );
