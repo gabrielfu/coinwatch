@@ -1,19 +1,19 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from "react";
-import CandleChart from "@/app/components/charts/CandleChart";
 import RangeSelector from "@/app/components/charts/RangeSelector";
 import Card from "@/app/components/Card";
 import { AutoColumn } from "@/app/components/Column";
-import { RowFixed } from "@/app/components/Row";
 import { Label } from "@/app/components/Text";
-import TokenLogo from "@/app/components/token/TokenLogo";
 import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative, formatInteger } from "@/app/components/util/format";
 import { twColors } from "@/app/twConfig";
 import { TokenData } from "@/app/actions/tokens";
 import { OhlcData, LineData } from "lightweight-charts";
-import { SiYahoo } from "react-icons/si";
+import { MdOutlineDelete } from "react-icons/md";
 import LineChart from "@/app/components/charts/LineChart";
+import { Box, Text } from "rebass";
+import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
+import { StateSelector } from "zustand";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -110,6 +110,9 @@ const PortfolioPage = ({ params }: {
   const [interval, setInterval] = useState("15m");
   const [range, setRange] = useState("24h");
 
+  const deletePortfolioModal = useDeletePortfolioModal();
+  const setPortfolioId = useDeletePortfolioModal((state) => state.setPortfolioId);
+
   const fetchChartData = useCallback(() => {  
     // TODO  
     id;
@@ -141,12 +144,13 @@ const PortfolioPage = ({ params }: {
       });
     
     fetchChartData();
+    setPortfolioId(id.toString());
   }, [id, fetchChartData]);
 
   return ( 
     <Card>
       <AutoColumn gap="8px">
-        <div className="flex justify-between items-end">
+        <div className="flex w-full justify-between items-end">
           <div className="ml-2">
             <Label color="white" fontSize={24}>
               {name}
@@ -158,6 +162,24 @@ const PortfolioPage = ({ params }: {
                 priceChangePercent={formatPriceChangePercent(quoteData.priceChangePercent)} 
                 negative={isNegative(quoteData.priceChangePercent)}
               />}
+          </div>
+          <div className="hover:cursor-pointer" onClick={deletePortfolioModal.onOpen}>
+            <Text 
+              className="flex items-center font-normal text-base font-variant-numeric: tabular-nums w-auto sm:w-[200px]"
+              backgroundColor={twColors.highlight}
+              marginBottom="12px" 
+              padding="6px 12px" 
+              height={42}
+              justifyContent="center"
+              style={{ 
+                borderRadius: "8px",
+              }}
+            >
+              <MdOutlineDelete color="white" size={22} />
+              <Box className="text-white text-[16px] font-semilight hidden sm:block" margin="0 12px">
+                Delete Portfolio
+              </Box>
+            </Text>
           </div>
         </div>
 

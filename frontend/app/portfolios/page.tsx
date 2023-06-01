@@ -7,14 +7,14 @@ import { AutoColumn } from "../components/Column";
 import { Label } from "../components/Text";
 import PortfolioTable from "../components/portfolio/PortfolioTable";
 import { twColors } from "../twConfig";
-import usePortfolioModal from "../hooks/usePortfolioModal";
+import useCreatePortfolioModal from "../hooks/useCreatePortfolioModal";
 import { PortfolioInfo, getPortfolios } from "@/app/actions/portfolios";
 import { useEffect, useState } from "react";
 
 const PortfoliosPage = () => {
   const [data, setData] = useState<PortfolioInfo[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const portfolioModal = usePortfolioModal();
+  const createPortfolioModal = useCreatePortfolioModal();
 
   useEffect(() => {
     setLoading(true);
@@ -30,7 +30,7 @@ const PortfoliosPage = () => {
       <AutoColumn gap="8px">
         <div className="flex w-full justify-between">
           <Label ml="16px" color="white" fontSize={24}>Portfolios</Label>
-          <div className="hover:cursor-pointer" onClick={portfolioModal.onOpen}>
+          <div className="hover:cursor-pointer" onClick={createPortfolioModal.onOpen}>
             <Label backgroundColor={twColors.highlight}
               marginBottom="12px" 
               padding="6px 12px" 
