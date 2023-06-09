@@ -103,6 +103,7 @@ const PortfolioPage = ({ params }: {
 }) => {
   const id = params.id;
   const [name, setName] = useState<string>("");
+  const [isEmpty, setIsEmpty] = useState<boolean>(true);
   const [widgetLabel, setWidgetLabel] = useState<LineData>();
 
   const [quoteData, setQuoteData] = useState<TokenData>();
@@ -158,7 +159,14 @@ const PortfolioPage = ({ params }: {
               {name}
             </Label>
 
-            {quoteData && 
+            {isEmpty && 
+              <PriceText 
+                price="-"
+                priceChangePercent={formatPriceChangePercent(0)} 
+                negative={false}
+              />
+            }
+            {quoteData && (!isEmpty) && 
               <PriceText 
                 price={formatPrice(quoteData.price)} 
                 priceChangePercent={formatPriceChangePercent(quoteData.priceChangePercent)} 
@@ -185,26 +193,38 @@ const PortfolioPage = ({ params }: {
           </div>
         </div>
 
-        <ContentLayout>
-          <Card padding={"1rem 0 1rem 0"} backgroundColor={twColors.primary}>
-            {quoteData && 
-            <InfoTable data={quoteData}/>}
-          </Card>
+        {isEmpty
+          ? 
+            <Box 
+              className="
+                flex h-32 mt-4 p-4 rounded-2xl bg-primary justify-center items-center 
+                text-white text-xl text-center
+              "
+            >
+              Your portfolio is empty.
+            </Box>
+          : 
+            <ContentLayout>
+              <Card padding={"1rem 0 1rem 0"} backgroundColor={twColors.primary}>
+                {quoteData && 
+                <InfoTable data={quoteData}/>}
+              </Card>
 
-          <Card backgroundColor={twColors.primary}>
-            {chartData == null 
-              ? "Loading..."
-              : <LineChart 
-                  data={chartData}
-                  lineColor={twColors.tickUp}
-                  height={360}
-                  setValue={setWidgetLabel}
-                  topLeft={<Widget data={widgetLabel} />}
-                  topRight={<RangeSelector setRange={setRange} setInterval={setInterval} activeRange={range} activeInterval={interval} />}
-                />
-            }
-          </Card>
-        </ContentLayout>
+              <Card backgroundColor={twColors.primary}>
+                {chartData == null 
+                  ? "Loading..."
+                  : <LineChart 
+                      data={chartData}
+                      lineColor={twColors.tickUp}
+                      height={360}
+                      setValue={setWidgetLabel}
+                      topLeft={<Widget data={widgetLabel} />}
+                      topRight={<RangeSelector setRange={setRange} setInterval={setInterval} activeRange={range} activeInterval={interval} />}
+                    />
+                }
+              </Card>
+            </ContentLayout>
+        }
       </AutoColumn>
     </Card>
    );
