@@ -16,13 +16,18 @@ const PortfoliosPage = () => {
   const [isLoading, setLoading] = useState(false);
   const createPortfolioModal = useCreatePortfolioModal();
 
-  useEffect(() => {
+  const refresh = () => {
     setLoading(true);
     getPortfolios()
       .then((datas) => {
         setData(datas);
         setLoading(false);
-      })
+      });
+  }
+
+  useEffect(() => {
+    refresh();
+    createPortfolioModal.setOnSuccess(refresh);
   }, []);
 
   return ( 

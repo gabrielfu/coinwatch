@@ -1,10 +1,17 @@
 import { create } from 'zustand';
 import ModalStore from './modalStore';
 
-const useCreatePortfolioModal = create<ModalStore>((set) => ({
+type DeletePortfolioModalStore = {
+  onSuccess: () => void;
+  setOnSuccess: (callback: () => void) => void;
+} & ModalStore
+
+const useCreatePortfolioModal = create<DeletePortfolioModalStore>((set) => ({
   isOpen: false,
   onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false })
+  onClose: () => set({ isOpen: false }),
+  onSuccess: () => {},
+  setOnSuccess: (callback) => set({ onSuccess: callback }),
 }));
 
 export default useCreatePortfolioModal;

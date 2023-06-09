@@ -31,6 +31,7 @@ const CreatePortfolioModal = () => {
       .then(() => {
         toast.success(`Created portfolio ${data.name}`);
         portfolioModal.onClose();
+        portfolioModal.onSuccess();
       })
       .catch((error) => {
         const message = error instanceof AxiosError
