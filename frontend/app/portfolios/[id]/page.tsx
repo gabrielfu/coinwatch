@@ -112,6 +112,7 @@ const PortfolioPage = ({ params }: {
 
   const deletePortfolioModal = useDeletePortfolioModal();
   const setPortfolioId = useDeletePortfolioModal((state) => state.setPortfolioId);
+  const setPortfolioName = useDeletePortfolioModal((state) => state.setPortfolioName);
 
   const fetchChartData = useCallback(() => {  
     // TODO  
@@ -145,7 +146,8 @@ const PortfolioPage = ({ params }: {
     
     fetchChartData();
     setPortfolioId(id.toString());
-  }, [id, fetchChartData]);
+    setPortfolioName(name);
+  }, [id, name, fetchChartData]);
 
   return ( 
     <Card>

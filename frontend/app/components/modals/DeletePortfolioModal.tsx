@@ -35,7 +35,7 @@ const DeletePortfolioModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      Are you sure you want to delete this portfolio {deletePortfolioModal.portfolioId}?
+      Are you sure you want to delete portfolio {deletePortfolioModal.portfolioName}?
     </div>
   );
 
