@@ -40,6 +40,7 @@ export const Input = ({
   register,
   required,
   errors,
+  autoFocus,
 }: {
   id: string;
   label: string;
@@ -47,8 +48,9 @@ export const Input = ({
   disabled?: boolean;
   formatPrice?: boolean;
   required?: boolean;
-  register: UseFormRegister<FieldValues>,
-  errors: FieldErrors
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors;
+  autoFocus?: boolean;
 }) => {
   return (
     <div className="w-full relative">
@@ -58,6 +60,7 @@ export const Input = ({
       <input
         id={id}
         disabled={disabled}
+        autoFocus={autoFocus}
         {...register(id, { required })}
         placeholder=" "
         type={type}

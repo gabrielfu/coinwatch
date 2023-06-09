@@ -36,21 +36,9 @@ const DeletePortfolioModal = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       Are you sure you want to delete portfolio {deletePortfolioModal.portfolioName}?
+      This action cannot be undone.
     </div>
   );
-
-  const footerContent = (
-    <div className="flex flex-col gap-4 mt-3">
-      <hr className="border-tertiary my-4" />
-      <Heading title="Import Portfolio" />
-      <Button 
-        label="Import from Binance"
-        icon={SiBinance}
-        onClick={() => {}} 
-        secondary
-      />
-    </div>
-  )
 
   return toRedirect
     ? redirect("/portfolios")
@@ -61,9 +49,8 @@ const DeletePortfolioModal = () => {
         onSubmit={onSubmit}
         onClose={deletePortfolioModal.onClose}
         title="Delete Portfolio"
-        actionLabel="Submit"
+        actionLabel="Delete"
         body={bodyContent}
-        footer={footerContent}
       />
     );
 }

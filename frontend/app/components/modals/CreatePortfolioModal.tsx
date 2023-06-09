@@ -46,6 +46,7 @@ const CreatePortfolioModal = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Input
+        autoFocus
         id="name"
         label="Portfolio Name"
         disabled={isLoading}
