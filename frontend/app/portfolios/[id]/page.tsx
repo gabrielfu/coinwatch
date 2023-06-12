@@ -14,7 +14,7 @@ import LineChart from "@/app/components/charts/LineChart";
 import { Box, Text } from "rebass";
 import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
 import { StateSelector } from "zustand";
-import TransactionTable from "@/app/components/portfolio/TransactionTable";
+import TransactionTable, { AddTransactionCard } from "@/app/components/portfolio/TransactionTable";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import SummaryTable from "@/app/components/portfolio/SummaryTable";
 
@@ -237,27 +237,8 @@ const PortfolioPage = ({ params }: {
             </>
         }
         
-        <div className="flex w-full justify-between mt-8">
-          <Label ml="16px" color="white" fontSize={24}>Transactions</Label>
-          
-          <div className="hover:cursor-pointer" onClick={() => {}}>
-            <Label backgroundColor={twColors.highlight}
-              marginBottom="12px" 
-              padding="6px 12px" 
-              width={200}
-              height={42}
-              justifyContent="center"
-              style={{ 
-                borderRadius: "8px",
-              }}
-            >
-              <IoMdAddCircleOutline color="white" size={22} />
-              <Box className="text-white text-[16px] font-semilight" margin="0 12px">
-                Add Transaction
-              </Box>
-            </Label>
-          </div>
-        </div>
+        <Label mt="32px" ml="16px" color="white" fontSize={24}>Transactions</Label>
+        <AddTransactionCard />
         <TransactionTable portfolioDatas={[]} />
       </AutoColumn>
     </Card>

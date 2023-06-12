@@ -41,6 +41,7 @@ export const Input = ({
   required,
   errors,
   autoFocus,
+  bgColor,
 }: {
   id: string;
   label: string;
@@ -51,6 +52,7 @@ export const Input = ({
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
   autoFocus?: boolean;
+  bgColor?: string;
 }) => {
   return (
     <div className="w-full relative">
@@ -66,7 +68,7 @@ export const Input = ({
         type={type}
         className={`
           peer w-full p-2 pt-6 font-light 
-          bg-secondary border-2 rounded-md outline-none transition
+          bg-${bgColor ?? "secondary"} border-2 rounded-md outline-none transition
           disabled:opacity-70
           disabled:cursor-not-allowed
           ${formatPrice ? 'pl-9' : 'pl-4'}
