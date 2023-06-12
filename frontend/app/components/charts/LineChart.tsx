@@ -16,6 +16,7 @@ const LineChart = ({
   const addSeriesCallback = (chart: IChartApi) => {
     return chart.addLineSeries({
       color: lineColor,
+      lineWidth: 2,
     });
   }
 

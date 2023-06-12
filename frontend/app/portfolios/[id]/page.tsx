@@ -14,6 +14,9 @@ import LineChart from "@/app/components/charts/LineChart";
 import { Box, Text } from "rebass";
 import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
 import { StateSelector } from "zustand";
+import TransactionTable from "@/app/components/portfolio/TransactionTable";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import SummaryTable from "@/app/components/portfolio/SummaryTable";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -55,9 +58,9 @@ const InfoTable = ({ data }: {
 }) => {
   return (
     <AutoColumn gap="20px" margin="1em 2em 1em 2em" justify="flex-start">
-      <InfoRow rowName="Volume (24h)" rowValue={formatDollarAmount(data.volume)} />
-      <InfoRow rowName="Market Cap" rowValue={formatDollarAmount(data.marketCap)} />
-      <InfoRow rowName="Total Supply" rowValue={formatInteger(data.totalSupply)} />
+      <InfoRow rowName="Market Value" rowValue={formatDollarAmount(data.volume)} />
+      <InfoRow rowName="Total Returns" rowValue={formatDollarAmount(data.marketCap)} />
+      <InfoRow rowName="Annualized Returns" rowValue={formatInteger(data.totalSupply)} />
     </AutoColumn>
    );
 }
@@ -197,34 +200,65 @@ const PortfolioPage = ({ params }: {
           ? 
             <Box 
               className="
-                flex h-32 mt-4 p-4 rounded-2xl bg-primary justify-center items-center 
-                text-white text-xl text-center
+                flex h-60 p-4 rounded-2xl bg-primary justify-center items-center 
+                text-text text-md text-center
               "
+              marginTop={16}
             >
-              Your portfolio is empty.
+              Your portfolio is empty. <br />
+              Add a transaction to get started.
             </Box>
           : 
-            <ContentLayout>
-              <Card padding={"1rem 0 1rem 0"} backgroundColor={twColors.primary}>
-                {quoteData && 
-                <InfoTable data={quoteData}/>}
-              </Card>
+            <>
+              <ContentLayout>
+                <Card padding={"1rem 0 1rem 0"} backgroundColor={twColors.primary}>
+                  {quoteData && 
+                  <InfoTable data={quoteData}/>}
+                </Card>
 
-              <Card backgroundColor={twColors.primary}>
-                {chartData == null 
-                  ? "Loading..."
-                  : <LineChart 
-                      data={chartData}
-                      lineColor={twColors.tickUp}
-                      height={360}
-                      setValue={setWidgetLabel}
-                      topLeft={<Widget data={widgetLabel} />}
-                      topRight={<RangeSelector setRange={setRange} setInterval={setInterval} activeRange={range} activeInterval={interval} />}
-                    />
-                }
-              </Card>
-            </ContentLayout>
+                <Card backgroundColor={twColors.primary}>
+                  {chartData == null 
+                    ? "Loading..."
+                    : <LineChart 
+                        data={chartData}
+                        lineColor={twColors.tickUp}
+                        height={360}
+                        setValue={setWidgetLabel}
+                        topLeft={<Widget data={widgetLabel} />}
+                        topRight={<RangeSelector setRange={setRange} setInterval={setInterval} activeRange={range} activeInterval={interval} />}
+                      />
+                  }
+                </Card>
+              </ContentLayout>
+              
+              <div className="mt-4">
+                <SummaryTable portfolioDatas={[]} />
+              </div>
+            </>
         }
+        
+        <div className="flex w-full justify-between mt-8">
+          <Label ml="16px" color="white" fontSize={24}>Transactions</Label>
+          
+          <div className="hover:cursor-pointer" onClick={() => {}}>
+            <Label backgroundColor={twColors.highlight}
+              marginBottom="12px" 
+              padding="6px 12px" 
+              width={200}
+              height={42}
+              justifyContent="center"
+              style={{ 
+                borderRadius: "8px",
+              }}
+            >
+              <IoMdAddCircleOutline color="white" size={22} />
+              <Box className="text-white text-[16px] font-semilight" margin="0 12px">
+                Add Transaction
+              </Box>
+            </Label>
+          </div>
+        </div>
+        <TransactionTable portfolioDatas={[]} />
       </AutoColumn>
     </Card>
    );
