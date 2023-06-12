@@ -16,16 +16,15 @@ const ResponsiveGrid = (props: React.PropsWithChildren) => {
         grid items-center mx-4 gap-4
 
         max-md:grid-cols-[repeat(3,1fr)]
-        max-md:[&>*:first-child]:hidden
         max-md:[&>*:nth-child(4)]:hidden
+        max-md:[&>*:nth-child(5)]:hidden
         max-md:[&>*:nth-child(6)]:hidden
-        max-md:[&>*:nth-child(7)]:hidden
 
-        md:max-lg:grid-cols-[20px_1.5fr_repeat(3,1fr)]
+        md:max-lg:grid-cols-[repeat(4,1fr)]
         md:max-lg:[&>*:nth-child(4)]:hidden
         md:max-lg:[&>*:nth-child(6)]:hidden
 
-        lg:grid-cols-[20px_2fr_repeat(5,1fr)]
+        lg:grid-cols-[repeat(6,1fr)]
       "
     >
       {props.children}
@@ -85,24 +84,23 @@ const TransactionTable = ({ portfolioDatas }: {
     <Card backgroundColor={twColors.primary}>
       <AutoColumn gap="16px" margin="0.25em 0 0.25em 0">
         <ResponsiveGrid>
-          <Label color={twColors.text}>#</Label>
+          <ClickableText color={twColors.text} onClick={() => handleSort("date")}>
+            Date
+          </ClickableText>
           <ClickableText color={twColors.text} onClick={() => handleSort("token")}>
             Token
           </ClickableText>
+          <ClickableText color={twColors.text} onClick={() => handleSort("type")}>
+            Type
+          </ClickableText>
           <ClickableText end={1} color={twColors.text} onClick={() => handleSort("marketValue")}>
-            Market Value
+            Quantity
           </ClickableText>
           <ClickableText end={1} color={twColors.text} onClick={() => handleSort("dayChange")}>
-            Day Chg
-          </ClickableText>
-          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("dayChangePercent")}>
-            Day Chg %
+            Average Price
           </ClickableText>
           <ClickableText end={1} color={twColors.text} onClick={() => handleSort("totalChange")}>
-            Total Chg
-          </ClickableText>
-          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("totalChangePercent")}>
-            Total Chg %
+            Cost Basis
           </ClickableText>
         </ResponsiveGrid>
         <Break />
