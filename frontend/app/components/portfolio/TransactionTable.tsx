@@ -74,32 +74,41 @@ const DataRow = ({
 
 
 export const AddTransactionCard = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Box className="bg-highlight w-full rounded-2xl p-8 text-white">
-      <ResponsiveGrid>
-        <Input bgColor="transparent" id="date" label="Date" register={() => {}} errors={() => {}} />
-        <Input id="token" label="Token" register={() => {}} errors={() => {}} />
-        <Input id="type" label="Type" register={() => {}} errors={() => {}} />
-        <Input id="quantity" label="Quantity" register={() => {}} errors={() => {}} />
-        <Input id="price" label="Average Price" register={() => {}} errors={() => {}} />
-                  
-        <div className="hover:cursor-pointer" onClick={() => {}}>
-            <Label backgroundColor={twColors.highlight}
-              padding="6px 12px" 
-              width={200}
-              height={42}
-              justifyContent="center"
-              style={{ 
-                borderRadius: "8px",
-              }}
-            >
-              <IoMdAddCircleOutline color="white" size={22} />
-              <Box className="text-white text-[16px] font-semilight" margin="0 12px">
-                Add Transaction
-              </Box>
-            </Label>
-          </div>
-      </ResponsiveGrid>
+    <Box className="bg-highlight w-full rounded-2xl px-8 pb-4 pt-4 text-white">
+      <AutoColumn gap="8px">
+        <Label className="hover:cursor-pointer" onClick={() => setIsOpen((prev) => !prev)}>
+          {"Add Transaction " + (isOpen ? "▲" : "▼")}
+        </Label>
+        {isOpen && 
+          <ResponsiveGrid>
+            <Input bgColor="transparent" id="date" label="Date" register={() => {}} errors={() => {}} />
+            <Input id="token" label="Token" register={() => {}} errors={() => {}} />
+            <Input id="type" label="Type" register={() => {}} errors={() => {}} />
+            <Input id="quantity" label="Quantity" register={() => {}} errors={() => {}} />
+            <Input id="price" label="Average Price" register={() => {}} errors={() => {}} />
+
+            <div className="hover:cursor-pointer" onClick={() => {}}>
+                <Label backgroundColor={twColors.highlight}
+                  padding="6px 12px" 
+                  width={200}
+                  height={42}
+                  justifyContent="center"
+                  style={{ 
+                    borderRadius: "8px",
+                  }}
+                >
+                  <IoMdAddCircleOutline color="white" size={22} />
+                  <Box className="text-white text-[16px] font-semilight" margin="0 12px">
+                    Add Transaction
+                  </Box>
+                </Label>
+              </div>
+          </ResponsiveGrid>
+        }
+      </AutoColumn>
     </Box>
   );
 }
