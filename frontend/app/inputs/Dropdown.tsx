@@ -39,12 +39,21 @@ const Dropdown = ({
         onChange={handleChange}
         sx={{          
           color: "white",
+          ".MuiSelect-icon": {
+            color: twColors.text
+          },
+          ".MuiSelect-iconOpen": {
+            color: "white"
+          },
           ".MuiOutlinedInput-notchedOutline": {
+            borderColor: twColors.text
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
             borderColor: twColors.text
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: "white"
-          }
+          },
         }}
       >
         {itemValues.map((v, i) => {
