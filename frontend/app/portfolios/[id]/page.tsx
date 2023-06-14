@@ -13,10 +13,9 @@ import { MdOutlineDelete } from "react-icons/md";
 import LineChart from "@/app/components/charts/LineChart";
 import { Box, Text } from "rebass";
 import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
-import { StateSelector } from "zustand";
-import TransactionTable, { AddTransactionCard } from "@/app/components/portfolio/TransactionTable";
-import { IoMdAddCircleOutline } from "react-icons/io";
+import TransactionTable from "@/app/components/portfolio/TransactionTable";
 import SummaryTable from "@/app/components/portfolio/SummaryTable";
+import AddTransactionForm from "@/app/components/portfolio/AddTransactionForm";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -238,7 +237,7 @@ const PortfolioPage = ({ params }: {
         }
         
         <Label mt="32px" ml="16px" color="white" fontSize={24}>Transactions</Label>
-        <AddTransactionCard />
+        <AddTransactionForm />
         <TransactionTable portfolioDatas={[]} />
       </AutoColumn>
     </Card>
