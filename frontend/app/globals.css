@@ -8,3 +8,14 @@ body,
     height: 100%;
     background-color: #101124;
 }
+
+@layer base {
+    input[type='number'] {
+        -moz-appearance:textfield;
+        appearance: textfield;
+    }    
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+}

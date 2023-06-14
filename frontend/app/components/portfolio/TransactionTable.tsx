@@ -117,21 +117,40 @@ export const AddTransactionCard = () => {
   }, []);
 
   return (
-    <Box className="bg-highlight w-full rounded-2xl px-8 pb-4 pt-4 text-white">
+    <Box className="bg-tertiary w-full rounded-2xl px-8 pb-4 pt-4 text-white">
       <AutoColumn gap="8px">
         <Label className="hover:cursor-pointer" onClick={() => setIsOpen((prev) => !prev)}>
           {"Add Transaction " + (isOpen ? "▲" : "▼")}
         </Label>
         {isOpen && 
           <ResponsiveGrid>
-            <DatePicker slotProps={{ textField: { size: 'small' } }} label="Date" />
+            <DatePicker 
+              label="Date"
+              slotProps={{ 
+                textField: { 
+                  size: "small",
+                  sx: sx,
+                  inputProps: ip,
+                },
+                openPickerButton: {
+                  style: {
+                    color: twColors.text,
+                  },
+                },
+                popper: {
+                  style: {
+                    backgroundColor: "black"
+                  }
+                }
+              }}
+            />
             <Dropdown value={token} setValue={setToken} label="Token" itemValues={tokenList} />
             <Dropdown value={type} setValue={setType} label="Type" itemValues={["BUY", "SELL"]} />
-            <TextField size="small" value={quantity} label="Quantity" sx={sx} inputProps={ip} />
-            <TextField size="small" value={price} label="Average Price" sx={sx} inputProps={ip} />
+            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={quantity} label="Quantity" sx={sx} inputProps={ip} />
+            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={price} label="Average Price" sx={sx} inputProps={ip} />
 
             <div className="hover:cursor-pointer" onClick={() => {}}>
-                <Label backgroundColor={twColors.highlight}
+                <Label backgroundColor={twColors.primary}
                   padding="6px 12px" 
                   width={200}
                   height={42}
