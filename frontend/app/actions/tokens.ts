@@ -59,3 +59,9 @@ export const getTokenWithQuoteDatas = async () => {
         return innerRes;
     });
 }
+
+export const getTokenDatas = async () => {
+  return await fetch("/api/v1/tokens")
+    .then((res) => res.json())
+    .then((data) => data as TokenInfo[]);
+}

@@ -5,13 +5,14 @@ import { ClickableText, Label, Percent } from "../Text";
 import { Break, LastRow, PageButtons } from "../Table";
 import Link from "next/link";
 import { formatDollarAmount, formatPrice, formatPriceChangePercent, isNegative } from "../util/format";
-import { useState } from "react";
-import { PortfolioData, PortfolioInfo } from "@/app/actions/portfolios";
-// import { Input } from "@rebass/forms";
-import { Box, Button } from "rebass";
+import { useEffect, useState } from "react";
+import { PortfolioData } from "@/app/actions/portfolios";
+import { Box } from "rebass";
+import { DatePicker } from "@mui/x-date-pickers"
+import { TextField } from "@mui/material";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { Input } from "../modals/Modal";
-
+import Dropdown from "@/app/inputs/Dropdown";
+import { getTokenDatas } from "@/app/actions/tokens";
 
 const ResponsiveGrid = (props: React.PropsWithChildren) => {
   return (
@@ -75,6 +76,45 @@ const DataRow = ({
 
 export const AddTransactionCard = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [date, setDate] = useState();
+  const [token, setToken] = useState();
+  const [type, setType] = useState();
+  const [quantity, setQuantity] = useState();
+  const [price, setPrice] = useState();
+
+  const [tokenList, setTokenList] = useState<string[]>([]);
+
+  const sx = {
+    "& label": {
+      color: twColors.text,
+    },
+    "& label.Mui-focused": {
+      color: "white"
+    },
+    "& .MuiInput-underline:after": {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        color: "white",
+        borderColor: twColors.text
+      },
+      "&:hover fieldset": {
+        borderColor: twColors.text
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white"
+      }
+    }
+  };
+  const ip = { style: { color: "white" } };
+
+  useEffect(() => {
+    getTokenDatas()
+      .then(data => {
+        setTokenList(data.map(d => d.symbol).sort())
+      });
+  }, []);
 
   return (
     <Box className="bg-highlight w-full rounded-2xl px-8 pb-4 pt-4 text-white">
@@ -84,11 +124,11 @@ export const AddTransactionCard = () => {
         </Label>
         {isOpen && 
           <ResponsiveGrid>
-            <Input bgColor="transparent" id="date" label="Date" register={() => {}} errors={() => {}} />
-            <Input id="token" label="Token" register={() => {}} errors={() => {}} />
-            <Input id="type" label="Type" register={() => {}} errors={() => {}} />
-            <Input id="quantity" label="Quantity" register={() => {}} errors={() => {}} />
-            <Input id="price" label="Average Price" register={() => {}} errors={() => {}} />
+            <DatePicker slotProps={{ textField: { size: 'small' } }} label="Date" />
+            <Dropdown value={token} setValue={setToken} label="Token" itemValues={tokenList} />
+            <Dropdown value={type} setValue={setType} label="Type" itemValues={["BUY", "SELL"]} />
+            <TextField size="small" value={quantity} label="Quantity" sx={sx} inputProps={ip} />
+            <TextField size="small" value={price} label="Average Price" sx={sx} inputProps={ip} />
 
             <div className="hover:cursor-pointer" onClick={() => {}}>
                 <Label backgroundColor={twColors.highlight}

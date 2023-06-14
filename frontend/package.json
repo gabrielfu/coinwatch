@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.5",
+    "@mui/x-date-pickers": "^6.7.0",
     "@rebass/forms": "^4.0.6",
     "@types/node": "20.1.2",
     "@types/react": "18.2.6",
