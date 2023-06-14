@@ -37,6 +37,23 @@ const ResponsiveGrid = (props: React.PropsWithChildren) => {
    );
 }
 
+const FormLayout = (props: React.PropsWithChildren) => {
+  return (
+    <div
+      className="
+        grid mt-4 gap-4
+      
+        max-lg:auto-cols-min
+        max-lg:grid-cols-[1fr]
+
+        lg:grid-cols-[repeat(6,1fr)]
+      "
+    >
+      {props.children}
+    </div>
+   );
+}
+
 const DataRow = ({
   data, 
   index,
@@ -123,7 +140,7 @@ export const AddTransactionCard = () => {
           {"Add Transaction " + (isOpen ? "▲" : "▼")}
         </Label>
         {isOpen && 
-          <ResponsiveGrid>
+          <FormLayout>
             <DatePicker 
               label="Date"
               slotProps={{ 
@@ -165,7 +182,7 @@ export const AddTransactionCard = () => {
                   </Box>
                 </Label>
               </div>
-          </ResponsiveGrid>
+          </FormLayout>
         }
       </AutoColumn>
     </Box>
