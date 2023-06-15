@@ -106,8 +106,72 @@ const AddTransactionForm = () => {
                     backgroundColor: twColors.primary,
                     color: "white",
                   },
+                  sx: {
+                    svg: {
+                      color: "white",
+                    },
+                    span: {
+                      color: "white",
+                    },
+                    "& .MuiPickersDay-root": {
+                      "&.Mui-selected": {
+                        backgroundColor: twColors.highlight,
+                      },
+                    },
+                    "& .MuiPickersDay-today": {
+                      borderColor: "white",
+                    }
+                  }
                 },
-              }}
+                mobilePaper: {
+                  style: {
+                    backgroundColor: twColors.primary,
+                    color: "white",
+                  },
+                  sx: {
+                    svg: {
+                      color: "white",
+                    },
+                    span: {
+                      color: "white",
+                    },
+                    "& .MuiPickersDay-root": {
+                      "&.Mui-selected": {
+                        backgroundColor: twColors.highlight,
+                      },
+                    },
+                    "& .MuiPickersDay-today": {
+                      borderColor: "white",
+                    }
+                  }
+                },
+                dialog: {
+                  style: {
+                    backgroundColor: twColors.primary,
+                    color: "white",
+                  },
+                },
+                switchViewButton: {
+                  style: {
+                    color: "white"
+                  }
+                },
+                leftArrowIcon: {
+                  style: {
+                    color: "white"
+                  }
+                },
+                rightArrowIcon: {
+                  style: {
+                    color: "white"
+                  }
+                },
+                day: {
+                  style: {
+                    color: "white"
+                  }
+                },
+              }}              
             />
             <Dropdown value={token} setValue={setToken} label="Token" itemValues={tokenList} />
             <Dropdown value={type} setValue={setType} label="Type" itemValues={["BUY", "SELL"]} />
