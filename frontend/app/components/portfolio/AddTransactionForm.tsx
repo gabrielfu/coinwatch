@@ -15,7 +15,7 @@ const FormLayout = (props: React.PropsWithChildren) => {
   return (
     <div
       className="
-        grid gap-4
+        grid gap-4 mt-4
       
         max-lg:auto-cols-min
         max-lg:grid-cols-[1fr]
@@ -78,7 +78,7 @@ const AddTransactionForm = () => {
   }, []);
 
   return (
-    <Box className="bg-tertiary w-full rounded-2xl px-8 pb-4 pt-4 text-white">
+    <Box className="bg-primary w-full rounded-2xl px-8 pb-4 pt-4 text-text">
       <AutoColumn gap="8px">
         <Label className="hover:cursor-pointer" onClick={() => setIsOpen((prev) => !prev)}>
           {"Add Transaction " + (isOpen ? "▲" : "▼")}
@@ -179,7 +179,7 @@ const AddTransactionForm = () => {
             <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={price} label="Average Price" sx={sx} inputProps={ip} />
 
             <div className="hover:cursor-pointer" onClick={onSubmit}>
-                <Label backgroundColor={twColors.primary}
+                <Label backgroundColor={twColors.highlight}
                   padding="6px 12px" 
                   width={200}
                   height={42}
