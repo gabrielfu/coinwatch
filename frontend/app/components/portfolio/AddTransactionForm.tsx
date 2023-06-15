@@ -8,6 +8,7 @@ import { TextField } from "@mui/material";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Dropdown from "@/app/inputs/Dropdown";
 import { getTokenDatas } from "@/app/actions/tokens";
+import dayjs from "dayjs";
 
 
 const FormLayout = (props: React.PropsWithChildren) => {
@@ -30,11 +31,11 @@ const FormLayout = (props: React.PropsWithChildren) => {
 
 const AddTransactionForm = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [date, setDate] = useState();
-  const [token, setToken] = useState();
-  const [type, setType] = useState();
-  const [quantity, setQuantity] = useState();
-  const [price, setPrice] = useState();
+  const [date, setDate] = useState(dayjs(new Date()));
+  const [token, setToken] = useState("");
+  const [type, setType] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [price, setPrice] = useState(0);
 
   const [tokenList, setTokenList] = useState<string[]>([]);
 
@@ -63,6 +64,12 @@ const AddTransactionForm = () => {
   };
   const ip = { style: { color: "white" } };
 
+  const onSubmit = () => {
+    console.log({
+      date, token, type, quantity, price
+    });
+  }
+
   useEffect(() => {
     getTokenDatas()
       .then(data => {
@@ -80,6 +87,9 @@ const AddTransactionForm = () => {
           <FormLayout>
             <DatePicker 
               label="Date"
+              value={date}
+              onChange={(newDate) => setDate(newDate)}
+              format="YYYY-MM-DD"
               slotProps={{ 
                 textField: { 
                   size: "small",
@@ -91,11 +101,12 @@ const AddTransactionForm = () => {
                     color: twColors.text,
                   },
                 },
-                popper: {
+                desktopPaper: {
                   style: {
-                    backgroundColor: "black"
-                  }
-                }
+                    backgroundColor: twColors.primary,
+                    color: "white",
+                  },
+                },
               }}
             />
             <Dropdown value={token} setValue={setToken} label="Token" itemValues={tokenList} />
@@ -103,7 +114,7 @@ const AddTransactionForm = () => {
             <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={quantity} label="Quantity" sx={sx} inputProps={ip} />
             <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={price} label="Average Price" sx={sx} inputProps={ip} />
 
-            <div className="hover:cursor-pointer" onClick={() => {}}>
+            <div className="hover:cursor-pointer" onClick={onSubmit}>
                 <Label backgroundColor={twColors.primary}
                   padding="6px 12px" 
                   width={200}

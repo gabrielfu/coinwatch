@@ -55,6 +55,18 @@ const Dropdown = ({
             borderColor: "white"
           },
         }}
+        MenuProps={{
+          slotProps: {
+            paper: {
+              style: {
+                maxHeight: 48 * 4.5 + 8,
+                minWidth: 180,
+                backgroundColor: twColors.primary,
+                color: "white",
+              }
+            }
+          }
+        }}
       >
         {itemValues.map((v, i) => {
           const l = itemLabels ? itemLabels[i] : v;
