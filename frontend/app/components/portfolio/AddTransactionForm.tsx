@@ -8,7 +8,7 @@ import { TextField } from "@mui/material";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Dropdown from "@/app/inputs/Dropdown";
 import { getTokenDatas } from "@/app/actions/tokens";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 
 const FormLayout = (props: React.PropsWithChildren) => {
@@ -37,6 +37,7 @@ const AddTransactionForm = () => {
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
 
+  const [valid, setValid] = useState(false);
   const [tokenList, setTokenList] = useState<string[]>([]);
 
   const sx = {
@@ -65,9 +66,11 @@ const AddTransactionForm = () => {
   const ip = { style: { color: "white" } };
 
   const onSubmit = () => {
-    console.log({
-      date, token, type, quantity, price
-    });
+    if (valid) {
+      console.log({
+        valid, date, token, type, quantity, price
+      });
+    }
   }
 
   useEffect(() => {
@@ -76,6 +79,23 @@ const AddTransactionForm = () => {
         setTokenList(data.map(d => d.symbol).sort())
       });
   }, []);
+
+  useEffect(() => {
+    setValid(
+      (date.isBefore(dayjs(new Date())))
+      && (date.isAfter(dayjs("1970-01-01")))
+      && (token != "")
+      && (type != "")
+      && (quantity > 0)
+      && (price > 0)
+    )
+  }, [date, token, type, quantity, price]);
+
+  const onChange = (setValue: (value: any) => void) => {
+    return (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(event.target.value);
+    }
+  }
 
   return (
     <Box className="bg-primary w-full rounded-2xl px-8 pb-4 pt-4 text-text">
@@ -88,7 +108,7 @@ const AddTransactionForm = () => {
             <DatePicker 
               label="Date"
               value={date}
-              onChange={(newDate) => setDate(newDate)}
+              onChange={(newDate) => setDate(newDate as Dayjs)}
               format="YYYY-MM-DD"
               slotProps={{ 
                 textField: { 
@@ -175,11 +195,11 @@ const AddTransactionForm = () => {
             />
             <Dropdown value={token} setValue={setToken} label="Token" itemValues={tokenList} />
             <Dropdown value={type} setValue={setType} label="Type" itemValues={["BUY", "SELL"]} />
-            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={quantity} label="Quantity" sx={sx} inputProps={ip} />
-            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={price} label="Average Price" sx={sx} inputProps={ip} />
+            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={quantity} onChange={onChange(setQuantity)} label="Quantity" sx={sx} inputProps={ip} />
+            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={price} onChange={onChange(setPrice)} label="Average Price" sx={sx} inputProps={ip} />
 
-            <div className="hover:cursor-pointer" onClick={onSubmit}>
-                <Label backgroundColor={twColors.highlight}
+            <div className={valid ? "hover:cursor-pointer" : ""} onClick={onSubmit}>
+                <Label backgroundColor={valid ? twColors.highlight : twColors.disabledText}
                   padding="6px 12px" 
                   width={200}
                   height={42}
