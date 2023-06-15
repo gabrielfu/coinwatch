@@ -7,6 +7,7 @@ import Link from "next/link";
 import { formatDollarAmount, formatPrice, formatPriceChangePercent, isNegative } from "../util/format";
 import { useEffect, useState } from "react";
 import { PortfolioData } from "@/app/actions/portfolios";
+import { getTransactions, TransactionRequest, TransactionResponse } from "@/app/actions/transactions";
 
 const ResponsiveGrid = (props: React.PropsWithChildren) => {
   return (
@@ -35,40 +36,39 @@ const DataRow = ({
   data, 
   index,
 }: {
-  data: PortfolioData;
+  data: TransactionResponse;
   index: number;
 }) => {
-  const formattedData = {
-    name: data.name,
-    marketValue: data.marketValue == null ? "-" : formatPrice(data.marketValue),
-    dayChange: data.marketValue == null ? "-" : formatPrice(data.dayChange),
-    dayChangePercent: data.dayChangePercent == null ? "-" : formatPriceChangePercent(data.dayChangePercent),
-    dayNegative: isNegative(data.dayChangePercent),
-    totalChange: data.marketValue == null ? "-" : formatPrice(data.totalChange),
-    totalChangePercent: data.totalChangePercent == null ? "-" : formatPriceChangePercent(data.totalChangePercent),
-    totalNegative: isNegative(data.totalChangePercent),
-  };
+  // const formattedData = {
+  //   name: data.name,
+  //   marketValue: data.marketValue == null ? "-" : formatPrice(data.marketValue),
+  //   dayChange: data.marketValue == null ? "-" : formatPrice(data.dayChange),
+  //   dayChangePercent: data.dayChangePercent == null ? "-" : formatPriceChangePercent(data.dayChangePercent),
+  //   dayNegative: isNegative(data.dayChangePercent),
+  //   totalChange: data.marketValue == null ? "-" : formatPrice(data.totalChange),
+  //   totalChangePercent: data.totalChangePercent == null ? "-" : formatPriceChangePercent(data.totalChangePercent),
+  //   totalNegative: isNegative(data.totalChangePercent),
+  // };
 
   return ( 
     <>
-      <Link href={`/portfolios/${data.id}`} className="no-underline hover:cursor-pointer hover:opacity-70">
+      <div className="no-underline hover:opacity-70">
         <ResponsiveGrid>
-          <Label color='white'>{index + 1}</Label>
-          <Label color='white'>{formattedData.name}</Label>
-          <Label color='white' end={1}>{formattedData.marketValue}</Label>
-          <Label color='white' end={1}>{formattedData.dayChange}</Label>
-          <Percent negative={formattedData.dayNegative} end={1}>{formattedData.dayChangePercent}</Percent>
-          <Label color='white' end={1}>{formattedData.totalChange}</Label>
-          <Percent negative={formattedData.totalNegative} end={1}>{formattedData.totalChangePercent}</Percent>
+          <Label color='white'>{data.date}</Label>
+          <Label color='white'>{data.token.symbol}</Label>
+          <Label color='white'>{data.type}</Label>
+          <Label color='white' end={1}>{data.quantity}</Label>
+          <Label color='white' end={1}>{data.price}</Label>
+          <Label color='white' end={1}>{data.quantity * data.price}</Label>
         </ResponsiveGrid>
-      </Link>
+      </div>
       <Break />
     </>
    );
 }
 
-const TransactionTable = ({ portfolioDatas }: {
-  portfolioDatas: PortfolioData[];
+const TransactionTable = ({ transactions }: {
+  transactions: TransactionResponse[];
 }) => {
 
   // pagination
@@ -103,9 +103,9 @@ const TransactionTable = ({ portfolioDatas }: {
         </ResponsiveGrid>
         <Break />
 
-        {portfolioDatas.length > 0 
+        {transactions.length > 0 
           ? <>
-            {portfolioDatas.map((data, i) => {
+            {transactions.map((data, i) => {
               return data 
                 ? <DataRow key={i} data={data} index={(page - 1) * itemsPerPage + i} />
                 : null;

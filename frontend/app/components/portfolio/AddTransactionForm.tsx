@@ -9,6 +9,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import Dropdown from "@/app/inputs/Dropdown";
 import { getTokenDatas } from "@/app/actions/tokens";
 import dayjs, { Dayjs } from "dayjs";
+import { createTransaction, TransactionRequest } from "@/app/actions/transactions";
 
 
 const FormLayout = (props: React.PropsWithChildren) => {
@@ -29,7 +30,9 @@ const FormLayout = (props: React.PropsWithChildren) => {
 }
 
 
-const AddTransactionForm = () => {
+const AddTransactionForm = ({ portfolioId }: {
+  portfolioId: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState(dayjs(new Date()));
   const [token, setToken] = useState("");
@@ -67,9 +70,15 @@ const AddTransactionForm = () => {
 
   const onSubmit = () => {
     if (valid) {
-      console.log({
-        valid, date, token, type, quantity, price
-      });
+      const t: TransactionRequest = {
+        portfolioId: parseInt(portfolioId),
+        tokenSymbol: token,
+        date: date.format("YYYY-MM-DD"),
+        quantity: quantity,
+        purchasePrice: price,
+        type: type,
+      }
+      createTransaction(t);
     }
   }
 

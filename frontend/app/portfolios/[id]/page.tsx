@@ -16,6 +16,7 @@ import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
 import TransactionTable from "@/app/components/portfolio/TransactionTable";
 import SummaryTable from "@/app/components/portfolio/SummaryTable";
 import AddTransactionForm from "@/app/components/portfolio/AddTransactionForm";
+import { TransactionRequest, TransactionResponse, getTransactions } from "@/app/actions/transactions";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -103,7 +104,7 @@ const Widget = ({ data }: {data?: LineData}) => {
 const PortfolioPage = ({ params }: {
   params: { id: string }
 }) => {
-  const id = params.id;
+  const portfolioId = params.id;
   const [name, setName] = useState<string>("");
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
   const [widgetLabel, setWidgetLabel] = useState<LineData>();
@@ -117,9 +118,11 @@ const PortfolioPage = ({ params }: {
   const setPortfolioId = useDeletePortfolioModal((state) => state.setPortfolioId);
   const setPortfolioName = useDeletePortfolioModal((state) => state.setPortfolioName);
 
+  const [transactions, setTransactions] = useState<TransactionResponse[]>([]);
+
   const fetchChartData = useCallback(() => {  
     // TODO  
-    id;
+    portfolioId;
     fetch(`/api/v1/quote/historical?token=AVAX&range=${range}&interval=${interval}`)
       .then((res) => res.json())
       .then((data: {series: OhlcData[]}) => {
@@ -131,10 +134,10 @@ const PortfolioPage = ({ params }: {
           } });
         setChartData(series);
       });
-  }, [id, range, interval]);
+  }, [portfolioId, range, interval]);
 
   useEffect(() => {
-    id;
+    portfolioId;
     fetch(`/api/v1/tokens/AVAX`)
       .then((res) => res.json())
       .then((info) => {
@@ -148,9 +151,17 @@ const PortfolioPage = ({ params }: {
       });
     
     fetchChartData();
-    setPortfolioId(id.toString());
+    setPortfolioId(portfolioId.toString());
     setPortfolioName(name);
-  }, [id, name, fetchChartData]);
+  }, [portfolioId, name, fetchChartData]);
+
+  useEffect(() => {
+    getTransactions()
+      .then(data => {
+        data = data.filter(t => t.portfolioId.toString() == portfolioId);
+        setTransactions(data);
+      })
+  }, []);
 
   return ( 
     <Card>
@@ -237,8 +248,8 @@ const PortfolioPage = ({ params }: {
         }
         
         <Label mt="32px" ml="16px" color="white" fontSize={24}>Transactions</Label>
-        <AddTransactionForm />
-        <TransactionTable portfolioDatas={[]} />
+        <AddTransactionForm portfolioId={portfolioId} />
+        <TransactionTable transactions={transactions} />
       </AutoColumn>
     </Card>
    );
