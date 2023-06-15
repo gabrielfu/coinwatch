@@ -39,27 +39,25 @@ const DataRow = ({
   data: TransactionResponse;
   index: number;
 }) => {
-  // const formattedData = {
-  //   name: data.name,
-  //   marketValue: data.marketValue == null ? "-" : formatPrice(data.marketValue),
-  //   dayChange: data.marketValue == null ? "-" : formatPrice(data.dayChange),
-  //   dayChangePercent: data.dayChangePercent == null ? "-" : formatPriceChangePercent(data.dayChangePercent),
-  //   dayNegative: isNegative(data.dayChangePercent),
-  //   totalChange: data.marketValue == null ? "-" : formatPrice(data.totalChange),
-  //   totalChangePercent: data.totalChangePercent == null ? "-" : formatPriceChangePercent(data.totalChangePercent),
-  //   totalNegative: isNegative(data.totalChangePercent),
-  // };
+  const formattedData = {
+    date: data.date,
+    token: data.token.symbol,
+    type: data.type,
+    quantity: formatPrice(data.quantity, false),
+    price: formatPrice(data.price),
+    costBasis: formatPrice(data.quantity * data.price),
+  };
 
   return ( 
     <>
       <div className="no-underline hover:opacity-70">
         <ResponsiveGrid>
-          <Label color='white'>{data.date}</Label>
-          <Label color='white'>{data.token.symbol}</Label>
-          <Label color='white'>{data.type}</Label>
-          <Label color='white' end={1}>{data.quantity}</Label>
-          <Label color='white' end={1}>{data.price}</Label>
-          <Label color='white' end={1}>{data.quantity * data.price}</Label>
+          <Label color='white'>{formattedData.date}</Label>
+          <Label color='white'>{formattedData.token}</Label>
+          <Label color='white'>{formattedData.type}</Label>
+          <Label color='white' end={1}>{formattedData.quantity}</Label>
+          <Label color='white' end={1}>{formattedData.price}</Label>
+          <Label color='white' end={1}>{formattedData.costBasis}</Label>
         </ResponsiveGrid>
       </div>
       <Break />
