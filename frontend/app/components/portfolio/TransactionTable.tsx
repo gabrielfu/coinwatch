@@ -1,13 +1,12 @@
 import { twColors } from "@/app/twConfig";
 import Card from "../Card";
 import { AutoColumn } from "../Column";
-import { ClickableText, Label, Percent } from "../Text";
+import { ClickableText, Label } from "../Text";
 import { Break, LastRow, PageButtons } from "../Table";
-import Link from "next/link";
-import { formatDollarAmount, formatPrice, formatPriceChangePercent, isNegative } from "../util/format";
+import { formatPrice } from "../util/format";
 import { useEffect, useState } from "react";
 import { PortfolioData } from "@/app/actions/portfolios";
-import { getTransactions, TransactionRequest, TransactionResponse } from "@/app/actions/transactions";
+import { TransactionResponse } from "@/app/actions/transactions";
 
 const ResponsiveGrid = (props: React.PropsWithChildren) => {
   return (
