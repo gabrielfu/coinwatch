@@ -32,7 +32,7 @@ const FormLayout = (props: React.PropsWithChildren) => {
 
 const AddTransactionForm = ({ 
   portfolioId,
-  onSuccess,
+  onSuccess = () => {},
  }: {
   portfolioId: string;
   onSuccess?: () => void;
