@@ -13,7 +13,8 @@ const ResponsiveGrid = (props: React.PropsWithChildren) => {
     <div
       className="
         grid items-center mx-4 gap-4
-        grid-cols-[repeat(6,160px)_22px_22px]
+        max-lg:grid-cols-[repeat(2,140px)_80px_100px_repeat(2,140px)_repeat(3,22px)]
+        lg:grid-cols-[repeat(6,154px)_repeat(3,22px)]
         overflow-x-auto
       "
     >
@@ -48,6 +49,7 @@ const DataRow = ({
           <Label color='white' end={1}>{formattedData.quantity}</Label>
           <Label color='white' end={1}>{formattedData.price}</Label>
           <Label color='white' end={1}>{formattedData.costBasis}</Label>
+          <div></div>
           <MdOutlineEdit color={twColors.text} size={22} />
           <MdOutlineDelete color={twColors.text} size={22} />
         </ResponsiveGrid>
@@ -92,6 +94,7 @@ const TransactionTable = ({ transactions }: {
               <ClickableText end={1} color={twColors.text} onClick={() => handleSort("totalChange")}>
                 Cost Basis
               </ClickableText>
+              <div></div>
               <div></div>
               <div></div>
             </ResponsiveGrid>
