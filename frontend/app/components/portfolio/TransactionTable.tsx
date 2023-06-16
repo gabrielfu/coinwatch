@@ -56,8 +56,8 @@ const DataRow = ({
           <Label color='white' end={1}>{formattedData.price}</Label>
           <Label color='white' end={1}>{formattedData.costBasis}</Label>
           <div></div>
-          <MdOutlineEdit className="hover:cursor-pointer" color={twColors.text} size={22} onClick={() => {console.log(data)}} />
-          <MdOutlineDelete className="hover:cursor-pointer" color={twColors.text} size={22} onClick={() => handleDelete(data.id.toString())} />
+          <MdOutlineEdit className="hover:cursor-pointer hover:text-white hover:opacity-100 text-text" size={22} onClick={() => {console.log(data)}} />
+          <MdOutlineDelete className="hover:cursor-pointer hover:text-white hover:opacity-100 text-text" size={22} onClick={() => handleDelete(data.id.toString())} />
         </ResponsiveGrid>
       </div>
       <Break />
