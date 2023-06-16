@@ -4,21 +4,19 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import Modal from "./Modal";
 import axios, { AxiosError } from "axios";
-import { redirect } from "next/navigation";
-import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
+import useDeleteTransactionModal from "@/app/hooks/useDeleteTransactionModal";
 
-const DeletePortfolioModal = () => {
-  const deletePortfolioModal = useDeletePortfolioModal();
+const DeleteTransactionModal = () => {
+  const deleteTransactionModal = useDeleteTransactionModal();
   const [isLoading, setIsLoading] = useState(false);
-  const [toRedirect, setRedirect] = useState(false);
 
   const onSubmit = () => {
     setIsLoading(true);
-    axios.delete(`/api/v1/portfolios/${deletePortfolioModal.portfolioId}`)
+    axios.delete(`/api/v1/transactions/${deleteTransactionModal.transactionId}`)
       .then(() => {
-        toast.success(`Deleted portfolio ${deletePortfolioModal.portfolioId}`);
-        deletePortfolioModal.onClose();
-        setRedirect(true);
+        toast.success(`Deleted transaction`);
+        deleteTransactionModal.onClose();
+        deleteTransactionModal.onSuccess();
       })
       .catch((error) => {
         const message = error instanceof AxiosError
@@ -33,24 +31,22 @@ const DeletePortfolioModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      Are you sure you want to delete portfolio {deletePortfolioModal.portfolioName}?
+      Are you sure you want to delete this transaction?
       This action cannot be undone.
     </div>
   );
 
-  return toRedirect
-    ? redirect("/portfolios")
-    : ( 
+  return (
       <Modal 
         disabled={isLoading}
-        isOpen={deletePortfolioModal.isOpen}
+        isOpen={deleteTransactionModal.isOpen}
         onSubmit={onSubmit}
-        onClose={deletePortfolioModal.onClose}
-        title="Delete Portfolio"
+        onClose={deleteTransactionModal.onClose}
+        title="Delete Transaction"
         actionLabel="Delete"
         body={bodyContent}
       />
     );
 }
  
-export default DeletePortfolioModal;
+export default DeleteTransactionModal;

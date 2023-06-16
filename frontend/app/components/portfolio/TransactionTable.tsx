@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { twColors } from "@/app/twConfig";
 import Card from "../Card";
 import { AutoColumn } from "../Column";
@@ -8,6 +8,7 @@ import { formatPrice } from "../util/format";
 import { TransactionResponse, deleteTransaction } from "@/app/actions/transactions";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import TokenLogo from "../token/TokenLogo";
+import useDeleteTransactionModal from "@/app/hooks/useDeleteTransactionModal";
 
 const ResponsiveGrid = (props: React.PropsWithChildren) => {
   return (
@@ -55,8 +56,8 @@ const DataRow = ({
           <Label color='white' end={1}>{formattedData.price}</Label>
           <Label color='white' end={1}>{formattedData.costBasis}</Label>
           <div></div>
-          <MdOutlineEdit color={twColors.text} size={22} onClick={() => {console.log(data)}} />
-          <MdOutlineDelete color={twColors.text} size={22} onClick={() => handleDelete(data.id.toString())} />
+          <MdOutlineEdit className="hover:cursor-pointer" color={twColors.text} size={22} onClick={() => {console.log(data)}} />
+          <MdOutlineDelete className="hover:cursor-pointer" color={twColors.text} size={22} onClick={() => handleDelete(data.id.toString())} />
         </ResponsiveGrid>
       </div>
       <Break />
@@ -77,12 +78,18 @@ const TransactionTable = ({
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
 
+  const deleteTransactionModal = useDeleteTransactionModal();
+
   const handleSort = (x: any) => {}
 
   const handleDelete = (id: string) => {
-    deleteTransaction(id)
-      .then(() => refresh());
+    deleteTransactionModal.setTransactionId(id);
+    deleteTransactionModal.onOpen();
   }
+
+  useEffect(() => {
+    deleteTransactionModal.setOnSuccess(refresh);
+  }, [])
 
   return ( 
     <Card backgroundColor={twColors.primary}>
