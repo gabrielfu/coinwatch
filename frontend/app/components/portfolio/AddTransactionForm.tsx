@@ -30,8 +30,12 @@ const FormLayout = (props: React.PropsWithChildren) => {
 }
 
 
-const AddTransactionForm = ({ portfolioId }: {
+const AddTransactionForm = ({ 
+  portfolioId,
+  onSuccess,
+ }: {
   portfolioId: string;
+  onSuccess?: () => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState(dayjs(new Date()));
@@ -78,7 +82,8 @@ const AddTransactionForm = ({ portfolioId }: {
         purchasePrice: price,
         type: type,
       }
-      createTransaction(t);
+      createTransaction(t)
+        .then(() => onSuccess());
     }
   }
 
