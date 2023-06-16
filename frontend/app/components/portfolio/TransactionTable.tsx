@@ -5,7 +5,7 @@ import { AutoColumn } from "../Column";
 import { ClickableText, Label } from "../Text";
 import { Break, LastRow, PageButtons } from "../Table";
 import { formatPrice } from "../util/format";
-import { TransactionResponse } from "@/app/actions/transactions";
+import { TransactionResponse, deleteTransaction } from "@/app/actions/transactions";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import TokenLogo from "../token/TokenLogo";
 
@@ -27,9 +27,11 @@ const ResponsiveGrid = (props: React.PropsWithChildren) => {
 const DataRow = ({
   data, 
   index,
+  handleDelete,
 }: {
   data: TransactionResponse;
   index: number;
+  handleDelete: (id: string) => void;
 }) => {
   const formattedData = {
     date: data.date,
@@ -54,7 +56,7 @@ const DataRow = ({
           <Label color='white' end={1}>{formattedData.costBasis}</Label>
           <div></div>
           <MdOutlineEdit color={twColors.text} size={22} onClick={() => {console.log(data)}} />
-          <MdOutlineDelete color={twColors.text} size={22} />
+          <MdOutlineDelete color={twColors.text} size={22} onClick={() => handleDelete(data.id.toString())} />
         </ResponsiveGrid>
       </div>
       <Break />
@@ -62,8 +64,12 @@ const DataRow = ({
    );
 }
 
-const TransactionTable = ({ transactions }: {
+const TransactionTable = ({ 
+  transactions, 
+  refresh = () => {},
+ }: {
   transactions: TransactionResponse[];
+  refresh?: () => void;
 }) => {
 
   // pagination
@@ -72,6 +78,11 @@ const TransactionTable = ({ transactions }: {
   const [maxPage, setMaxPage] = useState(1);
 
   const handleSort = (x: any) => {}
+
+  const handleDelete = (id: string) => {
+    deleteTransaction(id)
+      .then(() => refresh());
+  }
 
   return ( 
     <Card backgroundColor={twColors.primary}>
@@ -107,7 +118,7 @@ const TransactionTable = ({ transactions }: {
               ? <>
                 {transactions.map((data, i) => {
                   return data 
-                    ? <DataRow key={i} data={data} index={(page - 1) * itemsPerPage + i} />
+                    ? <DataRow key={i} data={data} index={(page - 1) * itemsPerPage + i} handleDelete={handleDelete} />
                     : null;
                 })}
               </>

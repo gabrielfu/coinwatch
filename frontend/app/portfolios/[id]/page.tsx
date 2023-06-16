@@ -164,7 +164,6 @@ const PortfolioPage = ({ params }: {
     refreshTransactions();
   }, []);
 
-
   return ( 
     <Card>
       <AutoColumn gap="8px">
@@ -251,7 +250,7 @@ const PortfolioPage = ({ params }: {
         
         <Label mt="32px" ml="16px" color="white" fontSize={24}>Transactions</Label>
         <AddTransactionForm portfolioId={portfolioId} onSuccess={refreshTransactions} />
-        <TransactionTable transactions={transactions} />
+        <TransactionTable transactions={transactions} refresh={refreshTransactions} />
       </AutoColumn>
     </Card>
    );

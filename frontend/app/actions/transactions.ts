@@ -57,3 +57,17 @@ export const getTransactions = async () => {
       return s;
     }));
 }
+
+export const deleteTransaction = async (id: string) => {
+  await axios.delete(`/api/v1/transactions/${id}`)
+    .then((res) => {
+      toast.success(`Deleted transaction`);
+      return res.data;
+    })
+    .catch((error) => {
+      const message = error instanceof AxiosError
+        ? error.response?.data.message
+        : error.toString();
+      toast.error(message);
+    });
+}
