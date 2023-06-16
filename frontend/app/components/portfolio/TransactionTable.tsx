@@ -1,33 +1,24 @@
+import { useState } from "react";
 import { twColors } from "@/app/twConfig";
 import Card from "../Card";
 import { AutoColumn } from "../Column";
 import { ClickableText, Label } from "../Text";
 import { Break, LastRow, PageButtons } from "../Table";
 import { formatPrice } from "../util/format";
-import { useEffect, useState } from "react";
-import { PortfolioData } from "@/app/actions/portfolios";
 import { TransactionResponse } from "@/app/actions/transactions";
+import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 
 const ResponsiveGrid = (props: React.PropsWithChildren) => {
   return (
     <div
       className="
         grid items-center mx-4 gap-4
-
-        max-md:grid-cols-[repeat(3,1fr)]
-        max-md:[&>*:nth-child(4)]:hidden
-        max-md:[&>*:nth-child(5)]:hidden
-        max-md:[&>*:nth-child(6)]:hidden
-
-        md:max-lg:grid-cols-[repeat(4,1fr)]
-        md:max-lg:[&>*:nth-child(4)]:hidden
-        md:max-lg:[&>*:nth-child(6)]:hidden
-
-        lg:grid-cols-[repeat(6,1fr)]
+        grid-cols-[repeat(6,160px)_22px_22px]
+        overflow-x-auto
       "
     >
       {props.children}
-    </div>
+      </div>
    );
 }
 
@@ -57,6 +48,8 @@ const DataRow = ({
           <Label color='white' end={1}>{formattedData.quantity}</Label>
           <Label color='white' end={1}>{formattedData.price}</Label>
           <Label color='white' end={1}>{formattedData.costBasis}</Label>
+          <MdOutlineEdit color={twColors.text} size={22} />
+          <MdOutlineDelete color={twColors.text} size={22} />
         </ResponsiveGrid>
       </div>
       <Break />
@@ -78,37 +71,46 @@ const TransactionTable = ({ transactions }: {
   return ( 
     <Card backgroundColor={twColors.primary}>
       <AutoColumn gap="16px" margin="0.25em 0 0.25em 0">
-        <ResponsiveGrid>
-          <ClickableText color={twColors.text} onClick={() => handleSort("date")}>
-            Date
-          </ClickableText>
-          <ClickableText color={twColors.text} onClick={() => handleSort("token")}>
-            Token
-          </ClickableText>
-          <ClickableText color={twColors.text} onClick={() => handleSort("type")}>
-            Type
-          </ClickableText>
-          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("marketValue")}>
-            Quantity
-          </ClickableText>
-          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("dayChange")}>
-            Average Price
-          </ClickableText>
-          <ClickableText end={1} color={twColors.text} onClick={() => handleSort("totalChange")}>
-            Cost Basis
-          </ClickableText>
-        </ResponsiveGrid>
-        <Break />
+        <div className=" overflow-x-scroll scroll-smooth">
+          <AutoColumn gap="16px" margin="0.25em 0 0.25em 0">
+            <ResponsiveGrid>
+              <ClickableText color={twColors.text} onClick={() => handleSort("date")}>
+                Date
+              </ClickableText>
+              <ClickableText color={twColors.text} onClick={() => handleSort("token")}>
+                Token
+              </ClickableText>
+              <ClickableText color={twColors.text} onClick={() => handleSort("type")}>
+                Type
+              </ClickableText>
+              <ClickableText end={1} color={twColors.text} onClick={() => handleSort("marketValue")}>
+                Quantity
+              </ClickableText>
+              <ClickableText end={1} color={twColors.text} onClick={() => handleSort("dayChange")}>
+                Average Price
+              </ClickableText>
+              <ClickableText end={1} color={twColors.text} onClick={() => handleSort("totalChange")}>
+                Cost Basis
+              </ClickableText>
+              <div></div>
+              <div></div>
+            </ResponsiveGrid>
+            <Break />
 
+            {transactions.length > 0 
+              ? <>
+                {transactions.map((data, i) => {
+                  return data 
+                    ? <DataRow key={i} data={data} index={(page - 1) * itemsPerPage + i} />
+                    : null;
+                })}
+              </>
+              : null
+            }
+          </AutoColumn>
+        </div>
         {transactions.length > 0 
-          ? <>
-            {transactions.map((data, i) => {
-              return data 
-                ? <DataRow key={i} data={data} index={(page - 1) * itemsPerPage + i} />
-                : null;
-            })}
-            <PageButtons page={page} setPage={setPage} maxPage={maxPage} />
-          </>
+          ? <PageButtons page={page} setPage={setPage} maxPage={maxPage} />
           : <LastRow>
             No Transactions
           </LastRow>

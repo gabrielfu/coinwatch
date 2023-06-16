@@ -23,7 +23,7 @@ export const PageButtons = ({ page, setPage, maxPage }: { page: number, setPage:
   return (
     <LastRow>
       <PageArrow left={true} disabled={page == 1} onClick={page == 1 ? null : (() => setPage((p: number) => p - 1))} />
-        {`Page ${page} / ${maxPage}`}
+      {`Page ${page} / ${maxPage}`}
       <PageArrow left={false} disabled={page == maxPage} onClick={page == maxPage ? null : (() => setPage((p: number) => p + 1))} />
     </LastRow>
   )
