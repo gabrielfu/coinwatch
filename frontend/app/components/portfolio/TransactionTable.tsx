@@ -7,6 +7,7 @@ import { Break, LastRow, PageButtons } from "../Table";
 import { formatPrice } from "../util/format";
 import { TransactionResponse } from "@/app/actions/transactions";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
+import TokenLogo from "../token/TokenLogo";
 
 const ResponsiveGrid = (props: React.PropsWithChildren) => {
   return (
@@ -32,7 +33,6 @@ const DataRow = ({
 }) => {
   const formattedData = {
     date: data.date,
-    token: data.token.symbol,
     type: data.type,
     quantity: formatPrice(data.quantity, false),
     price: formatPrice(data.price),
@@ -44,13 +44,16 @@ const DataRow = ({
       <div className="no-underline hover:opacity-70">
         <ResponsiveGrid>
           <Label color='white'>{formattedData.date}</Label>
-          <Label color='white'>{formattedData.token}</Label>
+          <Label color='white'>
+            <TokenLogo src={data.token.logo} alt={data.token.name} size={22} />
+            <Label ml="12px">{data.token.symbol}</Label>
+          </Label>
           <Label color='white'>{formattedData.type}</Label>
           <Label color='white' end={1}>{formattedData.quantity}</Label>
           <Label color='white' end={1}>{formattedData.price}</Label>
           <Label color='white' end={1}>{formattedData.costBasis}</Label>
           <div></div>
-          <MdOutlineEdit color={twColors.text} size={22} />
+          <MdOutlineEdit color={twColors.text} size={22} onClick={() => {console.log(data)}} />
           <MdOutlineDelete color={twColors.text} size={22} />
         </ResponsiveGrid>
       </div>
