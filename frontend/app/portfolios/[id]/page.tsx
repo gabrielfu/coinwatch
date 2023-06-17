@@ -16,7 +16,7 @@ import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
 import TransactionTable from "@/app/components/portfolio/TransactionTable";
 import SummaryTable from "@/app/components/portfolio/SummaryTable";
 import AddTransactionForm from "@/app/components/portfolio/AddTransactionForm";
-import { TransactionRequest, TransactionResponse, getTransactions, getTransactionsByPortfolio } from "@/app/actions/transactions";
+import { TransactionResponse, searchTransactionsByPortfolio } from "@/app/actions/transactions";
 import { PortfolioInfo, getPortfolio } from "@/app/actions/portfolios";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
@@ -153,7 +153,7 @@ const PortfolioPage = ({ params }: {
   }, [portfolioId, fetchChartData]);
 
   const refreshTransactions = () => {
-    getTransactionsByPortfolio(portfolioId)
+    searchTransactionsByPortfolio(portfolioId)
       .then(data => {
         setTransactions(data);
       });

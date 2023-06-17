@@ -58,7 +58,7 @@ export const getTransactions = async () => {
     }));
 }
 
-export const getTransactionsByPortfolio = async (portfolioId: string) => {
+export const searchTransactionsByPortfolio = async (portfolioId: string) => {
   return await fetch(`/api/v1/transactions/search?portfolioId=${portfolioId}`)
     .then((res) => res.json())
     .then((data: any[]) => data.map((record: any) => {
