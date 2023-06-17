@@ -9,7 +9,7 @@ import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative, 
 import { twColors } from "@/app/twConfig";
 import { TokenData } from "@/app/actions/tokens";
 import { OhlcData, LineData } from "lightweight-charts";
-import { MdOutlineDelete } from "react-icons/md";
+import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import LineChart from "@/app/components/charts/LineChart";
 import { Box, Text } from "rebass";
 import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
@@ -187,23 +187,43 @@ const PortfolioPage = ({ params }: {
                 negative={isNegative(quoteData.priceChangePercent)}
               />}
           </div>
-          <div className="hover:cursor-pointer hover:opacity-80" onClick={deletePortfolioModal.onOpen}>
-            <Text 
-              className="flex items-center font-normal text-base font-variant-numeric: tabular-nums w-auto sm:w-[200px]"
-              backgroundColor={twColors.highlight}
-              marginBottom="12px" 
-              padding="6px 12px" 
-              height={42}
-              justifyContent="center"
-              style={{ 
-                borderRadius: "8px",
-              }}
-            >
-              <MdOutlineDelete color="white" size={22} />
-              <Box className="text-white text-[16px] font-semilight hidden sm:block" margin="0 12px">
-                Delete Portfolio
-              </Box>
-            </Text>
+          <div className="flex justify-end gap-6">
+            <div className="hover:cursor-pointer hover:opacity-80" onClick={() => {}}>
+              <Text 
+                className="flex items-center font-normal text-base font-variant-numeric: tabular-nums w-auto sm:w-[200px]"
+                backgroundColor={twColors.highlight}
+                marginBottom="12px" 
+                padding="6px 12px" 
+                height={42}
+                justifyContent="center"
+                style={{ 
+                  borderRadius: "8px",
+                }}
+              >
+                <MdOutlineEdit color="white" size={22} />
+                <Box className="text-white text-[16px] font-semilight hidden sm:block" margin="0 12px">
+                  Edit Portfolio
+                </Box>
+              </Text>
+            </div>
+            <div className="hover:cursor-pointer hover:opacity-80" onClick={deletePortfolioModal.onOpen}>
+              <Text 
+                className="flex items-center font-normal text-base font-variant-numeric: tabular-nums w-auto sm:w-[200px]"
+                backgroundColor={twColors.highlight}
+                marginBottom="12px" 
+                padding="6px 12px" 
+                height={42}
+                justifyContent="center"
+                style={{ 
+                  borderRadius: "8px",
+                }}
+              >
+                <MdOutlineDelete color="white" size={22} />
+                <Box className="text-white text-[16px] font-semilight hidden sm:block" margin="0 12px">
+                  Delete Portfolio
+                </Box>
+              </Text>
+            </div>
           </div>
         </div>
 
