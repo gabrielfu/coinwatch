@@ -23,7 +23,7 @@ const ContentLayout = (props: React.PropsWithChildren) => {
   return (
     <div
       className="
-        grid mt-4 gap-8
+        grid mt-4 gap-6
       
         max-screen800:auto-cols-min
         max-screen800:grid-cols-[1fr]
