@@ -35,7 +35,7 @@ const PortfoliosPage = () => {
       <AutoColumn gap="8px">
         <div className="flex w-full justify-between">
           <Label ml="16px" color="white" fontSize={24}>Portfolios</Label>
-          <div className="hover:cursor-pointer" onClick={createPortfolioModal.onOpen}>
+          <div className="hover:cursor-pointer hover:opacity-80" onClick={createPortfolioModal.onOpen}>
             <Label backgroundColor={twColors.highlight}
               marginBottom="12px" 
               padding="6px 12px" 

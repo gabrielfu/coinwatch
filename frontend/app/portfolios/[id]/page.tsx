@@ -187,7 +187,7 @@ const PortfolioPage = ({ params }: {
                 negative={isNegative(quoteData.priceChangePercent)}
               />}
           </div>
-          <div className="hover:cursor-pointer" onClick={deletePortfolioModal.onOpen}>
+          <div className="hover:cursor-pointer hover:opacity-80" onClick={deletePortfolioModal.onOpen}>
             <Text 
               className="flex items-center font-normal text-base font-variant-numeric: tabular-nums w-auto sm:w-[200px]"
               backgroundColor={twColors.highlight}

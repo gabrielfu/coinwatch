@@ -222,8 +222,11 @@ const AddTransactionForm = ({
                     borderRadius: "8px",
                   }}
                 >
-                  <IoMdAddCircleOutline color="white" size={22} />
-                  <Box className="text-white text-[16px] font-semilight" margin="0 12px">
+                  <IoMdAddCircleOutline color={valid ? "white" : twColors.text} size={22} />
+                  <Box 
+                    className={"text-[16px] font-semilight " + (valid ? "text-white" : "text-text")} 
+                    margin="0 12px"
+                  >
                     Add Transaction
                   </Box>
                 </Label>
