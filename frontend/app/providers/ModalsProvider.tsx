@@ -1,11 +1,15 @@
 'use client';
 
-import PortfolioModal from "../components/modals/PortfolioModal";
+import CreatePortfolioModal from "../components/modals/CreatePortfolioModal";
+import DeletePortfolioModal from "../components/modals/DeletePortfolioModal";
+import DeleteTransactionModal from "../components/modals/DeleteTransactionModal";
 
 const ModalsProvider = () => {
   return ( 
     <>
-      <PortfolioModal />
+      <CreatePortfolioModal />
+      <DeletePortfolioModal />
+      <DeleteTransactionModal />
     </>
    );
 }

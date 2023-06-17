@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { 
   FieldErrors, 
   FieldValues, 
@@ -40,6 +40,7 @@ export const Input = ({
   register,
   required,
   errors,
+  autoFocus,
 }: {
   id: string;
   label: string;
@@ -47,8 +48,9 @@ export const Input = ({
   disabled?: boolean;
   formatPrice?: boolean;
   required?: boolean;
-  register: UseFormRegister<FieldValues>,
-  errors: FieldErrors
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors;
+  autoFocus?: boolean;
 }) => {
   return (
     <div className="w-full relative">
@@ -58,12 +60,13 @@ export const Input = ({
       <input
         id={id}
         disabled={disabled}
+        autoFocus={autoFocus}
         {...register(id, { required })}
         placeholder=" "
         type={type}
         className={`
-          peer w-full p-2 pt-6 font-light 
-          bg-secondary border-2 rounded-md outline-none transition
+          peer w-full p-2 pt-6 
+          bg-white text-primary font-medium border-2 rounded-md outline-none transition
           disabled:opacity-70
           disabled:cursor-not-allowed
           ${formatPrice ? 'pl-9' : 'pl-4'}
@@ -114,6 +117,7 @@ const Modal = ({
   secondaryActionLabel?: string;
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
+  const ref = useRef(null);
 
   useEffect(() => {
     setShowModal(isOpen);
@@ -146,6 +150,27 @@ const Modal = ({
     secondaryAction();
   }, [secondaryAction, disabled]);
 
+  const handleKeyDown = (evt: React.KeyboardEvent<HTMLInputElement>) => {
+    if (evt.key == "Escape") {
+      handleClose();
+    }
+  };
+
+  const handleClick = (evt: React.KeyboardEvent<HTMLInputElement>) => {
+    if (ref?.current?.contains && !ref.current.contains(evt.target)) {
+      handleClose();
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("mouseup", handleClick);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("mouseup", handleClick);
+    }
+  }, []);
+
   if (!isOpen) {
     return null;
   }
@@ -155,7 +180,7 @@ const Modal = ({
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto 
         fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70"
       >
-        <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto">
+        <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto" ref={ref}>
           {/*content*/}
           <div className={`
             translate duration-300 h-full 

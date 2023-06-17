@@ -22,7 +22,7 @@ export const isNegative = (x: number) => {
 
 export const formatPriceChangePercent = (x: number) => {
   const y = Math.round(x * 100) / 100;
-  const arrow = y > 0 ? '▲ ' : (y < 0 ? '▼ ': '');
+  const arrow = y >= 0 ? '▲ ' : '▼ ';
   return arrow + Math.abs(y).toFixed(2) + "%"
 }
 

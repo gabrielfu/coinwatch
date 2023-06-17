@@ -5,12 +5,12 @@ import { toast } from "react-hot-toast";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { SiBinance } from "react-icons/si"
 import Modal, { Heading, Input } from "./Modal";
-import usePortfolioModal from "@/app/hooks/usePortfolioModal";
+import useCreatePortfolioModal from "@/app/hooks/useCreatePortfolioModal";
 import Button from "../Button";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
-const PortfolioModal = () => {
-  const portfolioModal = usePortfolioModal();
+const CreatePortfolioModal = () => {
+  const portfolioModal = useCreatePortfolioModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const { 
@@ -31,9 +31,13 @@ const PortfolioModal = () => {
       .then(() => {
         toast.success(`Created portfolio ${data.name}`);
         portfolioModal.onClose();
+        portfolioModal.onSuccess();
       })
       .catch((error) => {
-        toast.error(error.response.data.message);
+        const message = error instanceof AxiosError
+          ? error.response?.data.message
+          : error.toString();
+        toast.error(message);
       })
       .finally(() => {
         setIsLoading(false);
@@ -43,6 +47,7 @@ const PortfolioModal = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Input
+        autoFocus
         id="name"
         label="Portfolio Name"
         disabled={isLoading}
@@ -77,7 +82,7 @@ const PortfolioModal = () => {
       body={bodyContent}
       footer={footerContent}
     />
-   );
+  );
 }
  
-export default PortfolioModal;
+export default CreatePortfolioModal;
