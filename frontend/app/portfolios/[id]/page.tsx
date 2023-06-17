@@ -156,6 +156,7 @@ const PortfolioPage = ({ params }: {
     searchTransactionsByPortfolio(portfolioId)
       .then(data => {
         setTransactions(data);
+        setIsEmpty(data.length <= 0);
       });
   }
 
@@ -247,7 +248,7 @@ const PortfolioPage = ({ params }: {
             </>
         }
         
-        <Label mt="32px" ml="16px" color="white" fontSize={24}>Transactions</Label>
+        <Label mt="32px" ml="16px" mb="16px" color="white" fontSize={24}>Transactions</Label>
         <AddTransactionForm portfolioId={portfolioId} onSuccess={refreshTransactions} />
         <TransactionTable transactions={transactions} refresh={refreshTransactions} />
       </AutoColumn>

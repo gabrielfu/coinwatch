@@ -95,7 +95,7 @@ const TransactionTable = ({
   }, [])
 
   return ( 
-    <Card backgroundColor={twColors.primary}>
+    <Card backgroundColor={twColors.primary} mt={16}>
       <AutoColumn gap="16px" margin="0.25em 0 0.25em 0">
         <div className=" overflow-x-scroll scroll-smooth">
           <AutoColumn gap="16px" margin="0.25em 0 0.25em 0">
