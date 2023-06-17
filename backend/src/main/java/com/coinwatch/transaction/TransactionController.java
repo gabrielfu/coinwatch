@@ -26,7 +26,6 @@ public class TransactionController {
     @Autowired
     private Validator validator;
 
-
     @GetMapping
     public List<Transaction> getTransactions() {
         return transactionService.getTransactions();
@@ -35,6 +34,11 @@ public class TransactionController {
     @GetMapping("{id}")
     public Transaction getTransactionById(@PathVariable Long id) {
         return transactionService.getTransactionById(id);
+    }
+
+    @GetMapping("search")
+    public List<Transaction> searchTransactionByPortfolio(@RequestParam Long portfolioId) {
+        return transactionService.searchTransactionByPortfolio(portfolioId);
     }
 
     @PostMapping

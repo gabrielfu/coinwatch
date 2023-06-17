@@ -58,6 +58,23 @@ export const getTransactions = async () => {
     }));
 }
 
+export const getTransactionsByPortfolio = async (portfolioId: string) => {
+  return await fetch(`/api/v1/transactions/search?portfolioId=${portfolioId}`)
+    .then((res) => res.json())
+    .then((data: any[]) => data.map((record: any) => {
+      const s: TransactionResponse = {
+        id: record.id,
+        portfolioId: record.portfolio,
+        token: record.token,
+        date: dayjs(record.date).format("YYYY-MM-DD"),
+        quantity: record.quantity,
+        price: record. purchasePrice,
+        type: record.type,
+      };
+      return s;
+    }));
+}
+
 export const deleteTransaction = async (id: string) => {
   await axios.delete(`/api/v1/transactions/${id}`)
     .then((res) => {

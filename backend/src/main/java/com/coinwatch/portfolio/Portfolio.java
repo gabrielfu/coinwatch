@@ -36,5 +36,6 @@ public class Portfolio {
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.LAZY
     )
+    @JsonIgnore
     private List<Transaction> transactions = new ArrayList<>();
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TransactionService {
@@ -22,6 +23,12 @@ public class TransactionService {
                         ErrorCode.RESOURCE_NOT_FOUND,
                         "Transaction with id '%s' not found".formatted(id)
                 ));
+    }
+
+    public List<Transaction> searchTransactionByPortfolio(Long portfolioId) {
+        return transactionRepository.findAll()
+                .stream().filter(t -> Objects.equals(t.getPortfolio().getId(), portfolioId))
+                .toList();
     }
 
     public Long createTransaction(Transaction transaction) {
