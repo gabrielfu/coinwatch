@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { twColors } from "@/app/twConfig";
 import Card from "../Card";
 import { AutoColumn } from "../Column";
@@ -47,10 +48,12 @@ const DataRow = ({
       <div className="no-underline hover:opacity-70">
         <ResponsiveGrid>
           <Label color='white'>{formattedData.date}</Label>
-          <Label color='white'>
-            <TokenLogo src={data.token.logo} alt={data.token.name} size={22} />
-            <Label ml="12px">{data.token.symbol}</Label>
-          </Label>
+          <Link href={`/tokens/${data.token.symbol}`} className="no-underline hover:cursor-pointer">
+            <Label color='white'>
+              <TokenLogo src={data.token.logo} alt={data.token.name} size={22} />
+              <Label ml="12px">{data.token.symbol}</Label>
+            </Label>
+          </Link>
           <Label color='white'>{formattedData.type}</Label>
           <Label color='white' end={1}>{formattedData.quantity}</Label>
           <Label color='white' end={1}>{formattedData.price}</Label>
