@@ -23,6 +23,7 @@ const Dropdown = ({
   return ( 
     <FormControl fullWidth size="small" >
       <InputLabel 
+        disabled={disabled}
         sx={{
           color: twColors.text,
           "&.MuiInputLabel-shrink": {
@@ -30,7 +31,10 @@ const Dropdown = ({
           },
           "&.Mui-focused": {
             color: "white"
-          }
+          },
+          "&.Mui-disabled" : {
+            color: twColors.disabledText,
+          },
         }}
       >
         {label}
@@ -58,10 +62,10 @@ const Dropdown = ({
             borderColor: "white"
           },
           "&.Mui-disabled .MuiOutlinedInput-notchedOutline": {
-            borderColor: twColors.text
+            borderColor: twColors.disabledText
           },
           "&.Mui-disabled .MuiSelect-icon": {
-            color: twColors.text
+            color: twColors.disabledText
           },
         }}
         MenuProps={{

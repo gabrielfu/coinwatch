@@ -53,7 +53,7 @@ const AddTransactionForm = ({
     "& label": {
       color: twColors.text,
       "&.Mui-disabled" : {
-        color: twColors.text,
+        color: twColors.disabledText,
       },
     },
     "& label.Mui-focused": {
@@ -73,11 +73,11 @@ const AddTransactionForm = ({
         borderColor: "white"
       },
       "&.Mui-disabled fieldset" : {
-        borderColor: twColors.text
+        borderColor: twColors.disabledText
       },
     },
     "& .MuiInputBase-input.Mui-disabled": {
-      WebkitTextFillColor: twColors.text
+      WebkitTextFillColor: twColors.disabledText
     },
   };
   const ip = { style: { color: "white" } };
@@ -238,7 +238,7 @@ const AddTransactionForm = ({
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <span className="text-text">$</span>
+                    <span className={isCash ? "text-disabledText" : "text-text"}>$</span>
                   </InputAdornment>
                 )
               }}
