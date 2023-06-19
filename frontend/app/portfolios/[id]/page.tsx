@@ -262,24 +262,6 @@ const PortfolioPage = ({ params }: {
               />}
           </div>
           <div className="flex justify-end gap-6">
-            <div className="hover:cursor-pointer hover:opacity-80" onClick={() => {}}>
-              <Text 
-                className="flex items-center font-normal text-base font-variant-numeric: tabular-nums w-auto sm:w-[200px]"
-                backgroundColor={twColors.highlight}
-                marginBottom="12px" 
-                padding="6px 12px" 
-                height={42}
-                justifyContent="center"
-                style={{ 
-                  borderRadius: "8px",
-                }}
-              >
-                <MdOutlineEdit color="white" size={22} />
-                <Box className="text-white text-[16px] font-semilight hidden sm:block" margin="0 12px">
-                  Edit Portfolio
-                </Box>
-              </Text>
-            </div>
             <div className="hover:cursor-pointer hover:opacity-80" onClick={deletePortfolioModal.onOpen}>
               <Text 
                 className="flex items-center font-normal text-base font-variant-numeric: tabular-nums w-auto sm:w-[200px]"
