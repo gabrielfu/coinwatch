@@ -4,12 +4,13 @@ import { Label } from "../Text";
 import { useEffect, useState } from "react";
 import { Box } from "rebass";
 import { DatePicker } from "@mui/x-date-pickers"
-import { TextField } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Dropdown from "@/app/inputs/Dropdown";
 import { getTokenDatas } from "@/app/actions/tokens";
 import dayjs, { Dayjs } from "dayjs";
 import { createTransaction, TransactionRequest } from "@/app/actions/transactions";
+import { BiDollar } from "react-icons/bi";
 
 
 const FormLayout = (props: React.PropsWithChildren) => {
@@ -210,7 +211,15 @@ const AddTransactionForm = ({
             <Dropdown value={token} setValue={setToken} label="Token" itemValues={tokenList} />
             <Dropdown value={type} setValue={setType} label="Type" itemValues={["BUY", "SELL"]} />
             <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={quantity} onChange={onChange(setQuantity)} label="Quantity" sx={sx} inputProps={ip} />
-            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={price} onChange={onChange(setPrice)} label="Average Price" sx={sx} inputProps={ip} />
+            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={price} onChange={onChange(setPrice)} label="Average Price" sx={sx} inputProps={ip} 
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <span className="text-text">$</span>
+                  </InputAdornment>
+                )
+              }}
+            />
 
             <div className={valid ? "hover:cursor-pointer" : ""} onClick={onSubmit}>
                 <Label backgroundColor={valid ? twColors.highlight : twColors.disabledText}
