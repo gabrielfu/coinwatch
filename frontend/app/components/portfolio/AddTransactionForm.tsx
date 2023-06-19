@@ -10,7 +10,6 @@ import Dropdown from "@/app/inputs/Dropdown";
 import { getTokenDatas } from "@/app/actions/tokens";
 import dayjs, { Dayjs } from "dayjs";
 import { createTransaction, TransactionRequest } from "@/app/actions/transactions";
-import { BiDollar } from "react-icons/bi";
 
 
 const FormLayout = (props: React.PropsWithChildren) => {
@@ -219,7 +218,7 @@ const AddTransactionForm = ({
                 },
               }}              
             />
-            <Dropdown value={token} setValue={setToken} label="Token" itemValues={tokenList} disabled={isCash} />
+            <Dropdown value={token} setValue={setToken} label={isCash ? "Cash" : "Token"} itemValues={tokenList} disabled={isCash} />
             <Dropdown value={type} setValue={setType} label="Type" itemValues={["BUY", "SELL"]} itemLabels={isCash ? ["DEPOSIT", "WITHDRAWAL"] : ["BUY", "SELL"]} />
             <TextField size="small" type="number" onWheel={(e) => e.target.blur()} 
               value={quantity} 
@@ -269,7 +268,13 @@ const AddTransactionForm = ({
               <Checkbox 
                 sx={{ color: twColors.text, '&.Mui-checked': { color: twColors.text }}} 
                 checked={isCash}
-                onChange={() => setIsCash(prev => !prev)}
+                onChange={() => {
+                  setIsCash(prev => !prev);
+                  setToken("");
+                  setType("");
+                  setQuantity(0);
+                  setPrice(0);
+                }}
               />} 
             label="Cash Deposit / Withdrawal" 
           />

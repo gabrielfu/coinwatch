@@ -57,6 +57,12 @@ const Dropdown = ({
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: "white"
           },
+          "&.Mui-disabled .MuiOutlinedInput-notchedOutline": {
+            borderColor: twColors.text
+          },
+          "&.Mui-disabled .MuiSelect-icon": {
+            color: twColors.text
+          },
         }}
         MenuProps={{
           slotProps: {
