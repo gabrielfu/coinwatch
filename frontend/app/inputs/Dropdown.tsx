@@ -7,12 +7,14 @@ const Dropdown = ({
   label,
   itemValues,
   itemLabels,
+  disabled = false,
 }: {
   value: any;
   setValue: (value: any) => void;
   label: string; 
   itemValues: any[];
   itemLabels?: string[];
+  disabled?: boolean;
 }) => {
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value);
@@ -37,6 +39,7 @@ const Dropdown = ({
         value={value}
         label={label}
         onChange={handleChange}
+        disabled={disabled}
         sx={{          
           color: "white",
           ".MuiSelect-icon": {

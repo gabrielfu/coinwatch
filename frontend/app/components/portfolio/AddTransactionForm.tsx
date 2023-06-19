@@ -4,7 +4,7 @@ import { Label } from "../Text";
 import { useEffect, useState } from "react";
 import { Box } from "rebass";
 import { DatePicker } from "@mui/x-date-pickers"
-import { InputAdornment, TextField } from "@mui/material";
+import { Checkbox, FormControlLabel, InputAdornment, TextField } from "@mui/material";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Dropdown from "@/app/inputs/Dropdown";
 import { getTokenDatas } from "@/app/actions/tokens";
@@ -48,9 +48,14 @@ const AddTransactionForm = ({
   const [valid, setValid] = useState(false);
   const [tokenList, setTokenList] = useState<string[]>([]);
 
+  const [isCash, setIsCash] = useState(false);
+
   const sx = {
     "& label": {
       color: twColors.text,
+      "&.Mui-disabled" : {
+        color: twColors.text,
+      },
     },
     "& label.Mui-focused": {
       color: "white"
@@ -60,7 +65,6 @@ const AddTransactionForm = ({
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        color: "white",
         borderColor: twColors.text
       },
       "&:hover fieldset": {
@@ -68,8 +72,14 @@ const AddTransactionForm = ({
       },
       "&.Mui-focused fieldset": {
         borderColor: "white"
-      }
-    }
+      },
+      "&.Mui-disabled fieldset" : {
+        borderColor: twColors.text
+      },
+    },
+    "& .MuiInputBase-input.Mui-disabled": {
+      WebkitTextFillColor: twColors.text
+    },
   };
   const ip = { style: { color: "white" } };
 
@@ -119,6 +129,7 @@ const AddTransactionForm = ({
           {"Add Transaction " + (isOpen ? "▲" : "▼")}
         </Label>
         {isOpen && 
+          <>
           <FormLayout>
             <DatePicker 
               label="Date"
@@ -208,10 +219,22 @@ const AddTransactionForm = ({
                 },
               }}              
             />
-            <Dropdown value={token} setValue={setToken} label="Token" itemValues={tokenList} />
-            <Dropdown value={type} setValue={setType} label="Type" itemValues={["BUY", "SELL"]} />
-            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={quantity} onChange={onChange(setQuantity)} label="Quantity" sx={sx} inputProps={ip} />
-            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} value={price} onChange={onChange(setPrice)} label="Average Price" sx={sx} inputProps={ip} 
+            <Dropdown value={token} setValue={setToken} label="Token" itemValues={tokenList} disabled={isCash} />
+            <Dropdown value={type} setValue={setType} label="Type" itemValues={["BUY", "SELL"]} itemLabels={isCash ? ["DEPOSIT", "WITHDRAWAL"] : ["BUY", "SELL"]} />
+            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} 
+              value={quantity} 
+              onChange={onChange(setQuantity)} 
+              label="Quantity" 
+              sx={sx} 
+              inputProps={ip}
+            />
+            <TextField size="small" type="number" onWheel={(e) => e.target.blur()} 
+              value={isCash ? "1.00" : price} 
+              onChange={onChange(setPrice)} 
+              label="Average Price" 
+              disabled={isCash} 
+              sx={sx} 
+              inputProps={ip} 
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -241,6 +264,16 @@ const AddTransactionForm = ({
                 </Label>
               </div>
           </FormLayout>
+          <FormControlLabel 
+            control={
+              <Checkbox 
+                sx={{ color: twColors.text, '&.Mui-checked': { color: twColors.text }}} 
+                checked={isCash}
+                onChange={() => setIsCash(prev => !prev)}
+              />} 
+            label="Cash Deposit / Withdrawal" 
+          />
+          </>
         }
       </AutoColumn>
     </Box>
