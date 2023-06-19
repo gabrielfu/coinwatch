@@ -2,34 +2,24 @@
 
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { SiBinance } from "react-icons/si"
-import Modal, { Heading, Input } from "./Modal";
+import Modal, { Heading } from "./Modal";
 import useCreatePortfolioModal from "@/app/hooks/useCreatePortfolioModal";
 import Button from "../Button";
 import axios, { AxiosError } from "axios";
+import TextField from "@mui/material/TextField";
+import { twColors } from "@/app/twConfig";
 
 const CreatePortfolioModal = () => {
   const portfolioModal = useCreatePortfolioModal();
   const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState("");
 
-  const { 
-    register, 
-    handleSubmit,
-    formState: {
-      errors,
-    },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      name: '',
-    },
-  });
-
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit = () => {
     setIsLoading(true);
-    axios.post('/api/v1/portfolios', data)
+    axios.post('/api/v1/portfolios', { name: name })
       .then(() => {
-        toast.success(`Created portfolio ${data.name}`);
+        toast.success(`Created portfolio ${name}`);
         portfolioModal.onClose();
         portfolioModal.onSuccess();
       })
@@ -44,16 +34,47 @@ const CreatePortfolioModal = () => {
       });
   }
 
+  const sx = {
+    "& label": {
+      color: twColors.text,
+    },
+    "& label.Mui-focused": {
+      color: "white"
+    },
+    "& .MuiInput-underline:after": {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        color: "white",
+        borderColor: twColors.text
+      },
+      "&:hover fieldset": {
+        borderColor: twColors.text
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white"
+      }
+    }
+  };
+  const ip = { style: { color: "white" } };
+
+  const onChange = (setValue: (value: any) => void) => {
+    return (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(event.target.value);
+    }
+  }
+
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Input
-        autoFocus
-        id="name"
-        label="Portfolio Name"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
+      <TextField 
+        type="text" 
+        onWheel={(e) => e.target.blur()} 
+        value={name} 
+        onChange={onChange(setName)} 
+        label="PortfolioName" 
+        sx={sx} 
+        inputProps={ip} 
       />
     </div>
   );
@@ -75,7 +96,7 @@ const CreatePortfolioModal = () => {
     <Modal 
       disabled={isLoading}
       isOpen={portfolioModal.isOpen}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={onSubmit}
       onClose={portfolioModal.onClose}
       title="Create New Portfolio"
       actionLabel="Submit"
