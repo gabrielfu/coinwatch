@@ -9,7 +9,7 @@ import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative, 
 import { twColors } from "@/app/twConfig";
 import { TokenData } from "@/app/actions/tokens";
 import { OhlcData, LineData } from "lightweight-charts";
-import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
+import { MdDone, MdOutlineCancel, MdOutlineClear, MdOutlineDelete, MdOutlineDone, MdOutlineEdit, MdOutlineEditNote } from "react-icons/md";
 import LineChart from "@/app/components/charts/LineChart";
 import { Box, Text } from "rebass";
 import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
@@ -18,6 +18,7 @@ import SummaryTable from "@/app/components/portfolio/SummaryTable";
 import AddTransactionForm from "@/app/components/portfolio/AddTransactionForm";
 import { TransactionResponse, searchTransactionsByPortfolio } from "@/app/actions/transactions";
 import { PortfolioInfo, getPortfolio } from "@/app/actions/portfolios";
+import { TextField } from "@mui/material";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -119,6 +120,9 @@ const PortfolioPage = ({ params }: {
   const [portfolio, setPortfolio] = useState<PortfolioInfo>({ id: parseInt(portfolioId), name: "-" });
   const [transactions, setTransactions] = useState<TransactionResponse[]>([]);
 
+  const [name, setName] = useState("");
+  const [isEditingName, setIsEditingName] = useState(false);
+
   const fetchChartData = useCallback(() => {  
     // TODO  
     portfolioId;
@@ -140,6 +144,7 @@ const PortfolioPage = ({ params }: {
       .then((data) => {
         setPortfolio(data);
         deletePortfolioModal.setPortfolioName(data.name);
+        setName(data.name);
       });
     
     fetch(`/api/v1/quote/spot?token=AVAX`)
@@ -164,14 +169,83 @@ const PortfolioPage = ({ params }: {
     refreshTransactions();
   }, []);
 
+  const onChange = (setValue: (value: any) => void) => {
+    return (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(event.target.value);
+    }
+  }
+
   return ( 
     <Card>
       <AutoColumn gap="8px">
         <div className="flex w-full justify-between items-end">
           <div className="ml-2">
-            <Label color="white" fontSize={24}>
-              {portfolio.name}
-            </Label>
+            {isEditingName
+              ? (              
+                <Label color="white" fontSize={24}>
+                  <TextField 
+                    value={name} 
+                    onChange={onChange(setName)}
+                    size="small" 
+                    sx={{
+                      "& label": {
+                        color: twColors.text,
+                        "&.Mui-disabled" : {
+                          color: twColors.disabledText,
+                        },
+                      },
+                      "& label.Mui-focused": {
+                        color: "white"
+                      },
+                      "& .MuiInput-underline:after": {
+                        color: "white",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: twColors.text
+                        },
+                        "&:hover fieldset": {
+                          borderColor: twColors.text
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "white"
+                        },
+                        "&.Mui-disabled fieldset" : {
+                          borderColor: twColors.disabledText
+                        },
+                      },
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: twColors.disabledText
+                      },
+                    }} 
+                    inputProps={{ style: { color: "white", fontSize: 20 }}}
+                  />
+                  <MdOutlineCancel 
+                    onClick={() => setIsEditingName(prev => !prev)} 
+                    className="text-text ml-4 hover:cursor-pointer" 
+                    size={24} 
+                  />
+                  <MdOutlineDone 
+                    onClick={() => {
+                      setIsEditingName(prev => !prev);
+                      // ...
+                    }}
+                    className="text-text ml-4 hover:cursor-pointer" 
+                    size={24} 
+                  />
+                </Label>
+              )
+              : (
+                <Label color="white" fontSize={24}>
+                  {portfolio.name}
+                  <MdOutlineEditNote 
+                    onClick={() => setIsEditingName(prev => !prev)} 
+                    className="text-text ml-4 hover:cursor-pointer" 
+                    size={24} 
+                  />
+                </Label>
+              )
+            }
 
             {isEmpty && 
               <PriceText 
