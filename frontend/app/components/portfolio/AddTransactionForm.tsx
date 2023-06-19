@@ -86,10 +86,10 @@ const AddTransactionForm = ({
     if (valid) {
       const t: TransactionRequest = {
         portfolioId: parseInt(portfolioId),
-        tokenSymbol: token,
+        tokenSymbol: isCash ? "CASH" : token,
         date: date.format("YYYY-MM-DD"),
         quantity: quantity,
-        purchasePrice: price,
+        purchasePrice: isCash ? 1.0 : price,
         type: type,
       }
       createTransaction(t)
@@ -108,12 +108,13 @@ const AddTransactionForm = ({
     setValid(
       (date.isBefore(dayjs(new Date())))
       && (date.isAfter(dayjs("1970-01-01")))
-      && (token != "")
       && (type != "")
       && (quantity > 0)
-      && (price > 0)
+      && (isCash
+        || ((token != "") && (price > 0))
+      )
     )
-  }, [date, token, type, quantity, price]);
+  }, [date, token, type, quantity, price, isCash]);
 
   const onChange = (setValue: (value: any) => void) => {
     return (event: React.ChangeEvent<HTMLInputElement>) => {
