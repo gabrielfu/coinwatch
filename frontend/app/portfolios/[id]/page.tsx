@@ -17,7 +17,7 @@ import TransactionTable from "@/app/components/portfolio/TransactionTable";
 import SummaryTable from "@/app/components/portfolio/SummaryTable";
 import AddTransactionForm from "@/app/components/portfolio/AddTransactionForm";
 import { TransactionResponse, searchTransactionsByPortfolio } from "@/app/actions/transactions";
-import { PortfolioInfo, getPortfolio } from "@/app/actions/portfolios";
+import { PortfolioInfo, getPortfolio, updatePortfolio } from "@/app/actions/portfolios";
 import { TextField } from "@mui/material";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
@@ -139,13 +139,17 @@ const PortfolioPage = ({ params }: {
       });
   }, [portfolioId, range, interval]);
 
-  useEffect(() => {
+  const refreshPortfolio = () => {
     getPortfolio(portfolioId)
       .then((data) => {
         setPortfolio(data);
         deletePortfolioModal.setPortfolioName(data.name);
         setName(data.name);
       });
+  }
+
+  useEffect(() => {
+    refreshPortfolio();
     
     fetch(`/api/v1/quote/spot?token=AVAX`)
       .then((res) => res.json())
@@ -172,6 +176,15 @@ const PortfolioPage = ({ params }: {
   const onChange = (setValue: (value: any) => void) => {
     return (event: React.ChangeEvent<HTMLInputElement>) => {
       setValue(event.target.value);
+    }
+  }
+
+  const handleUpdateName = () => {
+    if ((name != portfolio.name) && (name != "") && (name != null)) {
+      updatePortfolio(portfolioId, name, () => {
+        setIsEditingName(prev => !prev);
+        refreshPortfolio();
+      });
     }
   }
 
@@ -226,10 +239,7 @@ const PortfolioPage = ({ params }: {
                     size={24} 
                   />
                   <MdOutlineDone 
-                    onClick={() => {
-                      setIsEditingName(prev => !prev);
-                      // ...
-                    }}
+                    onClick={handleUpdateName}
                     className="text-text ml-4 hover:cursor-pointer" 
                     size={24} 
                   />

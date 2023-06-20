@@ -68,6 +68,7 @@ const CreatePortfolioModal = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <TextField 
+        autoFocus
         type="text" 
         onWheel={(e) => e.target.blur()} 
         value={name} 

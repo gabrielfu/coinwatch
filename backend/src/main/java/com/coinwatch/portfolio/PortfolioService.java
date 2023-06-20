@@ -8,6 +8,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -20,7 +21,10 @@ public class PortfolioService {
     private PortfolioRepository portfolioRepository;
 
     public List<Portfolio> getPortfolios() {
-        return portfolioRepository.findAll();
+        return portfolioRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Portfolio::getId))
+                .toList();
     }
 
     public Portfolio getPortfolioById(Long id) {
@@ -46,6 +50,24 @@ public class PortfolioService {
 
     public Long createPortfolio(Portfolio portfolio) {
         String name = portfolio.getName();
+        validatePortfolioName(name);
+        return portfolioRepository.save(portfolio).getId();
+    }
+
+    public void updatePortfolio(Long id, Portfolio newPortfolio) {
+        String name = newPortfolio.getName();
+        validatePortfolioName(name);
+        Portfolio portfolio = getPortfolioById(id);
+        portfolio.setName(name);
+        portfolioRepository.save(portfolio);
+    }
+
+    public void deletePortfolio(Long id) {
+        Portfolio portfolio = getPortfolioById(id);
+        portfolioRepository.delete(portfolio);
+    }
+
+    private void validatePortfolioName(String name) {
         if (name == null | Objects.equals(name, "")) {
             throw new CoinwatchException(
                     ErrorCode.INVALID_PARAMETER_VALUE,
@@ -58,19 +80,5 @@ public class PortfolioService {
                     "Portfolio with name '%s' already exists".formatted(name)
             );
         }
-        return portfolioRepository.save(portfolio).getId();
-    }
-
-    public void updatePortfolio(Long id, Portfolio newPortfolio) {
-        Portfolio portfolio = getPortfolioById(id);
-        if (newPortfolio.getName() != null) {
-            portfolio.setName(newPortfolio.getName());
-        }
-        portfolioRepository.save(portfolio);
-    }
-
-    public void deletePortfolio(Long id) {
-        Portfolio portfolio = getPortfolioById(id);
-        portfolioRepository.delete(portfolio);
     }
 }
