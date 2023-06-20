@@ -176,10 +176,10 @@ const AddTransactionForm = ({
                       "&.Mui-selected": {
                         backgroundColor: twColors.highlight,
                       },
+                      "&.MuiPickersDay-today": {
+                        borderColor: "white",
+                      }
                     },
-                    "& .MuiPickersDay-today": {
-                      borderColor: "white",
-                    }
                   }
                 },
                 mobilePaper: {
