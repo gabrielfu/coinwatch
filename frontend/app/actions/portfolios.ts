@@ -17,13 +17,13 @@ export interface PortfolioData {
 }
 
 export const getPortfolios = async () => {
-  return await fetch(`/api/v1/portfolios`)
-    .then((res) => (res.json() as Promise<PortfolioInfo[]>));
+  return await axios.get(`/api/v1/portfolios`)
+    .then((res) => (res.data as Promise<PortfolioInfo[]>));
 }
 
 export const getPortfolio = async (id: string) => {
-  return await fetch(`/api/v1/portfolios/${id}`)
-    .then((res) => (res.json() as Promise<PortfolioInfo>));
+  return await axios.get(`/api/v1/portfolios/${id}`)
+    .then((res) => (res.data as Promise<PortfolioInfo>));
 }
 
 export const updatePortfolio = async (id: string, name: string, onSuccess?: () => void) => {
