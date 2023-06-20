@@ -66,7 +66,6 @@ const CreatePortfolioModal = () => {
       <TextField 
         autoFocus
         type="text" 
-        onWheel={(e) => e.target.blur()} 
         value={name} 
         onChange={onChange(setName)} 
         label="PortfolioName" 
