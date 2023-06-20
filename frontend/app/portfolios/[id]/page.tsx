@@ -9,7 +9,7 @@ import { formatPrice, formatPriceChangePercent, formatDollarAmount, isNegative, 
 import { twColors } from "@/app/twConfig";
 import { TokenData } from "@/app/actions/tokens";
 import { OhlcData, LineData } from "lightweight-charts";
-import { MdDone, MdOutlineCancel, MdOutlineClear, MdOutlineDelete, MdOutlineDone, MdOutlineEdit, MdOutlineEditNote } from "react-icons/md";
+import { MdOutlineClear, MdOutlineDelete, MdOutlineDone, MdOutlineEdit } from "react-icons/md";
 import LineChart from "@/app/components/charts/LineChart";
 import { Box, Text } from "rebass";
 import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
@@ -220,7 +220,7 @@ const PortfolioPage = ({ params }: {
                     }} 
                     inputProps={{ style: { color: "white", fontSize: 20 }}}
                   />
-                  <MdOutlineCancel 
+                  <MdOutlineClear 
                     onClick={() => setIsEditingName(prev => !prev)} 
                     className="text-text ml-4 hover:cursor-pointer" 
                     size={24} 
@@ -238,7 +238,7 @@ const PortfolioPage = ({ params }: {
               : (
                 <Label color="white" fontSize={24}>
                   {portfolio.name}
-                  <MdOutlineEditNote 
+                  <MdOutlineEdit 
                     onClick={() => setIsEditingName(prev => !prev)} 
                     className="text-text ml-4 hover:cursor-pointer" 
                     size={24} 
