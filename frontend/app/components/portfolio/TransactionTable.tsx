@@ -51,7 +51,7 @@ const DataRow = ({
           <Link href={`/tokens/${data.token.symbol}`} className="no-underline hover:cursor-pointer">
             <Label color='white'>
               {data.token.logo && <TokenLogo src={data.token.logo} alt={data.token.name} size={22} />}
-              <Label ml="12px">{data.token.symbol}</Label>
+              <Label ml={data.token.logo ? "12px" : "0px"}>{data.token.symbol}</Label>
             </Label>
           </Link>
           <Label color='white'>{formattedData.type}</Label>
