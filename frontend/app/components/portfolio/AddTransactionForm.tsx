@@ -10,7 +10,7 @@ import Dropdown from "@/app/inputs/Dropdown";
 import { getTokenDatas } from "@/app/actions/tokens";
 import dayjs, { Dayjs } from "dayjs";
 import { createTransaction, TransactionRequest } from "@/app/actions/transactions";
-
+import { CashTransactionRequest, createCashTransaction } from "@/app/actions/cash";
 
 const FormLayout = (props: React.PropsWithChildren) => {
   return (
@@ -28,7 +28,6 @@ const FormLayout = (props: React.PropsWithChildren) => {
     </div>
    );
 }
-
 
 const AddTransactionForm = ({ 
   portfolioId,
@@ -48,6 +47,9 @@ const AddTransactionForm = ({
   const [tokenList, setTokenList] = useState<string[]>([]);
 
   const [isCash, setIsCash] = useState(false);
+
+  const TRANSACTION_TYPE = ["BUY", "SELL"];
+  const CASH_TRANSACTION_TYPE = ["DEPOSIT", "WITHDRAWAL"];
 
   const sx = {
     "& label": {
@@ -84,16 +86,27 @@ const AddTransactionForm = ({
 
   const onSubmit = () => {
     if (valid) {
-      const t: TransactionRequest = {
-        portfolioId: parseInt(portfolioId),
-        tokenSymbol: isCash ? "CASH" : token,
-        date: date.format("YYYY-MM-DD"),
-        quantity: quantity,
-        purchasePrice: isCash ? 1.0 : price,
-        type: type,
+      if (isCash) {
+        const t: CashTransactionRequest = {
+          portfolioId: parseInt(portfolioId),
+          date: date.format("YYYY-MM-DD"),
+          quantity: quantity,
+          type: type,
+        }
+        createCashTransaction(t)
+          .then(() => onSuccess());
+      } else {
+        const t: TransactionRequest = {
+          portfolioId: parseInt(portfolioId),
+          tokenSymbol: token,
+          date: date.format("YYYY-MM-DD"),
+          quantity: quantity,
+          purchasePrice: isCash ? 1.0 : price,
+          type: type,
+        }
+        createTransaction(t)
+          .then(() => onSuccess());
       }
-      createTransaction(t)
-        .then(() => onSuccess());
     }
   }
 
@@ -220,7 +233,7 @@ const AddTransactionForm = ({
               }}              
             />
             <Dropdown value={token} setValue={setToken} label={isCash ? "Cash" : "Token"} itemValues={tokenList} disabled={isCash} />
-            <Dropdown value={type} setValue={setType} label="Type" itemValues={["BUY", "SELL"]} itemLabels={isCash ? ["DEPOSIT", "WITHDRAWAL"] : ["BUY", "SELL"]} />
+            <Dropdown value={type} setValue={setType} label="Type" itemValues={isCash ? CASH_TRANSACTION_TYPE : TRANSACTION_TYPE} />
             <TextField size="small" type="number" onWheel={(e) => e.target.blur()} 
               value={quantity} 
               onChange={onChange(setQuantity)} 

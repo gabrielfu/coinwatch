@@ -2,6 +2,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { toast } from "react-hot-toast";
 import { toastCatchAxios } from "./utils";
+import { searchCashTransactionsByPortfolio } from "./cash";
 
 export interface TransactionRequest {
   portfolioId: number;
@@ -38,8 +39,8 @@ export const createTransaction = async (transaction: TransactionRequest) => {
 }
 
 export const getTransactions = async () => {
-  return await fetch(`/api/v1/transactions`)
-    .then((res) => res.json())
+  return await axios.get(`/api/v1/transactions`)
+    .then((res) => res.data)
     .then((data: any[]) => data.map((record: any) => {
       const s: TransactionResponse = {
         id: record.id,
@@ -55,8 +56,8 @@ export const getTransactions = async () => {
 }
 
 export const searchTransactionsByPortfolio = async (portfolioId: string) => {
-  return await fetch(`/api/v1/transactions/search?portfolioId=${portfolioId}`)
-    .then((res) => res.json())
+  return await axios.get(`/api/v1/transactions/search?portfolioId=${portfolioId}`)
+    .then((res) => res.data)
     .then((data: any[]) => data.map((record: any) => {
       const s: TransactionResponse = {
         id: record.id,
@@ -64,7 +65,7 @@ export const searchTransactionsByPortfolio = async (portfolioId: string) => {
         token: record.token,
         date: dayjs(record.date).format("YYYY-MM-DD"),
         quantity: record.quantity,
-        price: record. purchasePrice,
+        price: record.purchasePrice,
         type: record.type,
       };
       return s;
@@ -79,3 +80,9 @@ export const deleteTransaction = async (id: string) => {
     })
     .catch(toastCatchAxios);
 }
+
+export const searchTransactionsAndCashByPortfolio = async (portfolioId: string) => {
+  const transactions = await searchTransactionsByPortfolio(portfolioId);
+  const cash = await searchCashTransactionsByPortfolio(portfolioId);
+  return [...transactions, ...cash].sort((a, b) => dayjs(b.date).diff(a.date));
+} 

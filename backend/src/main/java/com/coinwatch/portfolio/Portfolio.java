@@ -1,5 +1,6 @@
 package com.coinwatch.portfolio;
 
+import com.coinwatch.cash.CashTransaction;
 import com.coinwatch.transaction.Transaction;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
@@ -38,4 +39,13 @@ public class Portfolio {
     )
     @JsonIgnore
     private List<Transaction> transactions = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "portfolio",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.LAZY
+    )
+    @JsonIgnore
+    private List<CashTransaction> cash = new ArrayList<>();
 }

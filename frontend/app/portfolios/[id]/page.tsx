@@ -16,7 +16,7 @@ import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
 import TransactionTable from "@/app/components/portfolio/TransactionTable";
 import SummaryTable from "@/app/components/portfolio/SummaryTable";
 import AddTransactionForm from "@/app/components/portfolio/AddTransactionForm";
-import { TransactionResponse, searchTransactionsByPortfolio } from "@/app/actions/transactions";
+import { TransactionResponse, searchTransactionsAndCashByPortfolio, searchTransactionsByPortfolio } from "@/app/actions/transactions";
 import { PortfolioInfo, getPortfolio, updatePortfolio } from "@/app/actions/portfolios";
 import { TextField } from "@mui/material";
 import { notFound } from "next/navigation";
@@ -167,7 +167,7 @@ const PortfolioPage = ({ params }: {
   }, [portfolioId, fetchChartData]);
 
   const refreshTransactions = () => {
-    searchTransactionsByPortfolio(portfolioId)
+    searchTransactionsAndCashByPortfolio(portfolioId)
       .then(data => {
         setTransactions(data);
         setIsEmpty(data.length <= 0);
