@@ -32,6 +32,12 @@ public class TokenService {
 
     public String createToken(Token token) {
         String symbol = token.getSymbol();
+        if (tokenRepository.findById(symbol).isPresent()) {
+            throw new CoinwatchException(
+                    ErrorCode.RESOURCE_ALREADY_EXISTS,
+                    "Token with symbol '%s' already exists".formatted(symbol)
+            );
+        }
         if (symbol == null | Objects.equals(symbol, "")) {
             throw new CoinwatchException(
                     ErrorCode.INVALID_PARAMETER_VALUE,
