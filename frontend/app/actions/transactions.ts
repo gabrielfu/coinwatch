@@ -1,6 +1,7 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import dayjs from "dayjs";
 import { toast } from "react-hot-toast";
+import { toastCatchAxios } from "./utils";
 
 export interface TransactionRequest {
   portfolioId: number;
@@ -33,12 +34,7 @@ export const createTransaction = async (transaction: TransactionRequest) => {
       toast.success(`Added new transaction`);
       return res.data;
     })
-    .catch((error) => {
-      const message = error instanceof AxiosError
-        ? error.response?.data.message
-        : error.toString();
-      toast.error(message);
-    });
+    .catch(toastCatchAxios);
 }
 
 export const getTransactions = async () => {
@@ -81,10 +77,5 @@ export const deleteTransaction = async (id: string) => {
       toast.success(`Deleted transaction`);
       return res.data;
     })
-    .catch((error) => {
-      const message = error instanceof AxiosError
-        ? error.response?.data.message
-        : error.toString();
-      toast.error(message);
-    });
+    .catch(toastCatchAxios);
 }

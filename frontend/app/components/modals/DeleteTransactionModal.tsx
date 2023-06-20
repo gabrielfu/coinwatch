@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import Modal from "./Modal";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import useDeleteTransactionModal from "@/app/hooks/useDeleteTransactionModal";
+import { toastCatchAxios } from "@/app/actions/utils";
 
 const DeleteTransactionModal = () => {
   const deleteTransactionModal = useDeleteTransactionModal();
@@ -18,12 +19,7 @@ const DeleteTransactionModal = () => {
         deleteTransactionModal.onClose();
         deleteTransactionModal.onSuccess();
       })
-      .catch((error) => {
-        const message = error instanceof AxiosError
-          ? error.response?.data.message
-          : error.toString();
-        toast.error(message);
-      })
+      .catch(toastCatchAxios)
       .finally(() => {
         setIsLoading(false);
       });

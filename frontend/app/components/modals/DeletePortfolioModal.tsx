@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import Modal from "./Modal";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { redirect } from "next/navigation";
 import useDeletePortfolioModal from "@/app/hooks/useDeletePortfolioModal";
+import { toastCatchAxios } from "@/app/actions/utils";
 
 const DeletePortfolioModal = () => {
   const deletePortfolioModal = useDeletePortfolioModal();
@@ -20,12 +21,7 @@ const DeletePortfolioModal = () => {
         deletePortfolioModal.onClose();
         setRedirect(true);
       })
-      .catch((error) => {
-        const message = error instanceof AxiosError
-          ? error.response?.data.message
-          : error.toString();
-        toast.error(message);
-      })
+      .catch(toastCatchAxios)
       .finally(() => {
         setIsLoading(false);
       });

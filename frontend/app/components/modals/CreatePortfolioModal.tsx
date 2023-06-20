@@ -6,9 +6,10 @@ import { SiBinance } from "react-icons/si"
 import Modal, { Heading } from "./Modal";
 import useCreatePortfolioModal from "@/app/hooks/useCreatePortfolioModal";
 import Button from "../Button";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import TextField from "@mui/material/TextField";
 import { twColors } from "@/app/twConfig";
+import { toastCatchAxios } from "@/app/actions/utils";
 
 const CreatePortfolioModal = () => {
   const portfolioModal = useCreatePortfolioModal();
@@ -23,12 +24,7 @@ const CreatePortfolioModal = () => {
         portfolioModal.onClose();
         portfolioModal.onSuccess();
       })
-      .catch((error) => {
-        const message = error instanceof AxiosError
-          ? error.response?.data.message
-          : error.toString();
-        toast.error(message);
-      })
+      .catch(toastCatchAxios)
       .finally(() => {
         setIsLoading(false);
       });

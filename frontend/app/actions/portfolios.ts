@@ -1,5 +1,5 @@
-import axios, { AxiosError } from "axios";
-import toast from "react-hot-toast";
+import axios from "axios";
+import { toastCatchAxios } from "./utils";
 
 export interface PortfolioInfo {
   id: number;
@@ -30,10 +30,5 @@ export const updatePortfolio = async (id: string, name: string, onSuccess?: () =
   await axios.put(`/api/v1/portfolios/${id}`, { name: name })
     .then((res) => res.data)
     .then(onSuccess)
-    .catch((error) => {
-      const message = error instanceof AxiosError
-        ? error.response?.data.message
-        : error.toString();
-      toast.error(message);
-    });
+    .catch(toastCatchAxios);
 }
