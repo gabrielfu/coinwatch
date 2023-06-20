@@ -19,6 +19,7 @@ import AddTransactionForm from "@/app/components/portfolio/AddTransactionForm";
 import { TransactionResponse, searchTransactionsByPortfolio } from "@/app/actions/transactions";
 import { PortfolioInfo, getPortfolio, updatePortfolio } from "@/app/actions/portfolios";
 import { TextField } from "@mui/material";
+import { notFound } from "next/navigation";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -107,7 +108,8 @@ const PortfolioPage = ({ params }: {
   params: { id: string }
 }) => {
   const portfolioId = params.id;
-  const [isEmpty, setIsEmpty] = useState<boolean>(true);
+  const [isError, setIsError] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
   const [widgetLabel, setWidgetLabel] = useState<LineData>();
 
   const [quoteData, setQuoteData] = useState<TokenData>();
@@ -145,6 +147,9 @@ const PortfolioPage = ({ params }: {
         setPortfolio(data);
         deletePortfolioModal.setPortfolioName(data.name);
         setName(data.name);
+      })
+      .catch(() => {
+        setIsError(true);
       });
   }
 
@@ -186,6 +191,10 @@ const PortfolioPage = ({ params }: {
         refreshPortfolio();
       });
     }
+  }
+
+  if (isError) {
+    notFound();
   }
 
   return ( 

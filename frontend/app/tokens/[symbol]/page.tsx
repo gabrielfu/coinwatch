@@ -13,6 +13,8 @@ import { twColors } from "@/app/twConfig";
 import { TokenData } from "@/app/actions/tokens";
 import { OhlcData } from "lightweight-charts";
 import { SiYahoo } from "react-icons/si";
+import axios from "axios";
+import { notFound } from "next/navigation";
 
 const ContentLayout = (props: React.PropsWithChildren) => {
   return (
@@ -143,6 +145,7 @@ const TokenPage = ({ params }: {
   const [name, setName] = useState<string>("");
   const [logo, setLogo] = useState<string>("");
   const [widgetLabel, setWidgetLabel] = useState<OhlcData>();
+  const [isError, setIsError] = useState(false);
 
   const [quoteData, setQuoteData] = useState<TokenData>();
   const [chartData, setChartData] = useState<OhlcData[]>();
@@ -150,8 +153,8 @@ const TokenPage = ({ params }: {
   const [range, setRange] = useState("24h");
 
   const fetchChartData = useCallback(() => {    
-    fetch(`/api/v1/quote/historical?token=${symbol}&range=${range}&interval=${interval}`)
-      .then((res) => res.json())
+    axios.get(`/api/v1/quote/historical?token=${symbol}&range=${range}&interval=${interval}`)
+      .then((res) => res.data)
       .then((data: {series: OhlcData[]}) => {
         const series = data.series.filter(d => Object.values(d).every(v => v != null));
         setChartData(series);
@@ -159,21 +162,26 @@ const TokenPage = ({ params }: {
   }, [symbol, range, interval]);
 
   useEffect(() => {
-    fetch(`/api/v1/tokens/${symbol}`)
-      .then((res) => res.json())
+    axios.get(`/api/v1/tokens/${symbol}`)
+      .then((res) => res.data)
       .then((info) => {
         setName(info.name);
         setLogo(info.logo);
-      });
+      })
+      .catch(() => setIsError(true));
     
-    fetch(`/api/v1/quote/spot?token=${symbol}`)
-      .then((res) => res.json())
+    axios.get(`/api/v1/quote/spot?token=${symbol}`)
+      .then((res) => res.data)
       .then((info) => {
         setQuoteData(info);
       });
     
     fetchChartData();
   }, [symbol, fetchChartData]);
+
+  if (isError) {
+    notFound();
+  }
 
   return ( 
     <Card>
