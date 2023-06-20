@@ -2,6 +2,8 @@ package com.coinwatch.quote;
 
 import com.coinwatch.clients.coincap.CoinCapAssetsResponse;
 import com.coinwatch.clients.coincap.CoinCapClient;
+import com.coinwatch.exceptions.CoinwatchException;
+import com.coinwatch.exceptions.ErrorCode;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,14 @@ public class CoinCapQuoteServiceImpl implements QuoteService {
     @Override
     public SpotPriceDTO getTokenSpotPrice(String token) {
         CoinCapAssetsResponse response = coinCapClient.getAssets(token);
-        return CoinCapDTOMapper.asSpotPriceDTOs(response).get(0);
+        List<SpotPriceDTO> dtos = CoinCapDTOMapper.asSpotPriceDTOs(response);
+        if (dtos.size() == 0) {
+            throw new CoinwatchException(
+                    ErrorCode.RESOURCE_NOT_FOUND,
+                    String.format("Unrecognized token %s", token)
+            );
+        }
+        return dtos.get(0);
     }
 
     @Override
