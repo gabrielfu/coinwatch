@@ -9,13 +9,13 @@ public class CoinCapDTOMapper {
     public static List<SpotPriceDTO> asSpotPriceDTOs(CoinCapAssetsResponse response) {
         return response.getData()
                 .stream().map(r -> {
-                    Double price = Double.parseDouble(
+                    double price = Double.parseDouble(
                             Objects.requireNonNullElse(r.getPriceUsd(), "0")
                     );
-                    Double priceChangePercent = Double.parseDouble(
+                    double priceChangePercent = Double.parseDouble(
                             Objects.requireNonNullElse(r.getChangePercent24Hr(), "0")
                     );
-                    Double priceChange = price * (1 - 1 / (1 + priceChangePercent));
+                    Double priceChange = price * (1 - 1 / (1 + priceChangePercent / 100));
                     return new SpotPriceDTO(
                             r.getSymbol(),
                             price,

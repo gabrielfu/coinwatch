@@ -29,7 +29,7 @@ public class CoinCapQuoteServiceImpl implements QuoteService {
     public SpotPriceDTO getTokenSpotPrice(String token) {
         CoinCapAssetsResponse response = coinCapClient.getAssets(token);
         List<SpotPriceDTO> dtos = CoinCapDTOMapper.asSpotPriceDTOs(response);
-        if (dtos.size() == 0) {
+        if (dtos.isEmpty()) {
             throw new CoinwatchException(
                     ErrorCode.RESOURCE_NOT_FOUND,
                     String.format("Unrecognized token %s", token)
