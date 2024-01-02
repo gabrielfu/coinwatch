@@ -9,8 +9,7 @@ public class CoinGeckoCoinsMarketsResponseMapper {
         return new Token(
                 response.getSymbol().toUpperCase(),
                 response.getName(),
-                response.getImage(),
-                null
+                response.getImage()
         );
     }
 }
