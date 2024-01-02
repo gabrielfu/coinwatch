@@ -52,6 +52,9 @@ public class TokenService {
         if (newToken.getName() != null) {
             token.setName(newToken.getName());
         }
+        if (newToken.getLogo() != null) {
+            token.setLogo(newToken.getLogo());
+        }
         tokenRepository.save(token);
     }
 
