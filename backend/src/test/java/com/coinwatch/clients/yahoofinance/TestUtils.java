@@ -1,6 +1,9 @@
-package com.coinwatch.quote.yahoofinance;
+package com.coinwatch.clients.yahoofinance;
+
+import lombok.Getter;
 
 public class TestUtils {
+    @Getter
     private final static String yahooFinanceQuoteJson = """
             {
               "quoteResponse": {
@@ -75,6 +78,7 @@ public class TestUtils {
             }
             """;
 
+    @Getter
     private final static String yahooFinanceChartJson = """
             {
               "chart": {
@@ -184,11 +188,4 @@ public class TestUtils {
             }
             """;
 
-    public static String getYahooFinanceQuoteJson() {
-        return yahooFinanceQuoteJson;
-    }
-
-    public static String getYahooFinanceChartJson() {
-        return yahooFinanceChartJson;
-    }
 }

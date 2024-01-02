@@ -1,6 +1,6 @@
 package com.coinwatch.quote;
 
-import com.coinwatch.quote.yahoofinance.TestUtils;
+import com.coinwatch.clients.yahoofinance.TestUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.coinwatch.clients.yahoofinance.YahooFinanceChartResponse;

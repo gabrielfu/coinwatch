@@ -28,11 +28,6 @@ public class CoinCapClient {
         }
     }
 
-    public CoinCapAssetsResponse getAssets(Long limit) {
-        String url = String.format("https://api.coincap.io/v2/assets?limit=%s", limit);
-        return getRequest(url, CoinCapAssetsResponse.class);
-    }
-
     public CoinCapAssetsResponse getAssets(String token) {
         String url = String.format("https://api.coincap.io/v2/assets?search=%s", token);
         CoinCapAssetsResponse response = getRequest(url, CoinCapAssetsResponse.class);
