@@ -1,11 +1,11 @@
-import React, { SetStateAction } from 'react';
+import React, { MouseEventHandler, SetStateAction } from 'react';
 
 
 export const PageArrow = ({ disabled, left, onClick }: {disabled?: boolean, left: boolean, onClick?: (() => void) | null}) => {
   return (
     <div 
       className={"pt-0 pb-0 pl-5 pr-5 select-none " + (onClick ? "hover:cursor-pointer " : "") + (disabled ? "opacity-40" : "opacity-100")} 
-      onClick={onClick}>
+      onClick={onClick as MouseEventHandler}>
       {left ? "◀" : "▶"}
     </div>
   )
