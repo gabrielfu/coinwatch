@@ -6,7 +6,7 @@ import SmallLogo from "./SmallLogo";
 
 const Navbar = () => {
   return (
-    <nav className='flex sticky top-0 z-10 bg-backdrop justify-between items-center w-full mb-8 pt-3'>
+    <nav className='flex sticky top-0 z-10 bg-transparent justify-between items-center w-full mb-8 pt-3'>
       <div className='sm:flex hidden'>
         <Logo />
       </div>
