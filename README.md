@@ -2,16 +2,7 @@
 
 **Coinwatch** allows you to view the latest prices of cryptocurrencies.
 
-### Homepage
-
 ![](assets/homepage-desktop.png)
-![](assets/homepage-mobile.png)
-
-### Search token
-
-![](assets/search-token.png)
-
-### Token view
 
 ![](assets/token-view.png)
 
